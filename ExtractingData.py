@@ -11,6 +11,7 @@ x1, y1, x2, y2 = 1584, 741, 1904, 1066
 
 # opcjonalnie: skala jeśli chcesz zmniejszyć obraz do ekranu laptopa
 laptop = False
+
 if laptop:
     scale_x = 1366 / 1920
     scale_y = 768 / 1080
