@@ -1,1 +1,1 @@
-pip install mss numpy opencv-python pyautogui
+pip install mss numpy opencv-python pyautogui ultralytics

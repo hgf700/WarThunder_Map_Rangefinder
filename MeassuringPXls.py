@@ -1,3 +1,4 @@
+# to manually meauser pixels in x and y dimension
 import cv2
 import os
 

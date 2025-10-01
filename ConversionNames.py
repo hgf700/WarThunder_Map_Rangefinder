@@ -1,3 +1,4 @@
+# purpose of this file is to convert natively generated ss in format .jpg to .png
 import os
 
 folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData"

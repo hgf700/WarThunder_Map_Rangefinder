@@ -1,3 +1,4 @@
+# extract from basic .png only minimap
 import os
 import cv2
 
