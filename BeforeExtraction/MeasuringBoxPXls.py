@@ -22,11 +22,11 @@ image_height, image_width = img.shape[:2]
 # Domyślny rozmiar prostokąta
 obj_width = 30
 obj_height = 30
-value=0
-click_id=0
+value = 0
+click_id = 0
 
 def click_event(event, x, y, flags, param):
-    global obj_width, obj_height ,value,click_id   # Umożliwiamy dostęp do rozmiaru prostokąta
+    global obj_width, obj_height, value, click_id  # Umożliwiamy dostęp do zmiennych
 
     if event == cv2.EVENT_LBUTTONDOWN:
         # przeskaluj kliknięcie jeśli obraz został zmniejszony
@@ -40,48 +40,56 @@ def click_event(event, x, y, flags, param):
         y2 = min(orig_y + obj_height//2, image_height)
         fragment = img[y1:y2, x1:x2]
 
-        if click_id==0:
-            value=0
-            click_id=1
+        # Ustawianie wartości value i click_id
+        if click_id == 0:
+            value = 0
+            click_id = 1
         elif click_id == 1:
-            value+=1
+            value = 1
 
-        show =1
-        if show ==1:
-            
+        # Wyświetlanie fragmentu
+        cv2.imshow("Fragment", fragment)
+        cv2.waitKey(500)
+        cv2.destroyWindow("Fragment")
 
-            cv2.imshow("Fragment", fragment)
-            cv2.waitKey(500)
-            cv2.destroyWindow("Fragment")
+        # Rysowanie prostokąta i tekstu na obrazie dla podglądu
+        cv2.rectangle(small_img, (int(x1*scale), int(y1*scale)), (int(x2*scale), int(y2*scale)), (0, 255, 0), 1)
+        cv2.putText(
+            small_img, 
+            str(value), 
+            (int(x2 * scale) + 5, int(y1 * scale) + 15), 
+            cv2.FONT_HERSHEY_SIMPLEX, 
+            0.3, 
+            (0, 255, 0), 
+            1
+        )
+        cv2.imshow("Mapa", small_img)
 
-            # Rysowanie prostokąta na obrazie dla podglądu
-            cv2.rectangle(small_img, (int(x1*scale), int(y1*scale)), (int(x2*scale), int(y2*scale)), (0, 255, 0), 1)
-            cv2.putText(
-                small_img, 
-                str(value),                       # <-- tu możesz wstawić np. f"({orig_x},{orig_y})"
-                (int(x2 * scale) + 5, int(y1 * scale) + 15),  # pozycja tekstu (tu: obok prawego górnego rogu)
-                cv2.FONT_HERSHEY_SIMPLEX, 
-                0.3, 
-                (0, 255, 0), 1
-            )
-            cv2.imshow("Mapa", small_img)
-
-        # YOLO label
+        # YOLO label dla kliknięcia
         x_center = orig_x / image_width
         y_center = orig_y / image_height
         width = obj_width / image_width
         height = obj_height / image_height
 
-        # class_id = 0  # np. gracz
-
-        # line = f"{class_id} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n"
         line = f"{value} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n"
 
-        # zapis do pliku txt
+        # Zapis etykiety kliknięcia
         with open(label_path, "a") as f:
             f.write(line)
-
         print(f"Zapisano label do {label_path}: {line.strip()}")
+
+        # Zapis statycznej meters_line po drugim kliknięciu
+        if value == 1:
+            meters_x_center = 0.969231
+            meters_y_center = 0.969231
+            meters_width = 0.156250
+            meters_height = 0.076923
+            meters_value = 2
+
+            meters_line = f"{meters_value} {meters_x_center:.6f} {meters_y_center:.6f} {meters_width:.6f} {meters_height:.6f}\n"
+            with open(label_path, "a") as f:
+                f.write(meters_line)
+            print(f"Zapisano statyczną linię meters do {label_path}: {meters_line.strip()}")
 
 cv2.imshow("Mapa", small_img)
 cv2.setMouseCallback("Mapa", click_event)
@@ -89,18 +97,18 @@ cv2.setMouseCallback("Mapa", click_event)
 # Pętla główna do obsługi klawiszy
 while True:
     key = cv2.waitKey(0) & 0xFF  # Czekaj na naciśnięcie klawisza
-    if key == ord('a'):  # Naciśnięcie 'A'
+    if key == ord('1'):  # Rozmiar dla gracza
+        obj_width = 20
+        obj_height = 20
+        print("Rozmiar 20x20 pikseli (gracz)")
+    elif key == ord('2'):  # Rozmiar dla pingu
         obj_width = 30
         obj_height = 30
-        print("Zmieniono rozmiar prostokąta na 30x30 pikseli")
-    elif key == ord('s'):  # Naciśnięcie 'D'
-        obj_width = 30
-        obj_height = 30
-        print("Zmieniono rozmiar prostokąta na 30x30 pikseli")
-    elif key == ord('d'):  # Naciśnięcie 'D'
-        obj_width = 30
-        obj_height = 30
-        print("Zmieniono rozmiar prostokąta na 30x30 pikseli")
+        print("Rozmiar 30x30 pikseli (ping)")
+    elif key == ord('3'):  # Rozmiar dla metrów
+        obj_width = 50
+        obj_height = 25
+        print("Rozmiar 50x25 pikseli (metry)")
     elif key == 27:  # Naciśnięcie ESC - wyjście z programu
         break
 

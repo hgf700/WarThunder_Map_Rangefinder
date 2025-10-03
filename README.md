@@ -1,4 +1,4 @@
-# Ballistic Calculator for War Thunder
+# Map Rangefinder for War Thunder
 
 This project aims to create a **ballistic calculator** for War Thunder.  
 The goal is to **automatically measure distances from player to squad markers** on the minimap using a neural network, most likely with a **YOLO-based approach**.  
