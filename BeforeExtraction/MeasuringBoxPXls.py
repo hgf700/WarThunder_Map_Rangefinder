@@ -29,9 +29,7 @@ def click_event(event, x, y, flags, param):
         RightDownY = int((y + box_height) / scale)
 
         print(f"Kliknięto w piksel LeftUp ({orig_x}, {orig_y})")
-        print(f"RightDown ({RightDownX}, {RightDownY})")
-
-        
+        print(f"RightDown ({RightDownX}, {RightDownY})")        
 
         # wycinamy fragment z obrazu
         fragment = img[orig_y:RightDownY, orig_x:RightDownX]

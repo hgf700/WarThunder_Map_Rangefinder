@@ -3,8 +3,8 @@ import os
 import cv2
 
 # folder ze screenshotami
-folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData"
-output_folder = os.path.join(folder, "fragments")
+folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData\edytowaneZdj"
+output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData\fragments"
 os.makedirs(output_folder, exist_ok=True)
 
 # obszar minimapy w pikselach (x1, y1, x2, y2)
@@ -35,13 +35,23 @@ for file in os.listdir(folder):
         height = int((y2 - y1) * scale_y)
 
         fragment = img[top:top+height, left:left+width]  # wycięcie fragmentu
-        cv2.imshow("fragment", fragment)
-        cv2.waitKey(500)  # pokaż na pół sekundy
 
-        # zapis do folderu
-        output_path = os.path.join(output_folder, file)
-        cv2.imwrite(output_path, fragment)
-        print("completed")
+        show =0
+         
+        if show==1:
+            cv2.imshow("fragment", fragment)
+            cv2.waitKey(500)  # pokaż na pół sekundy
+
+            # zapis do folderu
+            output_path = os.path.join(output_folder, file)
+            cv2.imwrite(output_path, fragment)
+            print("completed")
+        elif show==0:
+            output_path = os.path.join(output_folder, file)
+            cv2.imwrite(output_path, fragment)
+            print("completed")
+         
+
     else:
         print("?")
 

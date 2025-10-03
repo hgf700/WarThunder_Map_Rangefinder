@@ -3,7 +3,7 @@ import cv2
 import os
 
 # Wczytaj obraz (np. screenshot minimapy)
-img = cv2.imread(r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData\map_001.png")
+img = cv2.imread(r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData\podejscie\map_001.png")
 
 if img is None:
     print("Nie udało się wczytać obrazu!")
