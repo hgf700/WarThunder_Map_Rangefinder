@@ -1,5 +1,0 @@
-train: /app/data/images/train
-val: /app/data/images/val
-
-nc: 2
-names: ["player", "marker"]

@@ -1,0 +1,10 @@
+AfterExtraction/
+BeforeExtraction/
+ManagingData/
+venv/
+.gitignore
+przydatne.txt
+README.md
+requriments.txt
+train.py
+runs/
