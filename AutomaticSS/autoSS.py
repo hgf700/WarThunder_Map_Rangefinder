@@ -1,14 +1,13 @@
 import cv2
 import numpy as np
-import pyautogui
+from mss import mss
 import time
 import os
 
-# 📁 Foldery na zrzuty i wzorce
-output_folder = "C:/Screenshots"
+output_folder = "D:/AAAA_MojeDaneWT/output"
 os.makedirs(output_folder, exist_ok=True)
 
-template_folder = "C:/Templates"
+template_folder = "D:/AAAA_MojeDaneWT/nowetest"
 os.makedirs(template_folder, exist_ok=True)
 
 # 📸 Wczytaj wszystkie pliki wzorców
@@ -23,18 +22,20 @@ for file in os.listdir(template_folder):
 if not templates:
     raise FileNotFoundError("Nie znaleziono żadnych plików PNG w folderze Templates!")
 
-# ⚙️ Ustawienia
-threshold = 0.8      # próg dopasowania (0–1)
+# próg dopasowania threshold = 0.2 (0–1)
+#slabo treshold dziala na 0.4 na mapie nie z podeslanych danych
+threshold = 0.2
 count = 0
 max_shots = 970
-interval = 5         # odstęp po wykryciu (sekundy)
-region = (1584, 741, 1904, 1066)  # (x, y, szerokość, wysokość)
+interval = 5         
+monitor = {"top": 741, "left": 1584, "width": 320, "height": 325}
+
+sct = mss()
 
 while count < max_shots:
-    # 🎮 Pobierz zrzut określonego fragmentu ekranu (np. minimapy)
-    screenshot = pyautogui.screenshot(region=region)
+    screenshot = sct.grab(monitor)
     frame = np.array(screenshot)
-    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2GRAY)
 
     # 🔍 Wykryj którykolwiek wzorzec
     for name, template in templates:
@@ -44,11 +45,11 @@ while count < max_shots:
         # 📸 Jeśli wzorzec znaleziony
         if len(loc[0]) > 0 and count <= max_shots:
             filename = os.path.join(output_folder, f"detected_{count:04d}.png")
-            screenshot.save(filename)
+            cv2.imwrite(filename, frame)
             print(f"ilosc {count}")
             count += 1
-            time.sleep(interval)  # pauza po wykryciu
-            break  # przejdź do następnej iteracji pętli głównej
+            time.sleep(interval)  
+            break  
 
-    # 🔁 Krótka przerwa między sprawdzeniami
     time.sleep(1)
+    print("sleep")

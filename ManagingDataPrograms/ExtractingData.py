@@ -3,8 +3,10 @@ import os
 import cv2
 
 # folder ze screenshotami
-folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData\edytowaneZdj"
-output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData\fragments"
+# folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\edytowaneZdj"
+folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\asd"
+# output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\fragments"
+output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\fragments2"
 os.makedirs(output_folder, exist_ok=True)
 
 # obszar minimapy w pikselach (x1, y1, x2, y2)
@@ -36,7 +38,7 @@ for file in os.listdir(folder):
 
         fragment = img[top:top+height, left:left+width]  # wycięcie fragmentu
 
-        show =0
+        show =1
          
         if show==1:
             cv2.imshow("fragment", fragment)
