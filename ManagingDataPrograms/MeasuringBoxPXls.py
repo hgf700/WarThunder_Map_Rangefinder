@@ -80,10 +80,11 @@ def click_event(event, x, y, flags, param):
         print(f"Zapisano: {line.strip()}")
 
         # Jeśli był PING → dodaj od razu METRY
+        # 2 0.771875 0.966154 0.437500 0.076923
         if value == 1:
-            meters_x_center = 0.600000
-            meters_y_center = 0.969231
-            meters_width = 0.300000
+            meters_x_center = 0.771875
+            meters_y_center = 0.966154
+            meters_width = 0.437500
             meters_height = 0.076923
             meters_value = 2
 
