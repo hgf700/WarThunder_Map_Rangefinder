@@ -4,8 +4,8 @@ import os
 import random
 
 # Folder z obrazami
-input_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\edytowaneZdj\nowe"
-output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\fragmentsNew"
+input_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\fragmentsNew\asd"
+output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\fragmentsNew\afs"
 os.makedirs(output_folder, exist_ok=True)
 
 # Pozycja kółka (np. x=100, y=200 w pikselach)

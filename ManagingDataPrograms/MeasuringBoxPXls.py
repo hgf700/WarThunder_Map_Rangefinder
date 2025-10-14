@@ -3,8 +3,8 @@
 import cv2
 import os
 
-start = 301
-end = 400  # ustaw, ile chcesz
+start = 786
+end = 793  # ustaw, ile chcesz
 
 for i in range(start, end + 1):
 
