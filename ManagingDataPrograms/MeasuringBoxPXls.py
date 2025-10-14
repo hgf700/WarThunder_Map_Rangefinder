@@ -3,9 +3,12 @@
 import cv2
 import os
 
-file = "map_001"
-img_path = f"C:\\Users\\USER098\\Documents\\GitHub\\balistic-calculator-WT\\ManagingData\\fragments\\{file}.png"
-label_folder = f"C:\\Users\\USER098\\Documents\\GitHub\\balistic-calculator-WT\\ManagingData\\labels"
+file = "map_731"
+img_path = f"C:\\Users\\USER098\\Documents\\GitHub\\balistic-calculator-WT\\TrainingData\\images\\val\\{file}.png"
+# # img_path = f"C:\\Users\\USER098\\Documents\\GitHub\\balistic-calculator-WT\\ManagingData\\fragmentsNew\\{file}.png"
+# label_folder = f"C:\\Users\\USER098\\Documents\\GitHub\\balistic-calculator-WT\\ManagingData\\labels\\nowe"
+
+label_folder = f"C:\\Users\\USER098\\Documents\\GitHub\\balistic-calculator-WT\\TrainingData\\labels\\val"
 os.makedirs(label_folder, exist_ok=True)
 label_path = os.path.join(label_folder, f"{file}.txt")
 
@@ -78,9 +81,9 @@ def click_event(event, x, y, flags, param):
 
         # Jeśli był PING → dodaj od razu METRY
         if value == 1:
-            meters_x_center = 0.871875
+            meters_x_center = 0.600000
             meters_y_center = 0.969231
-            meters_width = 0.156250
+            meters_width = 0.300000
             meters_height = 0.076923
             meters_value = 2
 
@@ -101,6 +104,8 @@ cv2.setMouseCallback("Mapa", click_event)
 while True:
     key = cv2.waitKey(0) & 0xFF
     if key == 27:  # ESC
+        break
+    if value==1:
         break
     
 

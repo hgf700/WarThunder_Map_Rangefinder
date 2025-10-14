@@ -4,8 +4,8 @@ import cv2
 
 # folder ze screenshotami
 
-folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\fragments"
-output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\labels"
+folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\edytowaneZdj\nowe"
+output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\labels\nowe"
 os.makedirs(output_folder, exist_ok=True)
 
 for i, file_name in enumerate(os.listdir(folder)):

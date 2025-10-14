@@ -4,8 +4,8 @@ import os
 import random
 
 # Folder z obrazami
-input_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData\czysteZdj"
-output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData\edytowaneZdj"
+input_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\edytowaneZdj\nowe"
+output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\fragmentsNew"
 os.makedirs(output_folder, exist_ok=True)
 
 # Pozycja kółka (np. x=100, y=200 w pikselach)
@@ -21,9 +21,12 @@ for filename in os.listdir(input_folder):
             print(f"Nie udało się wczytać {filename}")
             continue
 
-        numX = random.randint(1584,1904)
-        numY = random.randint(741,1066)
+        # numX = random.randint(1584,1904)
+        # numY = random.randint(741,1066)
         
+        numX = random.randint(0,320)    
+        numY = random.randint(0,325)
+
         circle_pos = (numX, numY)
 
         radius1 =8

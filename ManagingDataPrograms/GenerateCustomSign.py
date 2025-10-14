@@ -14,8 +14,11 @@ small_img = cv2.resize(img, (0, 0), fx=scale, fy=scale)
 annotated_img = small_img.copy()
 
 # 🔲 Oryginalne granice minimapy (z pełnego obrazu)
-MIN_X_ORIG, MAX_X_ORIG = 1584, 1904
-MIN_Y_ORIG, MAX_Y_ORIG = 741, 1066
+# MIN_X_ORIG, MAX_X_ORIG = 1584, 1904
+# MIN_Y_ORIG, MAX_Y_ORIG = 741, 1066
+
+MIN_X_ORIG, MAX_X_ORIG = 0,320
+MIN_Y_ORIG, MAX_Y_ORIG = 0,325
 
 # 🔁 Przeskalowane granice na small_img
 MIN_X = int(MIN_X_ORIG * scale)
