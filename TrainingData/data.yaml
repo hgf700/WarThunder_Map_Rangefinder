@@ -1,7 +1,7 @@
-path: C:/Users/USER098/Documents/GitHub/balistic-calculator-WT/TrainingData
+path: /content/TrainingData
 
-train: C:/Users/USER098/Documents/GitHub/balistic-calculator-WT/TrainingData/images/train
-val: C:/Users/USER098/Documents/GitHub/balistic-calculator-WT/TrainingData/images/val
+train: /content/TrainingData/images/train
+val: /content/TrainingData/images/val
 
-nc: 3
-names: ['player', 'ping', 'distance']
+nc: 2
+names: ['player', 'ping']
