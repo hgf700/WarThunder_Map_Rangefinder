@@ -1,8 +1,13 @@
 # test generate frontend sign on minimap
 import cv2
+import os
 
 # Wczytaj obraz
-img = cv2.imread(r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData\podejscieTest\map_001.png")
+img = cv2.imread(r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\testing\test\test.png")
+output_folder= r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\testing\test"
+# img = cv2.imread(r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\ManagingData\podejscieTest\map_001.png")
+
+save=1
 
 if img is None:
     print("Nie udało się wczytać obrazu!")
@@ -28,6 +33,7 @@ MAX_Y = int(MAX_Y_ORIG * scale)
 
 def click_event(event, x, y, flags, param):
     global annotated_img
+    global img  # <- dodajemy, żeby można było nadpisywać img
     if event == cv2.EVENT_LBUTTONDOWN:
 
         # ✅ Sprawdź czy kliknięcie jest w dozwolonym obszarze
@@ -36,10 +42,25 @@ def click_event(event, x, y, flags, param):
             # Przeskalowanie kliknięcia na oryginalne współrzędne
             orig_x = int(x / scale)
             orig_y = int(y / scale)
-            
 
-            cv2.circle(annotated_img, (x, y), 8, (0, 140, 255), 2)  # 
+            radius1 = 8
+            radius2 = 6
+            color1 = (0, 165, 255)  # orange
+            color2 = (39, 250, 0)    # green
+            alpha = 0.4
+
+            overlay = img.copy()
+
+            # Narysuj kółko
+            cv2.circle(img, (x, y), radius1, color1, 2)
+            cv2.circle(img, (x, y), radius2, color2, 2)
+
+            img = cv2.addWeighted(overlay, alpha, img, 1 - alpha, 0)
+
             print(f"[OK] Klik w minimapie → ORIG({orig_x}, {orig_y}) | SMALL({x}, {y})")
+            if save == 1:
+                filename = "test_mark.png"
+                cv2.imwrite(os.path.join(output_folder, filename), img)
         else:
             print(f"[Ignoruję] Klik poza minimapą: {x}, {y}")
 

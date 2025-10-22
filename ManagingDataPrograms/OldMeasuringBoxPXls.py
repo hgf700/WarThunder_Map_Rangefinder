@@ -1,12 +1,7 @@
 import cv2
 import os
 
-# file = "map_009"
-# file = "map_045"
-# file = "map_071"
 file = "map_684"
-# file = "map_731"
-
 
 img_path = f"C:\\Users\\USER098\\Documents\\GitHub\\balistic-calculator-WT\\TrainingData\\images\\val\\{file}.png"
 label_folder = f"C:\\Users\\USER098\\Documents\\GitHub\\balistic-calculator-WT\\TrainingData\\labels\\val"

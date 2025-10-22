@@ -67,10 +67,10 @@ for i in range(start, end + 1):
             print(f"Zapisano: {line.strip()}")
 
             if value == 1:
-                meters_line = "2 0.771875 0.966154 0.437500 0.076923\n"
-                with open(label_path, "a") as f:
-                    f.write(meters_line)
-                print(f"[AUTO] Dodano METRY: {meters_line.strip()}")
+                # meters_line = "2 0.771875 0.966154 0.437500 0.076923\n"
+                # with open(label_path, "a") as f:
+                #     f.write(meters_line)
+                # print(f"[AUTO] Dodano METRY: {meters_line.strip()}")
                 value = 0
             else:
                 value = 1
