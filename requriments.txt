@@ -1,1 +1,1 @@
-pip install mss numpy opencv-python pyautogui ultralytics torch torch-vision PyAutoGUI PyQt5
+pip install mss numpy opencv-python pyautogui ultralytics torch torch-vision PyAutoGUI pynput
