@@ -18,30 +18,27 @@ image = cv2.imread(input_folder, cv2.IMREAD_GRAYSCALE)
 if image is None:
     raise FileNotFoundError(f"Nie znaleziono obrazu: {input_folder}")
 
-# cut_ratio_h = 0.075  
-# cut_ratio_w = 0.4
+height, width = image.shape
+cut_ratio_h = 0.075  
+cut_ratio_w = 0.4
 
-# cut_start_h = int(height * (1 - cut_ratio_h))
-# cut_start_w = int(width * (1 - cut_ratio_w))
+cut_start_h = int(height * (1 - cut_ratio_h))
+cut_start_w = int(width * (1 - cut_ratio_w))
 
-# roi = image[cut_start_h:, cut_start_w:] 
+roi = image[cut_start_h:, cut_start_w:] 
+
+# height, width = image.shape
+# cut_ratio = 0.075  
+# cut_start = int(height * (1 - cut_ratio))
 
 # # 🔪 Wytnij dolną część obrazu
-# upper_part = image[:roi, :]
-# lower_part = image[roi:, :]
-
-height, width = image.shape
-cut_ratio = 0.075  
-cut_start = int(height * (1 - cut_ratio))
-
-# 🔪 Wytnij dolną część obrazu
-upper_part = image[:cut_start, :]
-lower_part = image[cut_start:, :]
+# upper_part = image[:cut_start, :]
+# lower_part = image[cut_start:, :]
 
 # ⚙️ Progowanie kontrastowe
 lower_thresh = 0
 upper_thresh = 40
-mask = cv2.inRange(lower_part, lower_thresh, upper_thresh)
+mask = cv2.inRange(roi, lower_thresh, upper_thresh)
 
 # 🔄 Odwrócenie (czarny tekst na białym tle)
 processed = cv2.bitwise_not(mask)
@@ -51,7 +48,9 @@ processed = cv2.GaussianBlur(processed, (3,3), 0)
 processed = cv2.resize(processed, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
 
 # 🔤 OCR
-text = pytesseract.image_to_string(processed, lang='eng')
+config = r'--oem 3 --psm 6 -c tessedit_char_whitelist=0123456789mM'
+text = pytesseract.image_to_string(processed, config=config, lang='eng')
+
 print("Rozpoznany tekst:")
 print(text)
 
