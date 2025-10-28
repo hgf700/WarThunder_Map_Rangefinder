@@ -5,7 +5,7 @@ import os
 import pytesseract
 
 # 🔧 Ścieżki
-input_file = "map_100"
+input_file = "map_793"
 input_folder = fr"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\images\train\{input_file}.png"
 output_folder = fr"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\testing\test\image_tresholding\OCR"
 os.makedirs(output_folder, exist_ok=True)
@@ -27,14 +27,6 @@ cut_start_w = int(width * (1 - cut_ratio_w))
 
 roi = image[cut_start_h:, cut_start_w:] 
 
-# height, width = image.shape
-# cut_ratio = 0.075  
-# cut_start = int(height * (1 - cut_ratio))
-
-# # 🔪 Wytnij dolną część obrazu
-# upper_part = image[:cut_start, :]
-# lower_part = image[cut_start:, :]
-
 # ⚙️ Progowanie kontrastowe
 lower_thresh = 0
 upper_thresh = 40
@@ -48,7 +40,7 @@ processed = cv2.GaussianBlur(processed, (3,3), 0)
 processed = cv2.resize(processed, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
 
 # 🔤 OCR
-config = r'--oem 3 --psm 6 -c tessedit_char_whitelist=0123456789mM'
+config = r'--oem 3 --psm 6 -c tessedit_char_whitelist=0123456789'
 text = pytesseract.image_to_string(processed, config=config, lang='eng')
 
 print("Rozpoznany tekst:")
