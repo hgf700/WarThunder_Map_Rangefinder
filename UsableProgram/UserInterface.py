@@ -4,7 +4,11 @@ from tkinter import ttk
 root = Tk()
 root.overrideredirect(True)
 
+style = ttk.Style()
+style.configure("Close.TButton", background="red", foreground="red")
+
 # root.geometry("300x200+500+300")
+# root.geometry("111x134+200+200")
 
 mainframe = ttk.Frame(root)
 mainframe.grid(column=0, row=0)
@@ -12,7 +16,7 @@ mainframe.grid(column=0, row=0)
 def close_window():
     root.destroy()
 
-close_button = ttk.Button(mainframe, text="X", command=close_window)
+close_button = ttk.Button(mainframe, text="✕", command=close_window, width=2, style="Close.TButton")
 close_button.grid(column=2, row=2, sticky=W) 
 
 scale = StringVar()
@@ -25,14 +29,7 @@ ttk.Label(mainframe, text="M").grid(column=2, row=1, sticky=W)
 meters_entry = ttk.Entry(mainframe, textvariable=meters, state="readonly", width=10)
 meters_entry.grid(column=1, row=1, sticky=(W))
 
-something = StringVar()
-def asd():
-    try:
-        something.set("0")
-    except ValueError:
-        pass
-
-manual_setting_button = ttk.Button(mainframe, text="Scale", command=asd)
+manual_setting_button = ttk.Button(mainframe, text="Scale", command=lambda: None, width=8)
 
 def mode_changed(*args):
     if mode.get() == "manual":
@@ -51,6 +48,25 @@ root.rowconfigure(0, weight=1)
 mainframe.columnconfigure(2, weight=1)
 for child in mainframe.winfo_children(): 
     child.grid_configure(padx=5, pady=5)
+
+def start_move(event):
+    root.x = event.x
+    root.y = event.y
+
+def stop_move(event):
+    root.x = None
+    root.y = None
+
+def do_move(event):
+    deltax = event.x - root.x
+    deltay = event.y - root.y
+    x = root.winfo_x() + deltax
+    y = root.winfo_y() + deltay
+    root.geometry(f"+{x}+{y}")
+
+mainframe.bind("<Button-1>", start_move)
+mainframe.bind("<ButtonRelease-1>", stop_move)
+mainframe.bind("<B1-Motion>", do_move)
 
 manual_setting_button.grid_remove()
 root.mainloop()
