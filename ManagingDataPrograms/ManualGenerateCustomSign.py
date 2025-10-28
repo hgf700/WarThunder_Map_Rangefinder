@@ -45,7 +45,7 @@ def click_event(event, x, y, flags, param):
 
             radius1 = 8
             radius2 = 6
-            color1 = (0, 165, 255)  # orange
+            color1 = (255, 165, 0)  # orange
             color2 = (39, 250, 0)    # green
             alpha = 0.4
 

@@ -19,7 +19,7 @@ class SimpleOverlay(QtWidgets.QWidget):
         kolorkolo1=[255, 165, 0]
         kolorkolo2=[39, 250, 0]
         poskolo1=1
-        poskolo2=0
+        poskolo2=4
 #o
         pen = QtGui.QPen(QtGui.QColor(kolorkolo1[0],kolorkolo1[1], kolorkolo1[2],alpha))
         pen.setWidth(pen_width)
@@ -30,7 +30,6 @@ class SimpleOverlay(QtWidgets.QWidget):
 
 #g
 
-        
         pen = QtGui.QPen(QtGui.QColor(kolorkolo2[0], kolorkolo2[1],kolorkolo2[2],alpha))
         pen.setWidth(pen_width)
         pen.setCosmetic(False)
