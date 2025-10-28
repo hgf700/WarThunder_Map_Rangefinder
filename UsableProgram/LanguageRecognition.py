@@ -48,6 +48,4 @@ axes[1].set_title("Progowanie dolnej części")
 axes[1].axis("off")
 plt.show()
 
-# Zapis wyniku
-output_path = os.path.join(output_folder, f"tresholded_{input_file}")
-cv2.imwrite(output_path, combined)
+cv2.imwrite(os.path.join(output_folder, f"tresholded_{input_file}.png"), combined)
