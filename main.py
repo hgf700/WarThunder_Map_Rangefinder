@@ -12,6 +12,9 @@ def main():
             scale_value = Manual()
             if scale_value:
                 print(f"   ➜ Wczytana skala: {scale_value}")
+
+
+                
             else:
                 print("   ⚠️ Nie znaleziono zapisanej wartości skali.")
 

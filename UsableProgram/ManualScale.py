@@ -19,15 +19,16 @@ def read_scale() -> str:
 def Manual(parent=None):
     root = Toplevel(parent) if parent else Tk()
     root.title("Scale")
-    root.attributes('-topmost', False)
-    root.grab_set()
+    root.attributes('-topmost', True)
+    root.grab_set()  # blokuje interakcje z oknem głównym, dopóki to nie zostanie zamknięte
+
+    result = StringVar()
 
     mainframe = ttk.Frame(root, padding=10)
     mainframe.grid(column=0, row=0, sticky="nsew")
 
     ScaleM_input = StringVar()
-    ScaleM_output = StringVar()
-    result = StringVar()  # wartość, na którą będziemy czekać
+    ScaleM_output = StringVar(value=read_scale())
 
     ttk.Label(mainframe, text="Scale").grid(column=0, row=0, sticky=E)
     ttk.Entry(mainframe, textvariable=ScaleM_input, width=10).grid(column=1, row=0, sticky=W)
@@ -39,8 +40,8 @@ def Manual(parent=None):
             save_scale(value)
             ScaleM_output.set(value)
             result.set(value)
-            print(f"[DEBUG] Zapisano wartość: {value}")
-            root.destroy()
+            root.destroy()  # zamyka okno po kliknięciu „Set”
+            print(f"[DEBUG] Zapisano wartość skali: {value}")
 
     ttk.Button(mainframe, text="Set", command=ScaleM_put).grid(column=0, row=1, sticky=E)
     ttk.Label(mainframe, text="Seted").grid(column=1, row=1, sticky=W)
@@ -49,7 +50,7 @@ def Manual(parent=None):
     for child in mainframe.winfo_children():
         child.grid_configure(padx=5, pady=5)
 
-    # Czekamy aż użytkownik wpisze wartość i kliknie „Set”
+    # Czekaj, aż użytkownik kliknie „Set”
     root.wait_variable(result)
 
     return result.get()
