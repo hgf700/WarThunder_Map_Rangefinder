@@ -3,6 +3,9 @@ from tkinter import ttk
 
 root = Tk()
 root.overrideredirect(True)
+root.attributes('-topmost', True)
+# root.lift()
+
 
 style = ttk.Style()
 style.configure("Close.TButton", background="red", foreground="red")

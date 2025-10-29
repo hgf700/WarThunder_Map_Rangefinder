@@ -4,7 +4,7 @@ import os
 
 root = Tk()
 root.title("Settings")
-# root.geometry("300x200+500+300")
+root.attributes('-topmost', False)
 
 mainframe = ttk.Frame(root, padding=10)
 mainframe.grid(column=0, row=0, sticky="nsew")
@@ -40,6 +40,22 @@ def resolution_changed(*args):
         save_to_file(res2[0],res2[1],res2[2],res2[3],res2[4],res2[5])
     elif res == "2560x1440":
         save_to_file(res3[0],res3[1],res3[2],res3[3],res3[4],res3[5])
+
+def read_settings():
+    if not os.path.exists(file_path):
+        return None  # brak pliku
+    with open(file_path, "r") as f:
+        line = f.readline().strip()
+        return line
+    
+settings = read_settings()
+
+if settings:
+    resolution.set("No data")
+    values = list(map(int, settings.split()))
+    resolution.set(f"{values[0]}x{values[1]}")
+else:
+    print("Błąd odczytu pliku:")
 
 r1366x768_button = ttk.Radiobutton(mainframe, text="1366x768", variable=resolution,
                                    value="1366x768", command=resolution_changed)
