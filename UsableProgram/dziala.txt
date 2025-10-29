@@ -1,94 +1,101 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
-from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QObject
+from PyQt5.QtCore import Qt, pyqtSignal, QThread
 from pynput import mouse
 import sys
+import time
 
 FILENAME = "test.txt"
 
-class ClickListener(QObject):
-    click_signal = pyqtSignal(int, int)  # sygnał do przekazywania kliknięć
+class MouseThread(QThread):
+    click = pyqtSignal(int, int)
 
     def __init__(self):
         super().__init__()
-        self.listener = None
+        self._stop = False
+        self.last_time = 0
 
-    def start(self):
+    def run(self):
         def on_click(x, y, button, pressed):
-            if pressed:
-                self.click_signal.emit(x, y)
+            if not pressed or self._stop:
+                return
 
-        self.listener = mouse.Listener(on_click=on_click)
-        self.listener.start()
+            now = time.time()
+            # Debounce: max 1 kliknięcie co 80ms
+            if now - self.last_time < 0.08:
+                return
+            self.last_time = now
+
+            # Emit w głównym wątku
+            self.click.emit(int(x), int(y))
+
+        with mouse.Listener(on_click=on_click) as listener:
+            self.listener = listener
+            # WAŻNE: pętla z processEvents
+            while not self._stop:
+                time.sleep(0.01)
+                QtWidgets.QApplication.processEvents()
 
     def stop(self):
-        if self.listener:
+        self._stop = True
+        if hasattr(self, 'listener'):
             self.listener.stop()
+        self.quit()
+        self.wait(1000)
 
 
-class SimpleOverlay(QtWidgets.QWidget):
+class Overlay(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-
-        # ustawienia okna
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
-        self.setAttribute(Qt.WA_TranslucentBackground)  # ważne dla przezroczystości
-        self.setStyleSheet("background-color: rgba(0, 0, 0, 50);")
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setStyleSheet("background: rgba(0,0,0,60);")
         self.showFullScreen()
 
-        self.click_positions = []
-        print("Overlay utworzony")
+        self.pos = None
 
-        # Listener w osobnym wątku
-        self.click_listener = ClickListener()
-        self.click_listener.click_signal.connect(self.add_click)
-        self.click_listener.start()
+        # Uruchom wątek
+        self.thread = MouseThread()
+        self.thread.click.connect(self.set_click)
+        self.thread.start()
 
-    def add_click(self, x, y):
-        """Dodaje kliknięcie (wywoływane w głównym wątku)"""
-        print(f"Kliknięcie: x={x}, y={y}")
-        self.click_positions.append((x, y))
-
-        # zapis do pliku
-        with open(FILENAME, "a") as f:
+    def set_click(self, x, y):
+        self.pos = (x, y)
+        with open(FILENAME, "w") as f:
             f.write(f"{x},{y}\n")
-
-        # bezpieczne odświeżenie
-        self.update()  # teraz bezpieczne, bo w głównym wątku
+        self.update()  # odśwież
 
     def paintEvent(self, event):
-        painter = QtGui.QPainter(self)
-        painter.setRenderHint(QtGui.QPainter.Antialiasing)
+        if not self.pos:
+            return
 
-        pen_width = 3
-        kolo1 = 17
-        kolo2 = 12
-        alpha = 150
-        kolorkolo1 = [255, 165, 0]  # pomarańczowe
-        kolorkolo2 = [39, 250, 0]   # zielone
+        p = QtGui.QPainter(self)
+        p.setRenderHint(QtGui.QPainter.Antialiasing)
 
-        for x, y in self.click_positions:
-            # pierwsze kółko
-            pen = QtGui.QPen(QtGui.QColor(*kolorkolo1, alpha))
-            pen.setWidth(pen_width)
-            painter.setPen(pen)
-            painter.setBrush(QtCore.Qt.NoBrush)
-            painter.drawEllipse(x - kolo1//2, y - kolo1//2, kolo1, kolo1)
+        x, y = self.pos
+        r1, r2 = 20, 14
+        pen = QtGui.QPen()
+        pen.setWidth(3)
 
-            # drugie kółko
-            pen = QtGui.QPen(QtGui.QColor(*kolorkolo2, alpha))
-            pen.setWidth(pen_width)
-            painter.setPen(pen)
-            painter.drawEllipse(x - kolo2//2, y - kolo2//2, kolo2, kolo2)
+        # Pomarańczowe kółko
+        pen.setColor(QtGui.QColor(255, 165, 0, 180))
+        p.setPen(pen)
+        p.setBrush(QtCore.Qt.NoBrush)
+        p.drawEllipse(x - r1//2, y - r1//2, r1, r1)
 
-    def closeEvent(self, event):
-        self.click_listener.stop()
-        super().closeEvent(event)
+        # Zielone kółko
+        pen.setColor(QtGui.QColor(39, 250, 0, 180))
+        p.setPen(pen)
+        p.drawEllipse(x - r2//2, y - r2//2, r2, r2)
+
+    def closeEvent(self, e):
+        self.thread.stop()
+        super().closeEvent(e)
 
 
-# Uruchomienie
-app = QtWidgets.QApplication(sys.argv)
-overlay = SimpleOverlay()
-overlay.show()
-print("Overlay uruchomiony")
-
-sys.exit(app.exec_())
+# === URUCHOMIENIE ===
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    win = Overlay()
+    win.show()
+    print("Klikaj – działa bez limitu!")
+    sys.exit(app.exec_())
