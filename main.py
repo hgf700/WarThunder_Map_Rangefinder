@@ -1,12 +1,16 @@
 from UsableProgram.SettingsUI import start_ui
 from UsableProgram.InGameUI import InGameRangeFinder
-from UsableProgram.ManualScale import Manual 
 
 def main():
     res = start_ui()  # <- otwiera pierwsze okno
     if res and res != "error":
         print(f"Ustawiono rozdzielczość: {res}")
-        RangeFinder = InGameRangeFinder()  
+        mode=InGameRangeFinder()  
+        if mode == "maual":
+            print()
+
+        elif mode == "auto":
+            print()
 
 
 

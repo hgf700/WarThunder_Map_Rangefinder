@@ -1,18 +1,12 @@
-# extract from basic .png only minimap
 import os
 import cv2
 
-# folder ze screenshotami
-# folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\edytowaneZdj"
 folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\asd"
-# output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\fragments"
 output_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\fragments2"
 os.makedirs(output_folder, exist_ok=True)
 
-# obszar minimapy w pikselach (x1, y1, x2, y2)
 x1, y1, x2, y2 = 1584, 741, 1904, 1066
 
-# opcjonalnie: skala jeśli chcesz zmniejszyć obraz do ekranu laptopa
 laptop = False
 
 if laptop:
