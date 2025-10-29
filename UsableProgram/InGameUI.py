@@ -7,15 +7,18 @@ def InGameRangeFinder():
     root.overrideredirect(True)
     root.attributes('-topmost', True)
 
+    modeA_M = {"mode": "auto"}
+
     def close_window():
         root.destroy()
 
     def mode_changed(*args):
         if mode.get() == "manual":
             manual_setting_button.grid(column=1, row=3) 
-
+            modeA_M["mode"]="manual"
         else:
             manual_setting_button.grid_remove() 
+            modeA_M["mode"]="auto"
 
     def open_scale():
         Manual(root) 
@@ -74,5 +77,8 @@ def InGameRangeFinder():
 
     manual_setting_button.grid_remove()
     root.mainloop()
+    
+    print(modeA_M["mode"])
+    return modeA_M["mode"]
 
 # InGameRangeFinder()

@@ -1,1 +1,3 @@
+download and add to PATH in Environment variable
+
 https://github.com/UB-Mannheim/tesseract/wiki

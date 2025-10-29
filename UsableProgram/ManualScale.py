@@ -39,6 +39,9 @@ def Manual(parent=None):
 
     if not parent:
         root.mainloop()
-    return ManualScale["scale"] 
+        
+    print(ManualScale["scale"])
+    return ManualScale["scale"]     
+
 
 # Manual()
