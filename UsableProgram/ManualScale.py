@@ -2,10 +2,24 @@ from tkinter import *
 from tkinter import ttk
 import os
 
+folder_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\scale"
+os.makedirs(folder_path, exist_ok=True)
+file_path = os.path.join(folder_path, "scale.txt")
+
+def read_scale() -> str:
+    if os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            return f.read().strip()
+
+def save_scale(value: str):
+    with open(file_path, "w") as f:
+        f.write(value)
+
 def Manual(parent=None):
     root = Toplevel(parent) if parent else Tk()
     root.title("Scale")
     root.attributes('-topmost', False)
+    root.grab_set()
 
     ManualScale = {"scale": None}
 
@@ -24,6 +38,9 @@ def Manual(parent=None):
         value = ScaleM_input.get()
         ScaleM_output.set(value)
         ManualScale["scale"] = value
+        save_scale(value)
+        print(value)
+        return ManualScale["scale"]
 
     ttk.Button(mainframe, text="Set", command=ScaleM_put).grid(column=0, row=1, sticky=E)
 
@@ -40,7 +57,6 @@ def Manual(parent=None):
     if not parent:
         root.mainloop()
         
-    print(ManualScale["scale"])
     return ManualScale["scale"]     
 
 

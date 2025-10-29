@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from UsableProgram.ManualScale import Manual
+from UsableProgram.ManualScale import Manual, read_scale, ScaleM_put
 
 def InGameRangeFinder():
     root = Tk()
@@ -14,14 +14,17 @@ def InGameRangeFinder():
 
     def mode_changed(*args):
         if mode.get() == "manual":
-            manual_setting_button.grid(column=1, row=3) 
-            modeA_M["mode"]="manual"
+            modeA_M["mode"] = "manual"
+            # otwiera okno manual automatycznie
+            Manual(root)
+            # po zamknięciu manual odczytuje nową wartość
+            new_value = ScaleM_put()
+            if new_value:
+                scale.set(new_value)
+                print(f"[DEBUG] Wczytano nową wartość skali: {new_value}")
         else:
-            manual_setting_button.grid_remove() 
-            modeA_M["mode"]="auto"
-
-    def open_scale():
-        Manual(root) 
+            modeA_M["mode"] = "auto"
+            scale.set("")  # wyczyść pole, jeśli przełączysz na auto
 
     def start_move(event):
         root.x = event.x
@@ -45,7 +48,7 @@ def InGameRangeFinder():
     mainframe.grid(column=0, row=0)
 
     close_button = ttk.Button(mainframe, text="✕", command=close_window, width=2, style="Close.TButton")
-    close_button.grid(column=2, row=2, sticky=W) 
+    close_button.grid(column=2, row=2, sticky=W)
 
     scale = StringVar()
     ttk.Label(mainframe, text="S").grid(column=2, row=0, sticky=W)
@@ -57,28 +60,23 @@ def InGameRangeFinder():
     meters_entry = ttk.Entry(mainframe, textvariable=meters, state="readonly", width=10)
     meters_entry.grid(column=1, row=1, sticky=(W))
 
-    manual_setting_button = ttk.Button(mainframe, text="Scale", command=open_scale, width=8)
-
     mode = StringVar(value="auto")
     auto_button = ttk.Radiobutton(mainframe, text="A", variable=mode, value="auto", command=mode_changed)
-    manual_button = ttk.Radiobutton(mainframe, text="M", variable=mode, value="manual",command=mode_changed)
+    manual_button = ttk.Radiobutton(mainframe, text="M", variable=mode, value="manual", command=mode_changed)
     auto_button.grid(column=1, row=2, sticky=E)
     manual_button.grid(column=1, row=2, sticky=W)
 
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
     mainframe.columnconfigure(2, weight=1)
-    for child in mainframe.winfo_children(): 
+    for child in mainframe.winfo_children():
         child.grid_configure(padx=5, pady=5)
 
     mainframe.bind("<Button-1>", start_move)
     mainframe.bind("<ButtonRelease-1>", stop_move)
     mainframe.bind("<B1-Motion>", do_move)
 
-    manual_setting_button.grid_remove()
     root.mainloop()
-    
+
     print(modeA_M["mode"])
     return modeA_M["mode"]
-
-# InGameRangeFinder()
