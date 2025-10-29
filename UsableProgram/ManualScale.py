@@ -41,7 +41,7 @@ def Manual(parent=None):
             ScaleM_output.set(value)
             result.set(value)
             root.destroy()  # zamyka okno po kliknięciu „Set”
-            print(f"[DEBUG] Zapisano wartość skali: {value}")
+            print(f"manual scale : {value}")
 
     ttk.Button(mainframe, text="Set", command=ScaleM_put).grid(column=0, row=1, sticky=E)
     ttk.Label(mainframe, text="Seted").grid(column=1, row=1, sticky=W)

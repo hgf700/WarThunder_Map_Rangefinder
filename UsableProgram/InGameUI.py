@@ -24,7 +24,7 @@ def InGameRangeFinder():
         value = Manual(root)  
         if value:
             scale.set(value)
-            print(f"[DEBUG] Nowa wartość skali: {value}")
+            print(f"ingameui: {value}")
 
     def start_move(event):
         root.x = event.x
