@@ -2,8 +2,8 @@ from tkinter import *
 from tkinter import ttk
 import os
 
-def Manual():
-    root = Tk()
+def Manual(parent=None):
+    root = Toplevel(parent) if parent else Tk()
     root.title("Scale")
     root.attributes('-topmost', False)
 
@@ -22,8 +22,8 @@ def Manual():
 
     def ScaleM_put():
         value = ScaleM_input.get()
-        ScaleM_output.set(f"{value}")
-        ManualScale["scale"] 
+        ScaleM_output.set(value)
+        ManualScale["scale"] = value
 
     ttk.Button(mainframe, text="Set", command=ScaleM_put).grid(column=0, row=1, sticky=E)
 
@@ -37,7 +37,8 @@ def Manual():
     for child in mainframe.winfo_children():
         child.grid_configure(padx=5, pady=5)
 
-    root.mainloop()
+    if not parent:
+        root.mainloop()
     return ManualScale["scale"] 
 
 # Manual()

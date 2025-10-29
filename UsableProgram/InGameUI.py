@@ -13,9 +13,12 @@ def InGameRangeFinder():
     def mode_changed(*args):
         if mode.get() == "manual":
             manual_setting_button.grid(column=1, row=3) 
-            Manual()
+
         else:
-            manual_setting_button.grid_remove()  
+            manual_setting_button.grid_remove() 
+
+    def open_scale():
+        Manual(root) 
 
     def start_move(event):
         root.x = event.x
@@ -51,7 +54,7 @@ def InGameRangeFinder():
     meters_entry = ttk.Entry(mainframe, textvariable=meters, state="readonly", width=10)
     meters_entry.grid(column=1, row=1, sticky=(W))
 
-    manual_setting_button = ttk.Button(mainframe, text="Scale", command=lambda: None, width=8)
+    manual_setting_button = ttk.Button(mainframe, text="Scale", command=open_scale, width=8)
 
     mode = StringVar(value="auto")
     auto_button = ttk.Radiobutton(mainframe, text="A", variable=mode, value="auto", command=mode_changed)
