@@ -51,11 +51,11 @@ def read_settings():
 settings = read_settings()
 
 if settings:
-    resolution.set("No data")
     values = list(map(int, settings.split()))
     resolution.set(f"{values[0]}x{values[1]}")
 else:
-    print("Błąd odczytu pliku:")
+    print("error or no seted resolution")
+    resolution.set("error")
 
 r1366x768_button = ttk.Radiobutton(mainframe, text="1366x768", variable=resolution,
                                    value="1366x768", command=resolution_changed)

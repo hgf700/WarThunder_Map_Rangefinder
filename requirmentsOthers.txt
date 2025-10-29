@@ -1,0 +1,4 @@
+sudo apt update
+sudo apt install python3-pip python3-opencv tesseract-ocr tesseract-ocr-eng tesseract-ocr-pol
+
+pip install mss numpy opencv-python pyautogui ultralytics torch torchvision pynput
