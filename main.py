@@ -1,6 +1,6 @@
 from UsableProgram.SettingsUI import start_ui
 from UsableProgram.InGameUI import InGameRangeFinder
-from UsableProgram.ManualScale import Manual ,read_scale
+from UsableProgram.ManualScale import Manual 
 
 def main():
     res = start_ui()  # <- otwiera pierwsze okno
@@ -9,7 +9,7 @@ def main():
         RangeFinder = InGameRangeFinder()  
         if RangeFinder == "manual":
             print("Tryb manualny wybrany")
-            scale_value = read_scale()
+            scale_value = Manual()
             if scale_value:
                 print(f"   ➜ Wczytana skala: {scale_value}")
             else:

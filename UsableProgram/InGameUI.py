@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from UsableProgram.ManualScale import Manual, read_scale, ScaleM_put
+from UsableProgram.ManualScale import Manual, read_scale
 
 def InGameRangeFinder():
     root = Tk()
@@ -12,34 +12,30 @@ def InGameRangeFinder():
     def close_window():
         root.destroy()
 
-    def mode_changed(*args):
+    def mode_changed():
         if mode.get() == "manual":
             modeA_M["mode"] = "manual"
-            # otwiera okno manual automatycznie
-            Manual(root)
-            # po zamknięciu manual odczytuje nową wartość
-            new_value = ScaleM_put()
-            if new_value:
-                scale.set(new_value)
-                print(f"[DEBUG] Wczytano nową wartość skali: {new_value}")
+            print("[DEBUG] Tryb manualny wybrany")
+            value = Manual(root)  # otwiera okno manual
+            if value:
+                scale.set(value)
+                print(f"[DEBUG] Wczytano nową wartość skali: {value}")
         else:
             modeA_M["mode"] = "auto"
-            scale.set("")  # wyczyść pole, jeśli przełączysz na auto
+            print("[DEBUG] Tryb automatyczny wybrany")
+            scale.set("")
 
     def start_move(event):
         root.x = event.x
         root.y = event.y
 
-    def stop_move(event):
-        root.x = None
-        root.y = None
-
     def do_move(event):
-        deltax = event.x - root.x
-        deltay = event.y - root.y
-        x = root.winfo_x() + deltax
-        y = root.winfo_y() + deltay
+        x = root.winfo_x() + (event.x - root.x)
+        y = root.winfo_y() + (event.y - root.y)
         root.geometry(f"+{x}+{y}")
+
+    def stop_move(event):
+        root.x = root.y = None
 
     style = ttk.Style()
     style.configure("Close.TButton", background="red", foreground="red")
@@ -50,15 +46,13 @@ def InGameRangeFinder():
     close_button = ttk.Button(mainframe, text="✕", command=close_window, width=2, style="Close.TButton")
     close_button.grid(column=2, row=2, sticky=W)
 
-    scale = StringVar()
+    scale = StringVar(value=read_scale())
     ttk.Label(mainframe, text="S").grid(column=2, row=0, sticky=W)
-    scale_entry = ttk.Entry(mainframe, textvariable=scale, state="readonly", width=10)
-    scale_entry.grid(column=1, row=0, sticky=(W))
+    ttk.Entry(mainframe, textvariable=scale, state="readonly", width=10).grid(column=1, row=0, sticky=(W))
 
     meters = StringVar()
     ttk.Label(mainframe, text="M").grid(column=2, row=1, sticky=W)
-    meters_entry = ttk.Entry(mainframe, textvariable=meters, state="readonly", width=10)
-    meters_entry.grid(column=1, row=1, sticky=(W))
+    ttk.Entry(mainframe, textvariable=meters, state="readonly", width=10).grid(column=1, row=1, sticky=(W))
 
     mode = StringVar(value="auto")
     auto_button = ttk.Radiobutton(mainframe, text="A", variable=mode, value="auto", command=mode_changed)
@@ -66,9 +60,6 @@ def InGameRangeFinder():
     auto_button.grid(column=1, row=2, sticky=E)
     manual_button.grid(column=1, row=2, sticky=W)
 
-    root.columnconfigure(0, weight=1)
-    root.rowconfigure(0, weight=1)
-    mainframe.columnconfigure(2, weight=1)
     for child in mainframe.winfo_children():
         child.grid_configure(padx=5, pady=5)
 
@@ -78,5 +69,4 @@ def InGameRangeFinder():
 
     root.mainloop()
 
-    print(modeA_M["mode"])
     return modeA_M["mode"]
