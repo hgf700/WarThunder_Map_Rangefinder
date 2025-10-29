@@ -14,14 +14,5 @@ def main():
     else:
         print("Nie wybrano rozdzielczości")
 
-    
-
-
-
-
-
-
-
-
 if __name__ == "__main__":
     main()
