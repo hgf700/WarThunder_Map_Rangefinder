@@ -17,6 +17,7 @@ def read_settings():
         line = f.readline().strip()
         return line
     
+    
 def start_ui():
     root = Tk()
     root.title("Settings")
@@ -77,6 +78,13 @@ def start_ui():
     ttk.Label(mainframe, text="Current Resolution").grid(column=1, row=5, sticky=W)
     scale_entry = ttk.Entry(mainframe, textvariable=resolution, state="readonly", width=10)
     scale_entry.grid(column=1, row=6, sticky=(W))
+
+    def submit():
+        result["resolution"] = resolution.get()
+        root.destroy()
+
+    Submit_button = ttk.Button(mainframe, text="Submit", command=submit,  style="Close.TButton")
+    Submit_button.grid(column=2, row=6, sticky=W) 
 
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)

@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from UsableProgram.ManualScale import Manual
 
 def InGameRangeFinder():
     root = Tk()
@@ -12,6 +13,7 @@ def InGameRangeFinder():
     def mode_changed(*args):
         if mode.get() == "manual":
             manual_setting_button.grid(column=1, row=3) 
+            Manual()
         else:
             manual_setting_button.grid_remove()  
 
@@ -70,4 +72,4 @@ def InGameRangeFinder():
     manual_setting_button.grid_remove()
     root.mainloop()
 
-InGameRangeFinder()
+# InGameRangeFinder()
