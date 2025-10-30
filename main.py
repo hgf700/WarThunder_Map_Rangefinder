@@ -3,7 +3,6 @@ import sys
 from PyQt5.QtWidgets import QApplication
 from UsableProgram.SettingsUI import start_ui
 from UsableProgram.InGameUI import InGameRangeFinder
-from UsableProgram.LiveAddMark import ClickOverlay  # <--- DODANE
 
 
 # Globalny overlay
@@ -26,10 +25,6 @@ def main():
     app = QApplication.instance()
     if app is None:
         app = QApplication(sys.argv)
-
-    # 3. Uruchom overlay (nakładka)
-    overlay = ClickOverlay()
-    overlay.show()
 
     # 4. Uruchom główny tryb gry
     mode = InGameRangeFinder()  # zakładam, że to zwraca coś lub uruchamia UI
