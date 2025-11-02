@@ -31,7 +31,7 @@ for filename in os.listdir(input_folder):
 
         radius1 =8
         radius2=6
-        color1 = (0, 165, 255) #orange
+        color1 = (255, 165, 0) #orange
         color2 = (39,250,00)#green
         alpha = 0.4
 
