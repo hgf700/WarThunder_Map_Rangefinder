@@ -1,6 +1,5 @@
-# main.py
 import sys
-from PyQt5.QtWidgets import QApplication
+# from PyQt5.QtWidgets import QApplication
 from UsableProgram.SettingsUI import SettingsUI
 from UsableProgram.InGameUI import InGameUI
 from UsableProgram.GenerateBackendMark import GenerateBackendMark
@@ -22,9 +21,9 @@ def main():
     print(f"Ustawiono rozdzielczość: {res}")
 
     # 2. Utwórz aplikację Qt (jeśli jeszcze nie istnieje)
-    app = QApplication.instance()
-    if app is None:
-        app = QApplication(sys.argv)
+    # app = QApplication.instance()
+    # if app is None:
+    #     app = QApplication(sys.argv)
 
     # 4. Uruchom główny tryb gry
     mode = InGameUI()  # zakładam, że to zwraca coś lub uruchamia UI

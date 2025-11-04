@@ -2,7 +2,11 @@ from tkinter import *
 from tkinter import ttk
 from UsableProgram.ManualScale import Manual
 from UsableProgram.read_settings import read_settings
+import os
 
+folder_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\scale"
+os.makedirs(folder_path, exist_ok=True)
+file_path = os.path.join(folder_path, "scale.txt")
 
 def InGameUI():
     root = Tk()
@@ -49,7 +53,7 @@ def InGameUI():
     close_button = ttk.Button(mainframe, text="✕", command=close_window, width=2, style="Close.TButton")
     close_button.grid(column=2, row=2, sticky=W)
 
-    scale = StringVar(value=read_settings())
+    scale = StringVar(value=read_settings(file_path))
     ttk.Label(mainframe, text="S").grid(column=2, row=0, sticky=W)
     ttk.Entry(mainframe, textvariable=scale, state="readonly", width=10).grid(column=1, row=0, sticky=W)
 
