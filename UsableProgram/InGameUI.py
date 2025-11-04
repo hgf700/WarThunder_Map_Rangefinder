@@ -1,8 +1,13 @@
 from tkinter import *
 from tkinter import ttk
-from UsableProgram.ManualScale import Manual
+from UsableProgram.ManualScale import ManualScale
+# from ManualScale import ManualScale
 from UsableProgram.read_settings import read_settings
+# from read_settings import read_settings
 import os
+import functools
+
+print = functools.partial(print, flush=True)
 
 folder_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\scale"
 os.makedirs(folder_path, exist_ok=True)
@@ -27,7 +32,7 @@ def InGameUI():
             modeA_M["mode"] = "auto"
 
     def open_scale():
-        value = Manual(root)  
+        value = ManualScale(root)  
         if value:
             scale.set(value)
             print(f"ingameui: {value}")
@@ -80,4 +85,6 @@ def InGameUI():
     manual_setting_button.grid_remove()
     root.mainloop()
 
-    # return modeA_M["mode"]
+    return modeA_M["mode"]
+
+# InGameUI()

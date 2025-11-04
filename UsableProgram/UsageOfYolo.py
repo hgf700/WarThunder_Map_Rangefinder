@@ -1,6 +1,9 @@
 from ultralytics import YOLO
 import os
 import cv2
+import functools
+
+print = functools.partial(print, flush=True)
 
 def UsageOfYolo():
     file = "train_yolo_wt"
@@ -39,7 +42,9 @@ def UsageOfYolo():
                 x1, y1, x2, y2 = box.xyxy[0]  # współrzędne
                 conf = box.conf[0]
                 cls = int(box.cls[0])
-                line = f"Klasa: {cls}, Confidence: {conf:.2f}, BBox: ({x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f})\n"
+                # Klasa: 1, Confidence: 0.90, BBox: (278, 179, 308, 209)
+                # Klasa: 0, Confidence: 0.86, BBox: (253, 17, 273, 38)
+                line = f"{cls} {conf:.2f} {x1:.0f} {y1:.0f} {x2:.0f} {y2:.0f} "
                 f.write(line)
                 print(line.strip())
 
@@ -58,4 +63,4 @@ def UsageOfYolo():
     cv2.imwrite(output_image_path, img_pred)
     print(f"Wyniki zapisano: {output_txt_path} i {output_image_path}")
 
-UsageOfYolo()
+# UsageOfYolo()

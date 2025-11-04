@@ -4,8 +4,8 @@ import numpy as np
 from pynput import mouse, keyboard
 import os
 import threading
-from read_settings import read_settings
-# from UsableProgram.read_settings import read_settings
+# from read_settings import read_settings
+from UsableProgram.read_settings import read_settings
 import functools
 
 print = functools.partial(print, flush=True)
@@ -18,16 +18,12 @@ label_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsablePr
 os.makedirs(label_path, exist_ok=True)
 
 def GenerateBackendMark(settings_path,label_path,on_capture=None):
-
-    
 # Parametry kółka do wizualnego feedbacku (BGR)
     radius1 = 8
     radius2 = 6
     color1 = (0, 165, 255)  # pomarańczowy
     color2 = (39, 250, 0)   # zielony
     Alpha = 0.4
-
-    
 
     def load_settings_box():
         read=read_settings(settings_path)
@@ -133,6 +129,6 @@ def GenerateBackendMark(settings_path,label_path,on_capture=None):
     with mouse.Listener(on_click=on_click) as mouse_listener, \
         keyboard.Listener(on_press=on_press) as key_listener:
         mouse_listener.join()
-    return 
+    # return 
 
-GenerateBackendMark(settings_path,label_path)
+# GenerateBackendMark(settings_path,label_path)

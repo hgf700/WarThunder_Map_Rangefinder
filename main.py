@@ -39,11 +39,10 @@ def main():
     )
     backend_thread.start()
 
-    mode = InGameUI()
+    print("Otwieram InGameUI()...")
+    InGameUI()
+    print("Zamknąłem InGameUI()")
     
 
-
-
-    # sys.exit(app.exec_())  # <-- WAŻNE: to uruchamia całą aplikację
 if __name__ == "__main__":
     main()

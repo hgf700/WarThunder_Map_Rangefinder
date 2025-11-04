@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 import os
-from read_settings import read_settings
-# from UsableProgram.read_settings import read_settings
+# from read_settings import read_settings
+from UsableProgram.read_settings import read_settings
 import functools
 
 print = functools.partial(print, flush=True)
@@ -97,4 +97,4 @@ def SettingsUI():
     root.mainloop()
     return result["resolution"]
 
-SettingsUI()
+# SettingsUI()

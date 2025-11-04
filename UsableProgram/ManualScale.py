@@ -12,7 +12,7 @@ def save_scale(value: str):
     with open(file_path, "w") as f:
         f.write(value)
 
-def Manual(parent=None):
+def ManualScale(parent=None):
     root = Toplevel(parent) if parent else Tk()
     root.title("Scale")
     root.attributes('-topmost', True)
