@@ -3,6 +3,7 @@ from tkinter import ttk
 import os
 from UsableProgram.read_settings import read_settings
 
+
 folder_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\settings"
 os.makedirs(folder_path, exist_ok=True)
 file_path = os.path.join(folder_path, "settings.txt")
@@ -11,7 +12,7 @@ def save_to_file(width, height, MiniMapStartX,MiniMapStartY,MiniMapEndX,MiniMapE
     with open(file_path, "w") as f:
         f.write(f"{width} {height} {MiniMapStartX} {MiniMapStartY} {MiniMapEndX} {MiniMapEndY}")      
     
-def start_ui():
+def SettingsUI():
     root = Tk()
     root.title("Settings")
     root.attributes('-topmost', False)
@@ -50,11 +51,16 @@ def start_ui():
     settings = read_settings(file_path)
 
     if settings:
-        values = list(map(int, settings.split()))
-        resolution.set(f"{values[0]}x{values[1]}")
+        try:
+            values = list(map(int, settings.split()))
+            resolution.set(f"{values[0]}x{values[1]}")
+        except Exception as e:
+            print(f"[!] Błąd przy parsowaniu settings.txt: {e}")
+            resolution.set("error")
     else:
         print("error or no seted resolution")
         resolution.set("error")
+
 
     r1366x768_button = ttk.Radiobutton(mainframe, text="1366x768", variable=resolution,
                                     value="1366x768", command=resolution_changed)

@@ -3,6 +3,7 @@ from tkinter import ttk
 import os
 from UsableProgram.read_settings import read_settings
 
+
 folder_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\scale"
 os.makedirs(folder_path, exist_ok=True)
 file_path = os.path.join(folder_path, "scale.txt")
