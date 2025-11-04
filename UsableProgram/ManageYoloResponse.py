@@ -15,6 +15,10 @@ settings_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Usa
 os.makedirs(settings_folder, exist_ok=True)
 settings_path = os.path.join(settings_folder, "settings.txt")
 
+scale_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\scale"
+os.makedirs(scale_folder, exist_ok=True)
+scale_path = os.path.join(scale_folder, "scale.txt")
+
 def load_settings_box():
     parts=read_settings(prediciton_path)
     
@@ -51,11 +55,19 @@ def load_settings_box():
         Px=(Px1+Px2)/2
         Py=(Py1+Py2)/2
 
+        #pitagoras
         distance = math.hypot(Px - Mx, Py - My)
 
         print(f"[INFO] Marker: ({Mx}, {My}) | Conf: {Mpred:.2f}")
         print(f"[INFO] Player: ({Px}, {Py}) | Conf: {Ppred:.2f}")
         print(f"[INFO] Odległość: {distance}px")
+
+        resolution =read_settings(settings_path)
+        width,height=resolution[:2]
+        scale = read_settings(scale_path)
+        
+        # scale_factor = (width / BASE_WIDTH + height / BASE_HEIGHT) / 2
+        # current_scale = BASE_SCALE / scale_factor
 
         return Mx, My, Px, Py, distance
 
