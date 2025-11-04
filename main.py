@@ -3,11 +3,20 @@ import sys
 from UsableProgram.SettingsUI import SettingsUI
 from UsableProgram.InGameUI import InGameUI
 from UsableProgram.GenerateBackendMark import GenerateBackendMark
+import os
+from pynput import mouse, keyboard
+import threading
 
 # Globalny overlay
 overlay = None
 app = None  # globalna aplikacja
 
+settings = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\settings"
+os.makedirs(settings, exist_ok=True)
+settings_path = os.path.join(settings, "settings.txt")
+
+label_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\captures"
+os.makedirs(label_path, exist_ok=True)
 
 def main():
     global overlay, app
@@ -20,26 +29,16 @@ def main():
 
     print(f"Ustawiono rozdzielczość: {res}")
 
-    # 2. Utwórz aplikację Qt (jeśli jeszcze nie istnieje)
-    # app = QApplication.instance()
-    # if app is None:
-    #     app = QApplication(sys.argv)
+    backend_thread = threading.Thread(
+        target=GenerateBackendMark, args=(settings_path, label_path),daemon=True
+    )
+    backend_thread.start()
 
-    # 4. Uruchom główny tryb gry
-    mode = InGameUI()  # zakładam, że to zwraca coś lub uruchamia UI
-
-    if(mode =="manual"):
-        print("manual")
-        # generate = GenerateMark()
-    
-    elif(mode=="auto"):
-        print("auto")
-        # generate = GenerateMark()
-
+    mode = InGameUI()
     
 
 
 
-    sys.exit(app.exec_())  # <-- WAŻNE: to uruchamia całą aplikację
+    # sys.exit(app.exec_())  # <-- WAŻNE: to uruchamia całą aplikację
 if __name__ == "__main__":
     main()

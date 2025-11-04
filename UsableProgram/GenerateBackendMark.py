@@ -4,7 +4,11 @@ import numpy as np
 from pynput import mouse, keyboard
 import os
 import threading
+# from read_settings import read_settings
 from UsableProgram.read_settings import read_settings
+import functools
+
+print = functools.partial(print, flush=True)
 
 settings = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\settings"
 os.makedirs(settings, exist_ok=True)
@@ -13,7 +17,7 @@ settings_path = os.path.join(settings, "settings.txt")
 label_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\captures"
 os.makedirs(label_path, exist_ok=True)
 
-def GenerateBackendMark():
+def GenerateBackendMark(settings_path,label_path):
 # Parametry kółka do wizualnego feedbacku (BGR)
     radius1 = 8
     radius2 = 6
@@ -21,14 +25,30 @@ def GenerateBackendMark():
     color2 = (39, 250, 0)   # zielony
     Alpha = 0.4
 
-    def load_settings():
+    
+
+    def load_settings_box():
         read=read_settings(settings_path)
         if not read or len(read) < 6:
             print("[!] Brak danych lub za mało wartości w settings.txt.")
-            return 0 , 0 ,read[0],read[1]
-        return tuple(map(int, read[2:6]))
+            return 0 , 0 ,0,0
     
-    MIN_X, MIN_Y, MAX_X, MAX_Y=load_settings()
+        parts = read.strip().split()
+        if len(parts) < 6:
+            print("[!] Za mało wartości w settings.txt:", parts)
+            return 0, 0, 0, 0
+        
+        try:
+            MIN_X, MIN_Y, MAX_X, MAX_Y = map(int, parts[2:6])
+
+            return MIN_X, MIN_Y, MAX_X, MAX_Y
+        except ValueError as e:
+            print("[!] Błąd przy konwersji wartości:", e)
+            return 0, 0, 0, 0
+        
+        # return tuple(map(int, read[2:6]))
+    
+    MIN_X, MIN_Y, MAX_X, MAX_Y=load_settings_box()
 
     def capture_region(x1, y1, x2, y2):
         """Robi screenshot tylko z określonego obszaru ekranu."""
@@ -54,8 +74,8 @@ def GenerateBackendMark():
         x = max(MIN_X, min(x, MAX_X))
         y = max(MIN_Y, min(y, MAX_Y))
 
-        print(f"[DEBUG] Klik: ({x},{y}), Dozwolony: X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y}]")
-        print(f"[+] Kliknięto w dozwolonym zakresie: ({x},{y})")
+        print(f"[DEBUG] Klik: ({x},{y}), Dozwolony: X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y}]",flush=True)
+        print(f"[+] Kliknięto w dozwolonym zakresie: ({x},{y})",flush=True)
 
         # Zrób screenshot tylko regionu minimapy
         img = capture_region(MIN_X, MIN_Y, MAX_X, MAX_Y)
@@ -104,12 +124,9 @@ def GenerateBackendMark():
         except Exception as e:
             print(f"Błąd przy obsłudze klawiatury: {e}")
 
-    # ----- Główny start -----
-    if __name__ == "__main__":
-        print("[*] Listener myszy i klawiatury uruchomiony.")
-        print("[*] Kliknij w minimapę, lub naciśnij ESC aby zakończyć.")
+    print("[*] Listener myszy i klawiatury uruchomiony.")
+    with mouse.Listener(on_click=on_click) as mouse_listener, \
+        keyboard.Listener(on_press=on_press) as key_listener:
+        mouse_listener.join()
 
-        # Dwa listenery działające równolegle
-        with mouse.Listener(on_click=on_click) as mouse_listener, \
-            keyboard.Listener(on_press=on_press) as key_listener:
-            mouse_listener.join()
+# GenerateBackendMark(settings_path,label_path)

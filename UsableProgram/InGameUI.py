@@ -60,7 +60,8 @@ def InGameUI():
     meters = StringVar()
     ttk.Label(mainframe, text="M").grid(column=2, row=1, sticky=W)
     ttk.Entry(mainframe, textvariable=meters, state="readonly", width=10).grid(column=1, row=1, sticky=W)
-
+    
+    #manual button
     manual_setting_button = ttk.Button(mainframe, text="Scale", command=open_scale, width=8)
 
     mode = StringVar(value="auto")
@@ -79,4 +80,4 @@ def InGameUI():
     manual_setting_button.grid_remove()
     root.mainloop()
 
-    return modeA_M["mode"]
+    # return modeA_M["mode"]
