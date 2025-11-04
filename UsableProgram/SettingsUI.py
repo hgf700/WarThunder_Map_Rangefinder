@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import os
+from UsableProgram.read_settings import read_settings
 
 folder_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\settings"
 os.makedirs(folder_path, exist_ok=True)
@@ -8,15 +9,7 @@ file_path = os.path.join(folder_path, "settings.txt")
 
 def save_to_file(width, height, MiniMapStartX,MiniMapStartY,MiniMapEndX,MiniMapEndY):
     with open(file_path, "w") as f:
-        f.write(f"{width} {height} {MiniMapStartX} {MiniMapStartY} {MiniMapEndX} {MiniMapEndY}")  
-
-def read_settings():
-    if not os.path.exists(file_path):
-        return None  # brak pliku
-    with open(file_path, "r") as f:
-        line = f.readline().strip()
-        return line
-    
+        f.write(f"{width} {height} {MiniMapStartX} {MiniMapStartY} {MiniMapEndX} {MiniMapEndY}")      
     
 def start_ui():
     root = Tk()
@@ -44,7 +37,6 @@ def start_ui():
         res1=[1366, 768, 800, 500, 1366, 768]
         res2=[1920, 1080,1584, 741, 1904, 1066]
         res3=[2048, 1152, 1636, 736, 2035, 1138]
-        # res4=[2560, 1440,1500,1500,1500,1500]
 
         if res == "1366x768":
             save_to_file(res1[0],res1[1],res1[2],res1[3],res1[4],res1[5])
@@ -52,12 +44,10 @@ def start_ui():
             save_to_file(res2[0],res2[1],res2[2],res2[3],res2[4],res2[5])
         elif res == "2048x1152":
             save_to_file(res3[0],res3[1],res3[2],res3[3],res3[4],res3[5])
-        # elif res == "2560x1440":
-        #     save_to_file(res3[0],res3[1],res3[2],res3[3],res3[4],res3[5])
         
         result["resolution"] = res
         
-    settings = read_settings()
+    settings = read_settings(file_path)
 
     if settings:
         values = list(map(int, settings.split()))
@@ -77,10 +67,6 @@ def start_ui():
     r2048x1152_button = ttk.Radiobutton(mainframe, text="2048x1152", variable=resolution,
                                         value="2048x1152", command=resolution_changed)
     r2048x1152_button.grid(column=1, row=4, sticky=E)
-
-    # r2560x1440_button = ttk.Radiobutton(mainframe, text="2560x1440", variable=resolution,
-    #                                     value="2560x1440", command=resolution_changed)
-    # r2560x1440_button.grid(column=1, row=4, sticky=E)
 
     ttk.Label(mainframe, text="Current Resolution").grid(column=1, row=5, sticky=W)
     scale_entry = ttk.Entry(mainframe, textvariable=resolution, state="readonly", width=10)
@@ -102,4 +88,4 @@ def start_ui():
     root.mainloop()
     return result["resolution"]
 
-start_ui()
+# start_ui()

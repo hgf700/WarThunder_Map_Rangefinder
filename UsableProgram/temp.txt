@@ -1,0 +1,12 @@
+# elif res == "2560x1440":
+        #     save_to_file(res3[0],res3[1],res3[2],res3[3],res3[4],res3[5])
+
+
+
+        # r2560x1440_button = ttk.Radiobutton(mainframe, text="2560x1440", variable=resolution,
+    #                                     value="2560x1440", command=resolution_changed)
+    # r2560x1440_button.grid(column=1, row=4, sticky=E)
+
+    # res4=[2560, 1440,1500,1500,1500,1500]
+
+    
