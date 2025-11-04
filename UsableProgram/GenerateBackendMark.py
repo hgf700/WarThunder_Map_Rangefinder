@@ -5,9 +5,9 @@ from pynput import mouse, keyboard
 import os
 import threading
 
-# ----- Ustawienia -----
-MIN_X, MAX_X = 500, 1366
-MIN_Y, MAX_Y = 500, 768
+settings = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\settings"
+os.makedirs(settings, exist_ok=True)
+settings_path = os.path.join(settings, "settings.txt")
 
 label_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\captures"
 os.makedirs(label_path, exist_ok=True)
@@ -19,6 +19,20 @@ color1 = (0, 165, 255)  # pomarańczowy
 color2 = (39, 250, 0)   # zielony
 Alpha = 0.4
 
+def read_settings():
+    if not os.path.exists(settings_path):
+        return None  # brak pliku
+    with open(settings_path, "r") as f:
+        line = f.readline().strip()
+        return line.split()
+
+def load_settings():
+    read=read_settings()
+    if not read or len(read) < 6:
+        print("[!] Brak danych lub za mało wartości w settings.txt.")
+        return 0 , 0 ,read[0],read[1]
+    return tuple(map(int, read[2:6]))
+    
 
 # ----- Funkcje -----
 def capture_region(x1, y1, x2, y2):
@@ -33,6 +47,7 @@ def capture_region(x1, y1, x2, y2):
 
 def draw_marker(img, x, y, alpha=Alpha):
     """Rysuje marker w miejscu kliknięcia."""
+    MIN_X, MIN_Y, MAX_X, MAX_Y = load_settings()
     overlay = img.copy()
     cv2.circle(overlay, (x - MIN_X, y - MIN_Y), radius1, color1, 2)
     cv2.circle(overlay, (x - MIN_X, y - MIN_Y), radius2, color2, 2)
@@ -42,6 +57,7 @@ def draw_marker(img, x, y, alpha=Alpha):
 
 def process_click(x, y):
     """Funkcja wykonywana w osobnym wątku po kliknięciu."""
+    MIN_X, MIN_Y, MAX_X, MAX_Y = load_settings()
     x = max(MIN_X, min(x, MAX_X))
     y = max(MIN_Y, min(y, MAX_Y))
 
@@ -75,6 +91,8 @@ def handle_region_click(x, y):
 # ----- Listener myszy -----
 def on_click(x, y, button, pressed):
     if pressed:
+        MIN_X, MIN_Y, MAX_X, MAX_Y = load_settings()
+
         # Blokuj środkowy i prawy przycisk
         if button == mouse.Button.right or button == mouse.Button.middle:
             print(f"[Zablokowano przycisk]: {button}")
@@ -86,7 +104,6 @@ def on_click(x, y, button, pressed):
         else:
             print(f"[Ignoruję kliknięcie poza minimapą]: ({x},{y})")
 
-
 # ----- Obsługa ESC -----
 def on_press(key):
     try:
@@ -95,7 +112,6 @@ def on_press(key):
             os._exit(0)
     except Exception as e:
         print(f"Błąd przy obsłudze klawiatury: {e}")
-
 
 # ----- Główny start -----
 if __name__ == "__main__":
