@@ -4,8 +4,8 @@ import numpy as np
 from pynput import mouse, keyboard
 import os
 import threading
-# from read_settings import read_settings
-from UsableProgram.read_settings import read_settings
+from read_settings import read_settings
+# from UsableProgram.read_settings import read_settings
 import functools
 
 print = functools.partial(print, flush=True)
@@ -135,4 +135,4 @@ def GenerateBackendMark(settings_path,label_path,on_capture=None):
         mouse_listener.join()
     return 
 
-# GenerateBackendMark(settings_path,label_path)
+GenerateBackendMark(settings_path,label_path)

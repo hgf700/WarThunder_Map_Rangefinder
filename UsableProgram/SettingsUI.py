@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 import os
-from UsableProgram.read_settings import read_settings
+from read_settings import read_settings
+# from UsableProgram.read_settings import read_settings
 import functools
 
 print = functools.partial(print, flush=True)
@@ -37,7 +38,7 @@ def SettingsUI():
     def resolution_changed(*args):
         res = resolution.get()
 
-        res1=[1366, 768, 800, 500, 1366, 768]
+        res1=[1366, 768, 987, 389, 1351, 703]
         res2=[1920, 1080,1584, 741, 1904, 1066]
         res3=[2048, 1152, 1636, 736, 2035, 1138]
 
@@ -96,4 +97,4 @@ def SettingsUI():
     root.mainloop()
     return result["resolution"]
 
-# start_ui()
+SettingsUI()

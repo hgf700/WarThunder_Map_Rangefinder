@@ -57,3 +57,5 @@ def UsageOfYolo():
     # Zapis obrazu z bounding boxami
     cv2.imwrite(output_image_path, img_pred)
     print(f"Wyniki zapisano: {output_txt_path} i {output_image_path}")
+
+UsageOfYolo()
