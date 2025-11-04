@@ -19,6 +19,10 @@ settings_path = os.path.join(settings, "settings.txt")
 label_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\captures"
 os.makedirs(label_path, exist_ok=True)
 
+def when_capture_ready(number):
+    print(f"[YOLO] Uruchamiam detekcję dla {number}")
+    UsageOfYolo()
+
 def main():
     global overlay, app
 
@@ -31,12 +35,11 @@ def main():
     print(f"Ustawiono rozdzielczość: {res}")
 
     backend_thread = threading.Thread(
-        target=GenerateBackendMark, args=(settings_path, label_path),daemon=True
+        target=GenerateBackendMark, args=(settings_path, label_path,when_capture_ready),daemon=True
     )
     backend_thread.start()
 
     mode = InGameUI()
-    
     
 
 

@@ -17,7 +17,9 @@ settings_path = os.path.join(settings, "settings.txt")
 label_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\captures"
 os.makedirs(label_path, exist_ok=True)
 
-def GenerateBackendMark(settings_path,label_path):
+def GenerateBackendMark(settings_path,label_path,on_capture=None):
+
+    
 # Parametry kółka do wizualnego feedbacku (BGR)
     radius1 = 8
     radius2 = 6
@@ -88,6 +90,9 @@ def GenerateBackendMark(settings_path,label_path):
         cv2.imwrite(filename, img)
         print(f"[+] Screenshot zapisany jako {filename}")
 
+        if on_capture:
+            on_capture("1")
+
         # Podgląd (opcjonalny)
         cv2.imshow("Preview", img)
         cv2.waitKey(500)
@@ -128,5 +133,6 @@ def GenerateBackendMark(settings_path,label_path):
     with mouse.Listener(on_click=on_click) as mouse_listener, \
         keyboard.Listener(on_press=on_press) as key_listener:
         mouse_listener.join()
+    return 
 
 # GenerateBackendMark(settings_path,label_path)
