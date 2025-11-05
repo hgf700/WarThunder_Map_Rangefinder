@@ -3,6 +3,7 @@ import math
 from read_settings import read_settings
 # from UsableProgram.read_settings import read_settings
 
+
 import functools
 
 print = functools.partial(print, flush=True)
@@ -19,16 +20,21 @@ scale_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Usable
 os.makedirs(scale_folder, exist_ok=True)
 scale_path = os.path.join(scale_folder, "scale.txt")
 
-def load_settings_box():
+meter_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\meters"
+os.makedirs(meter_folder, exist_ok=True)
+meters_path = os.path.join(meter_folder, "meters.txt")
+
+def ManageYoloResponse():
     parts=read_settings(prediciton_path)
     
     if not parts:   
         print("[!] Brak danych w pliku prediction.txt")
         return
-
-
-    print(parts)
-
+    
+    def save_to_file_meters(meters):
+        with open(meters_path, "w") as f:
+            f.write(f"{meters}")
+    
     cleaned = parts.replace(",", " ").replace("\n", " ").replace("\t", " ")
     parts = [p for p in cleaned.split(" ") if p.strip() != ""]
 
@@ -63,17 +69,30 @@ def load_settings_box():
         print(f"[INFO] Odległość: {distance}px")
 
         resolution =read_settings(settings_path)
-        width,height=resolution[:2]
-        scale = read_settings(scale_path)
-        
-        # scale_factor = (width / BASE_WIDTH + height / BASE_HEIGHT) / 2
-        # current_scale = BASE_SCALE / scale_factor
+        parts2 = [int(x) for x in resolution.split()]
 
-        return Mx, My, Px, Py, distance
+        width, height = parts2[0], parts2[1]
+        scale = int(read_settings(scale_path))
+
+        print(f"width {width}")
+        print(f"height {height}")
+        print(f"scale {scale}")
+
+        meters_per_pixel = scale/distance
+        
+        distance_m= distance * meters_per_pixel
+
+        distance_m=int(distance_m)
+
+        print(f"[INFO] 1px = {meters_per_pixel:.4f} m")
+        print(f"[INFO] Odległość w metrach: {distance_m} m")
+
+        save_to_file_meters(distance_m)
+
+        return distance_m
 
     except ValueError as e:
         print("[!] Błąd przy konwersji wartości:", e)
         return 
         
-
-load_settings_box()
+ManageYoloResponse()
