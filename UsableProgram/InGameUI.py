@@ -6,12 +6,20 @@ from UsableProgram.read_settings import read_settings
 # from read_settings import read_settings
 import os
 import functools
+from pathlib import Path
+
+base_dir = Path(__file__).resolve().parent.parent
+usable_program = base_dir / "UsableProgram"
+
+scale_folder = usable_program / "scale"
+scale_folder.mkdir(parents=True, exist_ok=True)
+scale_path = scale_folder / "scale.txt"
+
+meters_folder = usable_program / "meters"
+meters_folder.mkdir(parents=True, exist_ok=True)
+meters_path = meters_folder / "meters.txt"
 
 print = functools.partial(print, flush=True)
-
-folder_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\scale"
-os.makedirs(folder_path, exist_ok=True)
-file_path = os.path.join(folder_path, "scale.txt")
 
 def InGameUI():
     root = Tk()
@@ -58,11 +66,11 @@ def InGameUI():
     close_button = ttk.Button(mainframe, text="✕", command=close_window, width=2, style="Close.TButton")
     close_button.grid(column=2, row=2, sticky=W)
 
-    scale = StringVar(value=read_settings(file_path))
+    scale = StringVar(value=read_settings(scale_path))
     ttk.Label(mainframe, text="S").grid(column=2, row=0, sticky=W)
     ttk.Entry(mainframe, textvariable=scale, state="readonly", width=10).grid(column=1, row=0, sticky=W)
 
-    meters = StringVar()
+    meters = StringVar(value=read_settings(meters_path))
     ttk.Label(mainframe, text="M").grid(column=2, row=1, sticky=W)
     ttk.Entry(mainframe, textvariable=meters, state="readonly", width=10).grid(column=1, row=1, sticky=W)
     

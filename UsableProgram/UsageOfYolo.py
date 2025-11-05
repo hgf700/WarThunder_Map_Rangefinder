@@ -1,66 +1,76 @@
 from ultralytics import YOLO
-import os
 import cv2
 import functools
+from pathlib import Path
 
 print = functools.partial(print, flush=True)
 
+# 🔹 Ustawienia ścieżek
+base_dir = Path(__file__).resolve().parent.parent
+usable_program = base_dir / "UsableProgram"
+
+file = "train_yolo_wt"
+model_file = "last.pt"
+capture_file = "capture.png"
+
+# 🔹 Folder i plik modelu
+model_path = base_dir / "runs" / "detect" / file / "weights" / model_file
+
+# 🔹 Folder i plik z obrazem do analizy
+captures_folder = usable_program / "captures"
+captures_folder.mkdir(parents=True, exist_ok=True)
+captures_path = captures_folder / capture_file
+
+# 🔹 Folder na wyniki
+output_folder = captures_folder / "wyniki"
+output_folder.mkdir(parents=True, exist_ok=True)
+output_image_path = output_folder / "prediction.png"
+output_txt_path = output_folder / "prediction.txt"
+
+
 def UsageOfYolo():
-    file = "train_yolo_wt"
-    model_file = "last.pt"
-    capture ="capture.png"
+    # 🔸 Sprawdź, czy model i obraz istnieją
+    if not model_path.exists():
+        print(f"❌ Nie znaleziono modelu: {model_path}")
+        return
+    if not captures_path.exists():
+        print(f"❌ Nie znaleziono pliku obrazu: {captures_path}")
+        return
 
-    model_folder = fr"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\runs\detect\{file}\weights"
-    os.makedirs(model_folder, exist_ok=True)
-
-    captures_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\captures"
-    os.makedirs(captures_folder, exist_ok=True)
-
-    model_path = os.path.join(model_folder, model_file)
-
-    capture_path=os.path.join(captures_folder, capture)
-
-    # Załaduj model
+    # 🔹 Załaduj model
+    print(f"🔄 Ładowanie modelu: {model_path}")
     model = YOLO(model_path)
 
-    # Detekcja
-    results = model.predict(source=capture_path)
+    # 🔹 Wykonaj predykcję
+    print(f"🧠 Wykonywanie predykcji na {captures_path}...")
+    results = model.predict(source=str(captures_path))
 
-    # Utwórz folder na wyniki
-    output_folder = os.path.join(captures_folder, "wyniki")
-    os.makedirs(output_folder, exist_ok=True)
-
-    # Ścieżka do obrazu i pliku TXT
-    output_image_path = os.path.join(output_folder, "prediction.png")
-    output_txt_path = os.path.join(output_folder, "prediction.txt")
-
-    # Zapis wyników do TXT
+    # 🔹 Zapis wyników do pliku TXT
     with open(output_txt_path, "w", encoding="utf-8") as f:
         for r in results:
             boxes = r.boxes
             for box in boxes:
-                x1, y1, x2, y2 = box.xyxy[0]  # współrzędne
+                x1, y1, x2, y2 = box.xyxy[0]
                 conf = box.conf[0]
                 cls = int(box.cls[0])
-                # Klasa: 1, Confidence: 0.90, BBox: (278, 179, 308, 209)
-                # Klasa: 0, Confidence: 0.86, BBox: (253, 17, 273, 38)
                 line = f"{cls} {conf:.2f} {x1:.0f} {y1:.0f} {x2:.0f} {y2:.0f} "
                 f.write(line)
                 print(line.strip())
 
-    # Podgląd obrazu z wykryciami
+    # 🔹 Podgląd i zapis obrazu z bounding boxami
     img_pred = results[0].plot()
     cv2.imshow("Predykcja", img_pred)
 
     while True:
         key = cv2.waitKey(1)
-        if key == 27:  # ESC aby wyjść
+        if key == 27:  # ESC, aby zamknąć okno
             break
 
     cv2.destroyAllWindows()
+    cv2.imwrite(str(output_image_path), img_pred)
 
-    # Zapis obrazu z bounding boxami
-    cv2.imwrite(output_image_path, img_pred)
-    print(f"Wyniki zapisano: {output_txt_path} i {output_image_path}")
+    print(f"✅ Wyniki zapisano w:\n  - {output_txt_path}\n  - {output_image_path}")
+
+
 
 # UsageOfYolo()

@@ -7,17 +7,21 @@ import threading
 # from read_settings import read_settings
 from UsableProgram.read_settings import read_settings
 import functools
+from pathlib import Path
+
+base_dir = Path(__file__).resolve().parent.parent
+usable_program = base_dir / "UsableProgram"
+
+settings_folder = usable_program / "settings"
+settings_folder.mkdir(parents=True, exist_ok=True)
+settings_path = settings_folder / "settings.txt"
+
+prediction_folder = usable_program / "captures" 
+prediction_folder.mkdir(parents=True, exist_ok=True)
 
 print = functools.partial(print, flush=True)
 
-settings = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\settings"
-os.makedirs(settings, exist_ok=True)
-settings_path = os.path.join(settings, "settings.txt")
-
-label_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\captures"
-os.makedirs(label_path, exist_ok=True)
-
-def GenerateBackendMark(settings_path,label_path,on_capture=None):
+def GenerateBackendMark(settings_path,prediction_folder,on_capture=None):
 # Parametry kółka do wizualnego feedbacku (BGR)
     radius1 = 8
     radius2 = 6
@@ -82,7 +86,7 @@ def GenerateBackendMark(settings_path,label_path,on_capture=None):
         img = draw_marker(img, x, y)
 
         # Nazwa pliku z numeracją (żeby nie nadpisywać)
-        filename = os.path.join(label_path, f"capture.png")
+        filename = os.path.join(prediction_folder, f"capture.png")
         cv2.imwrite(filename, img)
         print(f"[+] Screenshot zapisany jako {filename}")
 
@@ -131,4 +135,4 @@ def GenerateBackendMark(settings_path,label_path,on_capture=None):
         mouse_listener.join()
     # return 
 
-# GenerateBackendMark(settings_path,label_path)
+GenerateBackendMark(settings_path,prediction_folder)

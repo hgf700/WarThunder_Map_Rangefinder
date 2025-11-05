@@ -4,15 +4,19 @@ import os
 # from read_settings import read_settings
 from UsableProgram.read_settings import read_settings
 import functools
+from pathlib import Path
+
+base_dir = Path(__file__).resolve().parent.parent
+usable_program = base_dir / "UsableProgram"
+
+settings_folder = usable_program / "settings" 
+settings_folder.mkdir(parents=True, exist_ok=True)
+settings_path = settings_folder / "settings.txt"
 
 print = functools.partial(print, flush=True)
 
-folder_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\settings"
-os.makedirs(folder_path, exist_ok=True)
-file_path = os.path.join(folder_path, "settings.txt")
-
 def save_to_file(width, height, MiniMapStartX,MiniMapStartY,MiniMapEndX,MiniMapEndY):
-    with open(file_path, "w") as f:
+    with open(settings_path, "w") as f:
         f.write(f"{width} {height} {MiniMapStartX} {MiniMapStartY} {MiniMapEndX} {MiniMapEndY}")      
     
 def SettingsUI():
@@ -51,7 +55,7 @@ def SettingsUI():
         
         result["resolution"] = res
         
-    settings = read_settings(file_path)
+    settings = read_settings(settings_path)
 
     if settings:
         try:

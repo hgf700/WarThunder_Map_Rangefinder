@@ -1,3 +1,5 @@
 venv\Scripts\activate
 
+python -m UsableProgram.SettingsUI
+
 python -m venv venv

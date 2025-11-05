@@ -1,31 +1,34 @@
 import os
 import math
-from read_settings import read_settings
-# from UsableProgram.read_settings import read_settings
-
+# from read_settings import read_settings
+from UsableProgram.read_settings import read_settings
+from pathlib import Path
 
 import functools
 
 print = functools.partial(print, flush=True)
 
-prediciton_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\captures\wyniki"
-os.makedirs(prediciton_folder, exist_ok=True)
-prediciton_path = os.path.join(prediciton_folder, "prediction.txt")
+base_dir = Path(__file__).resolve().parent.parent
+usable_program = base_dir / "UsableProgram"
 
-settings_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\settings"
-os.makedirs(settings_folder, exist_ok=True)
-settings_path = os.path.join(settings_folder, "settings.txt")
+prediction_folder = usable_program / "captures" / "wyniki"
+prediction_folder.mkdir(parents=True, exist_ok=True)
+prediction_path = prediction_folder / "prediction.txt"
 
-scale_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\scale"
-os.makedirs(scale_folder, exist_ok=True)
-scale_path = os.path.join(scale_folder, "scale.txt")
+settings_folder = usable_program / "settings"
+settings_folder.mkdir(parents=True, exist_ok=True)
+settings_path = settings_folder / "settings.txt"
 
-meter_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\meters"
-os.makedirs(meter_folder, exist_ok=True)
-meters_path = os.path.join(meter_folder, "meters.txt")
+scale_folder = usable_program / "scale"
+scale_folder.mkdir(parents=True, exist_ok=True)
+scale_path = scale_folder / "scale.txt"
+
+meters_folder = usable_program / "meters"
+meters_folder.mkdir(parents=True, exist_ok=True)
+meters_path = meters_folder / "meters.txt"
 
 def ManageYoloResponse():
-    parts=read_settings(prediciton_path)
+    parts=read_settings(prediction_path)
     
     if not parts:   
         print("[!] Brak danych w pliku prediction.txt")
