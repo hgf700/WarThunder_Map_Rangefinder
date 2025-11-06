@@ -9,8 +9,8 @@ from UsableProgram.read_settings import read_settings
 import functools
 from pathlib import Path
 
-base_dir = Path(__file__).resolve().parent.parent
-usable_program = base_dir / "UsableProgram"
+base_dir = Path(__file__).resolve().parent
+usable_program = base_dir 
 
 settings_folder = usable_program / "settings"
 settings_folder.mkdir(parents=True, exist_ok=True)
@@ -30,23 +30,24 @@ def GenerateBackendMark(settings_path,prediction_folder,on_capture=None):
     Alpha = 0.4
 
     def load_settings_box():
-        read=read_settings(settings_path)
-        if not read or len(read) < 6:
-            print("[!] Brak danych lub za mało wartości w settings.txt.")
-            return 0 , 0 ,0,0
-    
+        read = read_settings(settings_path)
+        if not read:
+            print(f"[!] Plik {settings_path} jest pusty lub nie istnieje.")
+            return 0, 0, 0, 0
+
         parts = read.strip().split()
         if len(parts) < 6:
-            print("[!] Za mało wartości w settings.txt:", parts)
+            print(f"[!] Za mało wartości ({len(parts)}) w settings.txt: {parts}")
             return 0, 0, 0, 0
-        
+
         try:
             MIN_X, MIN_Y, MAX_X, MAX_Y = map(int, parts[2:6])
-
+            print(f"[OK] Wczytano współrzędne: {MIN_X}, {MIN_Y}, {MAX_X}, {MAX_Y}")
             return MIN_X, MIN_Y, MAX_X, MAX_Y
         except ValueError as e:
-            print("[!] Błąd przy konwersji wartości:", e)
+            print(f"[!] Błąd przy konwersji wartości: {e}")
             return 0, 0, 0, 0
+
         
         # return tuple(map(int, read[2:6]))
     
@@ -119,6 +120,7 @@ def GenerateBackendMark(settings_path,prediction_folder,on_capture=None):
                 handle_region_click(x, y)
             else:
                 print(f"[Ignoruję kliknięcie poza minimapą]: ({x},{y})")
+                print(f"X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y})")
 
     # ----- Obsługa ESC -----
     def on_press(key):
@@ -135,4 +137,4 @@ def GenerateBackendMark(settings_path,prediction_folder,on_capture=None):
         mouse_listener.join()
     # return 
 
-GenerateBackendMark(settings_path,prediction_folder)
+# GenerateBackendMark(settings_path,prediction_folder)
