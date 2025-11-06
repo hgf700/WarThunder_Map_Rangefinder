@@ -2,21 +2,25 @@ from ultralytics import YOLO
 import os
 import cv2
 import functools
+from pathlib import Path
 
 print = functools.partial(print, flush=True)
 
+base_dir = Path(__file__).resolve().parent
+project_root = base_dir.parent
+usable_program = base_dir
+
+file = "train_yolo_wt"
+
+model_folder = project_root / "runs" / "detect" / file / "weights"
+model_folder.mkdir(parents=True, exist_ok=True)
+model_path = model_folder / "last.pt"
+
+capture_folder = usable_program / "captures" 
+capture_folder.mkdir(parents=True, exist_ok=True)
+capture_path = capture_folder / "capture.png"
+
 def UsageOfYolo():
-    file = "train_yolo_wt"
-    model_file = "last.pt"
-    capture = "capture.png"
-
-    model_folder = fr"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\runs\detect\{file}\weights"
-    captures_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\UsableProgram\captures"
-
-    os.makedirs(captures_folder, exist_ok=True)
-    model_path = os.path.join(model_folder, model_file)
-    capture_path = os.path.join(captures_folder, capture)
-
     # Załaduj model
     model = YOLO(model_path)
 
@@ -24,7 +28,7 @@ def UsageOfYolo():
     results = model.predict(source=capture_path, save=False, verbose=False)
 
     # Utwórz folder na wyniki
-    output_folder = os.path.join(captures_folder, "wyniki")
+    output_folder = os.path.join(capture_folder, "wyniki")
     os.makedirs(output_folder, exist_ok=True)
 
     # Ścieżki do plików wynikowych
@@ -38,7 +42,7 @@ def UsageOfYolo():
                 x1, y1, x2, y2 = box.xyxy[0]
                 conf = box.conf[0]
                 cls = int(box.cls[0])
-                f.write(f"{cls} {conf:.2f} {x1:.0f} {y1:.0f} {x2:.0f} {y2:.0f}\n")
+                f.write(f"{cls} {conf:.2f} {x1:.0f} {y1:.0f} {x2:.0f} {y2:.0f} ")
                 print(f"Klasa: {cls}, Conf: {conf:.2f}, BBox: ({x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f})")
 
     # Zapisz obraz z detekcjami

@@ -81,11 +81,14 @@ def ManageYoloResponse():
         print(f"height {height}")
         print(f"scale {scale}")
 
-        meters_per_pixel = scale/distance
-        
-        distance_m= distance * meters_per_pixel
+        # distance – odległość w pikselach (np. wynik np.hypot)
+        # line – długość odcinka między literami A i E w pikselach
+        # scale – wartość w metrach odpowiadająca temu odcinkowi (np. 400 m)
 
-        distance_m=int(distance_m)
+        meters_per_pixel = scale / distance          # ile metrów przypada na 1 px
+        distance_m = distance * meters_per_pixel # przeliczenie pikseli na metry
+        distance_m = int(distance_m)             # zaokrąglenie do liczby całkowitej
+
 
         print(f"[INFO] 1px = {meters_per_pixel:.4f} m")
         print(f"[INFO] Odległość w metrach: {distance_m} m")
