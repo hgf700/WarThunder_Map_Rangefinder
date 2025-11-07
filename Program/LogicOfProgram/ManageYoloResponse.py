@@ -1,34 +1,16 @@
 import os
 import math
-# from read_settings import read_settings
-from UsableProgram.read_settings import read_settings
-from pathlib import Path
-
+from Program.LogicOfProgram.ReadFromFile import ReadFromFile
+from Program.LogicOfProgram.PathToPrograms import prediction_path
+from Program.LogicOfProgram.PathToPrograms import settings_path
+from Program.LogicOfProgram.PathToPrograms import scale_path
+from Program.LogicOfProgram.PathToPrograms import meters_path
 import functools
 
 print = functools.partial(print, flush=True)
 
-base_dir = Path(__file__).resolve().parent.parent
-usable_program = base_dir / "UsableProgram"
-
-prediction_folder = usable_program / "captures" / "wyniki"
-prediction_folder.mkdir(parents=True, exist_ok=True)
-prediction_path = prediction_folder / "prediction.txt"
-
-settings_folder = usable_program / "settings"
-settings_folder.mkdir(parents=True, exist_ok=True)
-settings_path = settings_folder / "settings.txt"
-
-scale_folder = usable_program / "scale"
-scale_folder.mkdir(parents=True, exist_ok=True)
-scale_path = scale_folder / "scale.txt"
-
-meters_folder = usable_program / "meters"
-meters_folder.mkdir(parents=True, exist_ok=True)
-meters_path = meters_folder / "meters.txt"
-
 def ManageYoloResponse():
-    parts=read_settings(prediction_path)
+    parts=ReadFromFile(prediction_path)
     
     if not parts:   
         print("[!] Brak danych w pliku prediction.txt")
@@ -71,11 +53,11 @@ def ManageYoloResponse():
         print(f"[INFO] Player: ({Px}, {Py}) | Conf: {Ppred:.2f}")
         print(f"[INFO] Odległość: {distance}px")
 
-        resolution =read_settings(settings_path)
+        resolution =ReadFromFile(settings_path)
         parts2 = [int(x) for x in resolution.split()]
 
         width, height = parts2[0], parts2[1]
-        scale = int(read_settings(scale_path))
+        scale = int(ReadFromFile(scale_path))
 
         print(f"width {width}")
         print(f"height {height}")
@@ -101,4 +83,4 @@ def ManageYoloResponse():
         print("[!] Błąd przy konwersji wartości:", e)
         return 
         
-ManageYoloResponse()
+# ManageYoloResponse()

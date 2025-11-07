@@ -4,20 +4,10 @@ import numpy as np
 from pynput import mouse, keyboard
 import os
 import threading
-# from read_settings import read_settings
-from UsableProgram.read_settings import read_settings
+from Program.LogicOfProgram.ReadFromFile import ReadFromFile
+from Program.LogicOfProgram.PathToPrograms import settings_path
+from Program.LogicOfProgram.PathToPrograms import captures_folder
 import functools
-from pathlib import Path
-
-base_dir = Path(__file__).resolve().parent
-usable_program = base_dir 
-
-settings_folder = usable_program / "settings"
-settings_folder.mkdir(parents=True, exist_ok=True)
-settings_path = settings_folder / "settings.txt"
-
-prediction_folder = usable_program / "captures" 
-prediction_folder.mkdir(parents=True, exist_ok=True)
 
 print = functools.partial(print, flush=True)
 
@@ -30,7 +20,7 @@ def GenerateBackendMark(settings_path,prediction_folder,on_capture=None):
     Alpha = 0.4
 
     def load_settings_box():
-        read = read_settings(settings_path)
+        read = ReadFromFile(settings_path)
         if not read:
             print(f"[!] Plik {settings_path} jest pusty lub nie istnieje.")
             return 0, 0, 0, 0
@@ -137,4 +127,4 @@ def GenerateBackendMark(settings_path,prediction_folder,on_capture=None):
         mouse_listener.join()
     # return 
 
-# GenerateBackendMark(settings_path,prediction_folder)
+# GenerateBackendMark(settings_path,captures_folder)

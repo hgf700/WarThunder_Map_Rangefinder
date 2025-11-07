@@ -1,15 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 import os
-from UsableProgram.read_settings import read_settings
-from pathlib import Path
-
-base_dir = Path(__file__).resolve().parent.parent
-usable_program = base_dir / "UsableProgram"
-
-scale_folder = usable_program / "scale"
-scale_folder.mkdir(parents=True, exist_ok=True)
-scale_path = scale_folder / "scale.txt"
+from Program.LogicOfProgram.ReadFromFile import ReadFromFile
+from Program.LogicOfProgram.PathToPrograms import scale_path
 
 def save_scale(value: str):
     with open(scale_path, "w") as f:
@@ -27,7 +20,7 @@ def ManualScale(parent=None):
     mainframe.grid(column=0, row=0, sticky="nsew")
 
     ScaleM_input = StringVar()
-    ScaleM_output = StringVar(value=read_settings(scale_path))
+    ScaleM_output = StringVar(value=ReadFromFile(scale_path))
 
     ttk.Label(mainframe, text="Scale").grid(column=0, row=0, sticky=E)
     ttk.Entry(mainframe, textvariable=ScaleM_input, width=10).grid(column=1, row=0, sticky=W)
@@ -53,3 +46,5 @@ def ManualScale(parent=None):
     root.wait_variable(result)
 
     return result.get()
+
+# ManualScale()

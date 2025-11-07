@@ -1,17 +1,9 @@
 from tkinter import *
 from tkinter import ttk
 import os
-# from read_settings import read_settings
-from UsableProgram.read_settings import read_settings
+from Program.LogicOfProgram.ReadFromFile import ReadFromFile
+from Program.LogicOfProgram.PathToPrograms import settings_path
 import functools
-from pathlib import Path
-
-base_dir = Path(__file__).resolve().parent.parent
-usable_program = base_dir / "UsableProgram"
-
-settings_folder = usable_program / "settings" 
-settings_folder.mkdir(parents=True, exist_ok=True)
-settings_path = settings_folder / "settings.txt"
 
 print = functools.partial(print, flush=True)
 
@@ -55,7 +47,7 @@ def SettingsUI():
         
         result["resolution"] = res
         
-    settings = read_settings(settings_path)
+    settings = ReadFromFile(settings_path)
 
     if settings:
         try:

@@ -1,7 +1,7 @@
 from pathlib import Path
 
 base_dir = Path(__file__).resolve().parent.parent
-logic_of_program = base_dir / "Program" / "LogicOfProgram"
+logic_of_program = base_dir  / "LogicOfProgram"
 
 scale_folder = logic_of_program / "scale"
 scale_folder.mkdir(parents=True, exist_ok=True)

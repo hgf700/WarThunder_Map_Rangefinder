@@ -1,34 +1,20 @@
 import sys
 import os
 import threading
-from pathlib import Path
-from UsableProgram.SettingsUI import SettingsUI
-from UsableProgram.InGameUI import InGameUI
-from UsableProgram.GenerateBackendMark import GenerateBackendMark
-from UsableProgram.UsageOfYolo import UsageOfYolo
-
-# 🔧 Znajdź katalog główny projektu niezależnie od miejsca uruchomienia
-base_dir = Path(__file__).resolve().parent
-usable_program = base_dir / "UsableProgram"
-
-# 🔧 Ustal ścieżki absolutne
-settings_folder = usable_program / "settings"
-captures_folder = usable_program / "captures"
-
-settings_folder.mkdir(parents=True, exist_ok=True)
-captures_folder.mkdir(parents=True, exist_ok=True)
-
-settings_path = settings_folder / "settings.txt"
+from Program.LogicOfProgram.SettingsUI import SettingsUI
+from Program.LogicOfProgram.InGameUI import InGameUI
+from Program.LogicOfProgram.GenerateBackendMark import GenerateBackendMark
+from Program.LogicOfProgram.UsageOfYolo import UsageOfYolo
+from Program.LogicOfProgram.PathToPrograms import settings_path
+from Program.LogicOfProgram.PathToPrograms import captures_folder
 
 # 🌐 Globalne zmienne
 overlay = None
 app = None  # globalna aplikacja
 
-
 def when_capture_ready(number):
     print(f"[YOLO] Uruchamiam detekcję dla {number}")
     UsageOfYolo()
-
 
 def main():
     global overlay, app
