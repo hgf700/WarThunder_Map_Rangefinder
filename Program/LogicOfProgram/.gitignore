@@ -4,3 +4,4 @@ settings/
 scale/
 meters/
 Todo/
+__pycache__/
