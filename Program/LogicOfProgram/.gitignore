@@ -5,3 +5,5 @@ scale/
 meters/
 Todo/
 __pycache__/
+prediction/
+MetersPerPx/

@@ -2,7 +2,7 @@ from ultralytics import YOLO
 import os
 import cv2
 import functools
-from Program.LogicOfProgram.PathToPrograms import model_path,captures_path,prediction_folder
+from Program.LogicOfProgram.PathToPrograms import model_path,prediction_raw_path,prediction_folder,prediction_path
 
 print = functools.partial(print, flush=True)
 
@@ -11,14 +11,13 @@ def UsageOfYolo():
     model = YOLO(model_path)
 
     # Wykonaj detekcję
-    results = model.predict(source=captures_path, save=False, verbose=False)
+    results = model.predict(source=prediction_raw_path, save=False, verbose=False)
 
     # Ścieżki do plików wynikowych
     output_image_path = os.path.join(prediction_folder, "prediction.png")
-    output_txt_path = os.path.join(prediction_folder, "prediction.txt")
 
     # Zapis wyników do TXT
-    with open(output_txt_path, "w", encoding="utf-8") as f:
+    with open(prediction_path, "w", encoding="utf-8") as f:
         for r in results:
             for box in r.boxes:
                 x1, y1, x2, y2 = box.xyxy[0]
@@ -32,7 +31,7 @@ def UsageOfYolo():
     success = cv2.imwrite(output_image_path, img_pred)
 
     if success:
-        print(f"[✔] Wyniki zapisano:\n{output_txt_path}\n{output_image_path}")
+        print(f"[✔] Wyniki zapisano:\n{prediction_path}\n{output_image_path}")
     else:
         print("[❌] Błąd przy zapisie prediction.png")
 

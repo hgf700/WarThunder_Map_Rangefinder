@@ -5,8 +5,8 @@ from Program.LogicOfProgram.SettingsUI import SettingsUI
 from Program.LogicOfProgram.InGameUI import InGameUI
 from Program.LogicOfProgram.GenerateBackendMark import GenerateBackendMark
 from Program.LogicOfProgram.UsageOfYolo import UsageOfYolo
-from Program.LogicOfProgram.PathToPrograms import settings_path
-from Program.LogicOfProgram.PathToPrograms import captures_folder
+# from Program.LogicOfProgram.CalculateMetersPerPX import CalculateMetersPerPX
+from Program.LogicOfProgram.PathToPrograms import settings_path, prediction_raw_path
 
 # 🌐 Globalne zmienne
 overlay = None
@@ -30,15 +30,16 @@ def main():
     # 2️⃣ Uruchom backend do generowania markerów
     backend_thread = threading.Thread(
         target=GenerateBackendMark,
-        args=(settings_path, captures_folder, when_capture_ready),
+        args=(settings_path, prediction_raw_path, when_capture_ready),
         daemon=True
     )
     backend_thread.start()
 
     # 3️⃣ Uruchom interfejs gry
-    print("Otwieram InGameUI()...")
     InGameUI()
-    print("Zamknąłem InGameUI()")
+
+    # result=CalculateMetersPerPX(res)
+
 
 
 if __name__ == "__main__":

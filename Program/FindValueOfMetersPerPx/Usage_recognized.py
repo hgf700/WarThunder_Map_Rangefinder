@@ -57,8 +57,10 @@ positions.pop(outlier)
 # oblicz odległość w pikselach przypadającą na 1 kwadrat
 pixels_per_square = abs(y1 - y2) / abs(grid1 - grid2)
 
+pixels_per_square=int(pixels_per_square)
+
 print(f"\nLitery {keys[0]} i {keys[1]} zostały użyte do obliczenia skali.")
-print(f"1 kwadrat = {pixels_per_square:.2f} pikseli")
+print(f"1 kwadrat = {pixels_per_square} pikseli")
 
 def save_to_file(pixels_per_square):
     with open(MetersPerPx_path, "w") as f:
