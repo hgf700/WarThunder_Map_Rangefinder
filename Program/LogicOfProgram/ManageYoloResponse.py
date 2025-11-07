@@ -1,10 +1,7 @@
 import os
 import math
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
-from Program.LogicOfProgram.PathToPrograms import prediction_path
-from Program.LogicOfProgram.PathToPrograms import settings_path
-from Program.LogicOfProgram.PathToPrograms import scale_path
-from Program.LogicOfProgram.PathToPrograms import meters_path
+from Program.LogicOfProgram.PathToPrograms import prediction_path,settings_path,scale_path,meters_path
 import functools
 
 print = functools.partial(print, flush=True)

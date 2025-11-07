@@ -5,8 +5,7 @@ from pynput import mouse, keyboard
 import os
 import threading
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
-from Program.LogicOfProgram.PathToPrograms import settings_path
-from Program.LogicOfProgram.PathToPrograms import captures_folder
+from Program.LogicOfProgram.PathToPrograms import settings_path, captures_folder
 import functools
 
 print = functools.partial(print, flush=True)

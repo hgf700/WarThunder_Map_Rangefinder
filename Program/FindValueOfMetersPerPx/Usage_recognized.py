@@ -1,37 +1,21 @@
 import cv2
 import numpy as np
 import os
+from Program.LogicOfProgram.PathToPrograms import photo_path, MetersPerPx_path, Letters_return_func
 
 resolution = 1
 
-resoltuion_img_file = fr"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Resolutions_Photo\res{resolution}"
-img_path = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\photo"
-match_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Find_value_of_px_in_meter\match"
-squrae_to_px_folder = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Find_value_of_px_in_meter\result"
-
-os.makedirs(resoltuion_img_file, exist_ok=True)
-os.makedirs(img_path, exist_ok=True)
-os.makedirs(match_folder, exist_ok=True)
-os.makedirs(squrae_to_px_folder, exist_ok=True)
-
-squrae_to_px_path = os.path.join(squrae_to_px_folder, "result.txt")
-
-# ścieżki do liter
-B_path = os.path.join(resoltuion_img_file, "B.png")
-D_path = os.path.join(resoltuion_img_file, "D.png")
-F_path = os.path.join(resoltuion_img_file, "F.png")
+B_path,D_path,F_path=Letters_return_func(resolution)
 
 # wczytanie liter i konwersja do szarości
 B_letter = cv2.imread(B_path, cv2.IMREAD_GRAYSCALE)
 D_letter = cv2.imread(D_path, cv2.IMREAD_GRAYSCALE)
 F_letter = cv2.imread(F_path, cv2.IMREAD_GRAYSCALE)
 
-# wczytanie mapy / screena
-capture_path = os.path.join(img_path, "image.png")
-capture_img = cv2.imread(capture_path, cv2.IMREAD_GRAYSCALE)
+capture_img = cv2.imread(photo_path, cv2.IMREAD_GRAYSCALE)
 
 if capture_img is None:
-    raise FileNotFoundError(f"Nie znaleziono pliku: {capture_path}")
+    raise FileNotFoundError(f"Nie znaleziono pliku: {photo_path}")
 
 # dopasowanie liter
 Capture_B = cv2.matchTemplate(capture_img, B_letter, cv2.TM_CCOEFF_NORMED)
@@ -77,7 +61,7 @@ print(f"\nLitery {keys[0]} i {keys[1]} zostały użyte do obliczenia skali.")
 print(f"1 kwadrat = {pixels_per_square:.2f} pikseli")
 
 def save_to_file(pixels_per_square):
-    with open(squrae_to_px_path, "w") as f:
+    with open(MetersPerPx_path, "w") as f:
         f.write(f"{pixels_per_square}")      
     
 save_to_file(pixels_per_square)

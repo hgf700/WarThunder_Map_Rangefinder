@@ -2,8 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from Program.LogicOfProgram.ManualScale import ManualScale
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
-from Program.LogicOfProgram.PathToPrograms import scale_path
-from Program.LogicOfProgram.PathToPrograms import meters_path
+from Program.LogicOfProgram.PathToPrograms import scale_path,meters_path
 import os
 import functools
 

@@ -2,9 +2,7 @@ from ultralytics import YOLO
 import os
 import cv2
 import functools
-from Program.LogicOfProgram.PathToPrograms import model_path
-from Program.LogicOfProgram.PathToPrograms import captures_path
-from Program.LogicOfProgram.PathToPrograms import prediction_folder
+from Program.LogicOfProgram.PathToPrograms import model_path,captures_path,prediction_folder
 
 print = functools.partial(print, flush=True)
 
