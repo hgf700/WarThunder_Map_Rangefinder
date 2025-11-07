@@ -33,10 +33,16 @@ def main():
     )
     backend_thread.start()
 
+    print("[DEBUG] Uruchamiam InGameUI w osobnym wątku.")
+    meterperPX_thread = threading.Thread(
+        target=CalculateMetersPerPX,
+        args=(res,),  # <- poprawka tutaj
+        daemon=True
+    )
+    meterperPX_thread.start()
+    print("[DEBUG] Przechodzę do CalculateMetersPerPX...")
+
     InGameUI()
-
-    result=CalculateMetersPerPX(res)
-
 
 
 if __name__ == "__main__":

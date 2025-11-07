@@ -19,11 +19,11 @@ def CalculateMetersPerPX(resolutionPX):
     B_path,D_path,F_path=Letters_return_func(resolution)
 
     # wczytanie liter i konwersja do szarości
-    B_letter = cv2.imread(B_path, cv2.IMREAD_GRAYSCALE)
-    D_letter = cv2.imread(D_path, cv2.IMREAD_GRAYSCALE)
-    F_letter = cv2.imread(F_path, cv2.IMREAD_GRAYSCALE)
+    B_letter = cv2.imread(str(B_path), cv2.IMREAD_GRAYSCALE)
+    D_letter = cv2.imread(str(D_path), cv2.IMREAD_GRAYSCALE)
+    F_letter = cv2.imread(str(F_path), cv2.IMREAD_GRAYSCALE)
 
-    capture_img = cv2.imread(prediction_raw_path, cv2.IMREAD_GRAYSCALE)
+    capture_img = cv2.imread(str(prediction_raw_path), cv2.IMREAD_GRAYSCALE)
 
     if capture_img is None:
         raise FileNotFoundError(f"Nie znaleziono pliku: {prediction_raw_path}")

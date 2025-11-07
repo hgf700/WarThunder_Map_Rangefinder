@@ -21,6 +21,8 @@ prediction_raw_folder = logic_of_program / "prediction"
 prediction_raw_folder.mkdir(parents=True, exist_ok=True)
 prediction_raw_path = prediction_raw_folder / "capture.png"
 
+# print(prediction_raw_path)
+
 prediction_folder = logic_of_program / "prediction" / "results"
 prediction_folder.mkdir(parents=True, exist_ok=True)
 prediction_path = prediction_folder / "prediction.txt"
