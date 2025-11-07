@@ -1,2 +1,0 @@
-Klasa: 1, Confidence: 0.90, BBox: (99, 151, 130, 181)
-Klasa: 0, Confidence: 0.84, BBox: (192, 88, 212, 108)
