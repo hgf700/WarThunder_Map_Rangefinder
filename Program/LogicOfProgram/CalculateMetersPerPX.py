@@ -6,6 +6,8 @@ from Program.LogicOfProgram.PathToPrograms import prediction_raw_path, MetersPer
 
 def CalculateMetersPerPX(resolutionPX):
 
+    MetersToPx = {"meters": None}
+
     if resolutionPX=="1920x1080":
         resolution = 1
     elif resolutionPX=="2048x1152":
@@ -15,8 +17,6 @@ def CalculateMetersPerPX(resolutionPX):
         print("error")
 
     B_path,D_path,F_path=Letters_return_func(resolution)
-
-    MetersToPx = {"meters": None}
 
     # wczytanie liter i konwersja do szarości
     B_letter = cv2.imread(B_path, cv2.IMREAD_GRAYSCALE)
@@ -80,5 +80,5 @@ def CalculateMetersPerPX(resolutionPX):
     save_to_file(pixels_per_square)
     return MetersToPx["meters"]
 
-settings="1920x1080"
-CalculateMetersPerPX(settings)
+# settings="1920x1080"
+# CalculateMetersPerPX(settings)

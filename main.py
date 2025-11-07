@@ -5,7 +5,7 @@ from Program.LogicOfProgram.SettingsUI import SettingsUI
 from Program.LogicOfProgram.InGameUI import InGameUI
 from Program.LogicOfProgram.GenerateBackendMark import GenerateBackendMark
 from Program.LogicOfProgram.UsageOfYolo import UsageOfYolo
-# from Program.LogicOfProgram.CalculateMetersPerPX import CalculateMetersPerPX
+from Program.LogicOfProgram.CalculateMetersPerPX import CalculateMetersPerPX
 from Program.LogicOfProgram.PathToPrograms import settings_path, prediction_raw_path
 
 # 🌐 Globalne zmienne
@@ -19,7 +19,6 @@ def when_capture_ready(number):
 def main():
     global overlay, app
 
-    # 1️⃣ Uruchom UI ustawień
     res = SettingsUI()
     if not res or res == "error":
         print("Nie wybrano rozdzielczości lub błąd.")
@@ -27,7 +26,6 @@ def main():
 
     print(f"Ustawiono rozdzielczość: {res}")
 
-    # 2️⃣ Uruchom backend do generowania markerów
     backend_thread = threading.Thread(
         target=GenerateBackendMark,
         args=(settings_path, prediction_raw_path, when_capture_ready),
@@ -35,10 +33,9 @@ def main():
     )
     backend_thread.start()
 
-    # 3️⃣ Uruchom interfejs gry
     InGameUI()
 
-    # result=CalculateMetersPerPX(res)
+    result=CalculateMetersPerPX(res)
 
 
 

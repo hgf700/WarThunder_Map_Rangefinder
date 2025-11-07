@@ -10,7 +10,7 @@ import functools
 
 print = functools.partial(print, flush=True)
 
-def GenerateBackendMark(settings_path,prediction_folder,on_capture=None):
+def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
 # Parametry kółka do wizualnego feedbacku (BGR)
     radius1 = 8
     radius2 = 6
@@ -76,9 +76,8 @@ def GenerateBackendMark(settings_path,prediction_folder,on_capture=None):
         img = draw_marker(img, x, y)
 
         # Nazwa pliku z numeracją (żeby nie nadpisywać)
-        filename = os.path.join(prediction_folder, f"capture.png")
-        cv2.imwrite(filename, img)
-        print(f"[+] Screenshot zapisany jako {filename}")
+        cv2.imwrite(prediction_raw_path, img)
+        print(f"[+] Screenshot zapisany jako {prediction_raw_path}")
 
         if on_capture:
             on_capture("1")
