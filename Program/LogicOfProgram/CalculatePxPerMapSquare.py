@@ -1,24 +1,24 @@
 import cv2
 import numpy as np
 import os
-from Program.LogicOfProgram.PathToPrograms import prediction_raw_path, MetersPerPx_path,Letters_return_func
+from Program.LogicOfProgram.PathToPrograms import prediction_raw_path, PxPerMapSquare_path,Letters_return_func
 import functools
 
 print = functools.partial(print, flush=True)
 
-def CalculateMetersPerPX(resolutionPX):
+def CalculatePxPerMapSquare(resolutionPX):
 
-    MetersToPx = {"meters": None}
+    Pixels_per_square = {"1square": None}
 
     if resolutionPX=="1920x1080":
         resolution = 1
     elif resolutionPX=="2048x1152":
         resolution = 2
     elif resolutionPX:
-        # resolution=0
-        # print("error")
-        resolution=1
-        print("1366x768 calculate")
+        resolution=0
+        print("error")
+        # resolution=1
+        # print("1366x768 calculate")
 
     print(resolutionPX)
 
@@ -94,12 +94,12 @@ def CalculateMetersPerPX(resolutionPX):
     print(f"1 kwadrat = {pixels_per_square} pikseli")
 
     def save_to_file(pixels_per_square):
-        with open(MetersPerPx_path, "w") as f:
+        with open(PxPerMapSquare_path, "w") as f:
             f.write(f"{pixels_per_square}")      
         
     save_to_file(pixels_per_square)
-    print(MetersToPx["meters"])
-    return MetersToPx["meters"]
+    print(Pixels_per_square["1square"])
+    return Pixels_per_square["1square"]
 
 # settings="1920x1080"
-# CalculateMetersPerPX(settings)
+# CalculatePxPerMapSquare(settings)

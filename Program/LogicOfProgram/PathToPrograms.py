@@ -34,9 +34,9 @@ model_folder = project_root / "runs" / "detect" / file / "weights"
 model_folder.mkdir(parents=True, exist_ok=True)
 model_path = model_folder / "last.pt"
 
-MetersPerPx_folder = logic_of_program / "MetersPerPx"
-MetersPerPx_folder.mkdir(parents=True, exist_ok=True)
-MetersPerPx_path = MetersPerPx_folder / "result.txt"
+PxPerMapSquare_folder = logic_of_program / "PxPerMapSquare"
+PxPerMapSquare_folder.mkdir(parents=True, exist_ok=True)
+PxPerMapSquare_path = PxPerMapSquare_folder / "result.txt"
 
 Letters_various_resolution_folder= base_dir / "LettersForVariuousResolutions"
 Letters_various_resolution_folder.mkdir(parents=True, exist_ok=True) 

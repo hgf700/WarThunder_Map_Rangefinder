@@ -3,7 +3,7 @@ from Program.LogicOfProgram.SettingsUI import SettingsUI
 from Program.LogicOfProgram.InGameUI import InGameUI
 from Program.LogicOfProgram.GenerateBackendMark import GenerateBackendMark
 from Program.LogicOfProgram.UsageOfYolo import UsageOfYolo
-from Program.LogicOfProgram.CalculateMetersPerPX import CalculateMetersPerPX
+from Program.LogicOfProgram.CalculatePxPerMapSquare import CalculatePxPerMapSquare
 from Program.LogicOfProgram.ManageYoloResponse import ManageYoloResponse
 from Program.LogicOfProgram.PathToPrograms import settings_path, prediction_raw_path
 
@@ -34,7 +34,7 @@ def when_capture_ready(number):
         global meter_thread_running
         try:
             print("[DEBUG] Uruchamiam CalculateMetersPerPX w osobnym wątku.")
-            CalculateMetersPerPX(current_resolution)
+            CalculatePxPerMapSquare(current_resolution)
             print("[DEBUG] Uruchamiam ManageYoloResponse po CalculateMetersPerPX.")
             ManageYoloResponse()
         except Exception as e:

@@ -7,3 +7,4 @@ Todo/
 __pycache__/
 prediction/
 MetersPerPx/
+PxPerMapSquare/

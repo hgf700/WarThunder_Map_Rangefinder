@@ -34,16 +34,17 @@ def SettingsUI():
     def resolution_changed(*args):
         res = resolution.get()
 
-        res1=[1366, 768, 987, 389, 1351, 703]
+        # res1=[1366, 768, 987, 389, 1351, 703]
         res2=[1920, 1080,1584, 741, 1904, 1066]
         res3=[2048, 1152, 1636, 736, 2035, 1138]
 
-        if res == "1366x768":
-            save_to_file(res1[0],res1[1],res1[2],res1[3],res1[4],res1[5])
-        elif res == "1920x1080":
+
+        if res == "1920x1080":
             save_to_file(res2[0],res2[1],res2[2],res2[3],res2[4],res2[5])
         elif res == "2048x1152":
             save_to_file(res3[0],res3[1],res3[2],res3[3],res3[4],res3[5])
+        # elif res == "1366x768":
+        #     save_to_file(res1[0],res1[1],res1[2],res1[3],res1[4],res1[5])
         
         result["resolution"] = res
         
@@ -61,9 +62,9 @@ def SettingsUI():
         resolution.set("error")
 
 
-    r1366x768_button = ttk.Radiobutton(mainframe, text="1366x768", variable=resolution,
-                                    value="1366x768", command=resolution_changed)
-    r1366x768_button.grid(column=1, row=2, sticky=E)
+    # r1366x768_button = ttk.Radiobutton(mainframe, text="1366x768", variable=resolution,
+    #                                 value="1366x768", command=resolution_changed)
+    # r1366x768_button.grid(column=1, row=2, sticky=E)
 
     r1920x1080_button = ttk.Radiobutton(mainframe, text="1920x1080", variable=resolution,
                                         value="1920x1080", command=resolution_changed)
