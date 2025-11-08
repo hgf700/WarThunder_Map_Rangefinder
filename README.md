@@ -57,12 +57,20 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
 
 When using the Map Rangefinder:
 
-1. **User interaction:** Press `Alt + Left Mouse Button` on the minimap (bottom-left corner).  
-   ![After pressing alt + Lmouse button on area of minimap screenshot is being created](assets/1.jpg)
+1. **Settings with resolutions:** Choose your current game resolution and submit.  
+   ![Settings with resolutions](assets/3.JPG)
 
-2. **YOLO detection:** The neural network analyzes the screenshot to detect the player and the marker.  
-   ![YOLO Neural network analyze this](assets/2.jpg)
+2. **In-game UI:** The overlay appears and is **hoverable**.  
+   ![In-game UI](assets/4.JPG)
 
+3. **Insert scale:** Open manual scale input (press **M**) and enter the minimap scale.  
+   ![Insert scale](assets/5.JPG)
+
+4. **User interaction:** Press `Alt + Left Mouse Button` on the minimap (bottom-left corner).  
+   ![After pressing Alt + LMouse button on area of minimap, screenshot is being created](assets/1.jpg)
+
+5. **YOLO detection:** The neural network analyzes the screenshot to detect both the **player** and the **marker**.  
+   ![YOLO Neural network analyzing the capture](assets/2.jpg)
 
 ## ⚠️ Disclaimer
 
