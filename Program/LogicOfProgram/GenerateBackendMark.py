@@ -61,6 +61,20 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
         return img
 
 
+    alt_pressed=False
+
+    def on_press(key):
+        nonlocal alt_pressed
+        if key == keyboard.Key.alt_l or key == keyboard.Key.alt_r:
+            alt_pressed = True
+
+
+    def on_release(key):
+        global alt_pressed
+        if key == keyboard.Key.alt_l or key == keyboard.Key.alt_r:
+            alt_pressed = False
+
+
     def process_click(x, y):
         """Funkcja wykonywana w osobnym wątku po kliknięciu."""
         x = max(MIN_X, min(x, MAX_X))
@@ -97,18 +111,21 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
 
     # ----- Listener myszy -----
     def on_click(x, y, button, pressed):
+        nonlocal  alt_pressed
         if pressed:
             # Blokuj środkowy i prawy przycisk
             if button == mouse.Button.right or button == mouse.Button.middle:
                 print(f"[Zablokowano przycisk]: {button}")
                 return
 
-            # Tylko kliknięcia w określonym zakresie
-            if MIN_X <= x <= MAX_X and MIN_Y <= y <= MAX_Y:
-                handle_region_click(x, y)
-            else:
-                print(f"[Ignoruję kliknięcie poza minimapą]: ({x},{y})")
-                print(f"X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y})")
+            if button==mouse.Button.left and pressed and alt_pressed:
+                print(f"alt+lpm")
+                # Tylko kliknięcia w określonym zakresie
+                if MIN_X <= x <= MAX_X and MIN_Y <= y <= MAX_Y:
+                    handle_region_click(x, y)
+                else:
+                    print(f"[Ignoruję kliknięcie poza minimapą]: ({x},{y})")
+                    print(f"X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y})")
 
     # ----- Obsługa ESC -----
     # def on_press(key):
@@ -120,8 +137,10 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
     #         print(f"Błąd przy obsłudze klawiatury: {e}")
 
     print("[*] Listener myszy")
-    with mouse.Listener(on_click=on_click) as mouse_listener:
-        mouse_listener.join()
+    with keyboard.Listener(on_press=on_press, on_release=on_release) as kl, \
+        mouse.Listener(on_click=on_click) as ml:
+        kl.join()
+        ml.join()
 
     # print("[*] Listener myszy i klawiatury uruchomiony.")
     # with mouse.Listener(on_click=on_click) as mouse_listener, \

@@ -56,7 +56,7 @@ def ManageYoloResponse():
         width, height = parts2[0], parts2[1]
 
         scale=float(ReadFromFile(scale_path))
-
+        
         PxPerMap=int(ReadFromFile(PxPerMapSquare_path))
 
         print(f"width {width}")
