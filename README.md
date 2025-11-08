@@ -62,3 +62,9 @@ When using the Map Rangefinder:
 
 2. **YOLO detection:** The neural network analyzes the screenshot to detect the player and the marker.  
    ![YOLO Neural network analyze this](assets/2.jpg)
+
+
+## ⚠️ Disclaimer
+
+This tool is **not affiliated** with Gaijin Entertainment or War Thunder.  
+It is a **personal project**.
