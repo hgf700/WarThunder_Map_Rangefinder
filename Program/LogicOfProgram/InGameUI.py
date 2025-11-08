@@ -78,6 +78,18 @@ def InGameUI():
     mainframe.bind("<B1-Motion>", do_move)
 
     manual_setting_button.grid_remove()
+
+    def refresh_meters():
+        try:
+            new_value = ReadFromFile(meters_path)
+            meters.set(new_value)
+        except Exception as e:
+            print(f"[ERROR] Błąd przy odczycie meters: {e}")
+        root.after(500, refresh_meters)  # odśwież co 0.5 s
+
+    
+    refresh_meters()  # start odświeżania
+
     root.mainloop()
 
     return modeA_M["mode"]

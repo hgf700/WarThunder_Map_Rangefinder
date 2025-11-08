@@ -2,7 +2,9 @@ import cv2
 import numpy as np
 import os
 from Program.LogicOfProgram.PathToPrograms import prediction_raw_path, MetersPerPx_path,Letters_return_func
-# from Program.LogicOfProgram.ReadFromFile import ReadFromFile
+import functools
+
+print = functools.partial(print, flush=True)
 
 def CalculateMetersPerPX(resolutionPX):
 
@@ -13,8 +15,12 @@ def CalculateMetersPerPX(resolutionPX):
     elif resolutionPX=="2048x1152":
         resolution = 2
     elif resolutionPX:
-        resolution=0
-        print("error")
+        # resolution=0
+        # print("error")
+        resolution=1
+        print("1366x768 calculate")
+
+    print(resolutionPX)
 
     B_path,D_path,F_path=Letters_return_func(resolution)
 
@@ -23,7 +29,21 @@ def CalculateMetersPerPX(resolutionPX):
     D_letter = cv2.imread(str(D_path), cv2.IMREAD_GRAYSCALE)
     F_letter = cv2.imread(str(F_path), cv2.IMREAD_GRAYSCALE)
 
+
+
+
+
+
+
     capture_img = cv2.imread(str(prediction_raw_path), cv2.IMREAD_GRAYSCALE)
+
+    # photo = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Program\photo\image.png"
+    # capture_img = cv2.imread(str(photo), cv2.IMREAD_GRAYSCALE)
+
+
+
+
+
 
     if capture_img is None:
         raise FileNotFoundError(f"Nie znaleziono pliku: {prediction_raw_path}")
@@ -78,6 +98,7 @@ def CalculateMetersPerPX(resolutionPX):
             f.write(f"{pixels_per_square}")      
         
     save_to_file(pixels_per_square)
+    print(MetersToPx["meters"])
     return MetersToPx["meters"]
 
 # settings="1920x1080"

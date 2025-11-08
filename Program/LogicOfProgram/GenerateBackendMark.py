@@ -111,18 +111,22 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
                 print(f"X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y})")
 
     # ----- Obsługa ESC -----
-    def on_press(key):
-        try:
-            if key == keyboard.Key.esc:
-                print("\n[!] ESC wciśnięty — zamykam program.")
-                os._exit(0)
-        except Exception as e:
-            print(f"Błąd przy obsłudze klawiatury: {e}")
+    # def on_press(key):
+    #     try:
+    #         if key == keyboard.Key.esc:
+    #             print("\n[!] ESC wciśnięty — zamykam program.")
+    #             os._exit(0)
+    #     except Exception as e:
+    #         print(f"Błąd przy obsłudze klawiatury: {e}")
 
-    print("[*] Listener myszy i klawiatury uruchomiony.")
-    with mouse.Listener(on_click=on_click) as mouse_listener, \
-        keyboard.Listener(on_press=on_press) as key_listener:
+    print("[*] Listener myszy")
+    with mouse.Listener(on_click=on_click) as mouse_listener:
         mouse_listener.join()
+
+    # print("[*] Listener myszy i klawiatury uruchomiony.")
+    # with mouse.Listener(on_click=on_click) as mouse_listener, \
+    #     keyboard.Listener(on_press=on_press) as key_listener:
+    #     mouse_listener.join()
     # return 
 
 # GenerateBackendMark(settings_path,captures_folder)

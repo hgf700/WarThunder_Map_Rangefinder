@@ -1,7 +1,7 @@
 import os
 import math
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
-from Program.LogicOfProgram.PathToPrograms import prediction_path,settings_path,scale_path,meters_path
+from Program.LogicOfProgram.PathToPrograms import prediction_path,settings_path,scale_path,meters_path,MetersPerPx_path
 import functools
 
 print = functools.partial(print, flush=True)
@@ -54,22 +54,24 @@ def ManageYoloResponse():
         parts2 = [int(x) for x in resolution.split()]
 
         width, height = parts2[0], parts2[1]
-        scale = int(ReadFromFile(scale_path))
+
+        MetersPerPx=int(ReadFromFile(MetersPerPx_path))
 
         print(f"width {width}")
         print(f"height {height}")
-        print(f"scale {scale}")
+        print(f"MetersPerPx {MetersPerPx}")
 
         # distance – odległość w pikselach (np. wynik np.hypot)
         # line – długość odcinka między literami A i E w pikselach
         # scale – wartość w metrach odpowiadająca temu odcinkowi (np. 400 m)
+         # przeliczenie pikseli na metry
 
-        meters_per_pixel = scale / distance          # ile metrów przypada na 1 px
-        distance_m = distance * meters_per_pixel # przeliczenie pikseli na metry
+        distance_m = distance * MetersPerPx
+
         distance_m = int(distance_m)             # zaokrąglenie do liczby całkowitej
 
 
-        print(f"[INFO] 1px = {meters_per_pixel:.4f} m")
+        print(f"[INFO] 1px = {MetersPerPx:.4f} m")
         print(f"[INFO] Odległość w metrach: {distance_m} m")
 
         save_to_file_meters(distance_m)
