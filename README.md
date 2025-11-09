@@ -40,7 +40,7 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
     python main.py
 
 4. **Select your current game resolution** and click **Submit**.  
-   - If your resolution is not listed, please **create a pull request** and send a **screenshot of your game minimap including the scale bar** so it can be added.
+   - If your resolution is not listed, please **create a pull request** and send a **print screen of your game with minimap including the scale bar** so it can be added.
 
 5. The in-game UI (overlay) will appear — it is **hoverable**.  
    - Click the **M** button to open the **manual scale input** window.
@@ -71,6 +71,10 @@ When using the Map Rangefinder:
 
 5. **YOLO detection:** The neural network analyzes the screenshot to detect both the **player** and the **marker**.  
    ![YOLO Neural network analyzing the capture](assets/2.jpg)
+
+## plans for future
+
+implement automatic scale detection which will be requiring pytesseract ocr and cv2 thresholding
 
 ## ⚠️ Disclaimer
 
