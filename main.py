@@ -83,7 +83,7 @@ def when_capture_ready(number):
         global meter_thread_running
         try:
             print("[DEBUG] Uruchamiam CalculateMetersPerPX w osobnym wątku.")
-            task_queue.put(partial(CalculatePxPerMapSquare, current_resolution))
+            task_queue.put(lambda: CalculatePxPerMapSquare(current_resolution))
             task_queue.put(ManageYoloResponse)
         except Exception as e:
             print(f"[ERROR] Błąd w wątku obliczania metrów: {e}")
@@ -126,6 +126,19 @@ def main():
         name="GenerateMark"
     )
     backend_thread.start()
+
+
+    # Pętla główna obsługi zadań
+    # while not stop_threads:
+    #     try:
+    #         task = task_queue.get(timeout=0.5)
+    #         # jeśli chcesz, możesz tu od razu wykonać task:
+    #         if task is not None:
+    #             task()
+    #         task_queue.task_done()
+    #     except queue.Empty:
+    #         continue
+
 
     print("[DEBUG] Wszystkie wątki uruchomione. Program działa równolegle.")
 

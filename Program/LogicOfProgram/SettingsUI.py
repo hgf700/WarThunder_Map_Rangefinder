@@ -7,11 +7,11 @@ import functools
 
 print = functools.partial(print, flush=True)
 
+laptop=0
+
 def save_to_file(width, height, MiniMapStartX,MiniMapStartY,MiniMapEndX,MiniMapEndY):
     with open(settings_path, "w") as f:
         f.write(f"{width} {height} {MiniMapStartX} {MiniMapStartY} {MiniMapEndX} {MiniMapEndY}")      
-
-laptop =0
 
 def SettingsUI():
     root = Tk()

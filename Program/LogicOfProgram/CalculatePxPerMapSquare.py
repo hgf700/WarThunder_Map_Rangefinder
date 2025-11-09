@@ -9,7 +9,6 @@ print = functools.partial(print, flush=True)
 laptop=0
 
 def CalculatePxPerMapSquare(resolutionPX):
-
     Pixels_per_square = {"1square": None}
 
     if resolutionPX=="1920x1080":

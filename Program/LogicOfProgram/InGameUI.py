@@ -8,6 +8,8 @@ import functools
 
 print = functools.partial(print, flush=True)
 
+# stop_threads = False
+
 def InGameUI():
     root = Tk()
     root.overrideredirect(True)
@@ -16,6 +18,8 @@ def InGameUI():
     modeA_M = {"mode": "auto"}
 
     def close_window():
+        # global stop_threads
+        # stop_threads = True
         root.destroy()
         os._exit(0)
 
