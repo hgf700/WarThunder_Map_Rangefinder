@@ -1,5 +1,8 @@
-import threading
+import threading 
+import queue
 import traceback
+import time
+from functools import partial
 from Program.LogicOfProgram.SettingsUI import SettingsUI
 from Program.LogicOfProgram.InGameUI import InGameUI
 from Program.LogicOfProgram.GenerateBackendMark import GenerateBackendMark
@@ -16,6 +19,27 @@ current_resolution = None
 # 🔐 Flaga i blokada do wątku meters
 meter_thread_running = False
 meter_lock = threading.Lock()
+
+task_queue = queue.Queue()
+
+def worker():
+    """Worker do obsługi zadań z kolejki."""
+    while True:
+        task = task_queue.get()
+        if task is None:  # sygnał zakończenia
+            task_queue.task_done()
+            print("[WORKER] Zatrzymuję worker thread.")
+            break
+        try:
+            result = task()
+            if result is not None:
+                print(f"[WORKER OK] Wynik: {result}")
+        except Exception as e:
+            print(f"[WORKER ERR] {e}")
+            traceback.print_exc()
+        finally:
+            task_queue.task_done()
+
 
 def handle_thread_exception(args):
     print("\n--- [BŁĄD W WĄTKU] ---")
@@ -59,17 +83,17 @@ def when_capture_ready(number):
         global meter_thread_running
         try:
             print("[DEBUG] Uruchamiam CalculateMetersPerPX w osobnym wątku.")
-            CalculatePxPerMapSquare(current_resolution)
-            print("[DEBUG] Uruchamiam ManageYoloResponse po CalculateMetersPerPX.")
-            ManageYoloResponse()
+            task_queue.put(partial(CalculatePxPerMapSquare, current_resolution))
+            task_queue.put(ManageYoloResponse)
         except Exception as e:
             print(f"[ERROR] Błąd w wątku obliczania metrów: {e}")
+            traceback.print_exc()
         finally:
             # 🔄 Reset flagi po zakończeniu wątku
             with meter_lock:
                 meter_thread_running = False
 
-    meter_thread = threading.Thread(target=meter_thread_func, daemon=True)
+    meter_thread=threading.Thread(target=meter_thread_func, daemon=True, name="MeterWorker")
     meter_thread.start()
 
 
@@ -78,6 +102,8 @@ def main():
     global overlay, app, current_resolution
 
     threading.excepthook = handle_thread_exception
+    
+    threading.Thread(target=worker, daemon=True, name="TaskQueueWorker").start()
 
     # 📏 Ustawienia rozdzielczości
     res = SettingsUI()
@@ -88,7 +114,7 @@ def main():
     print(f"Ustawiono rozdzielczość: {res}")
 
     # 🎮 Uruchamiamy InGameUI (oddzielny wątek, działa do ESC/krzyżyka)
-    InGameUI_thread = threading.Thread(target=InGameUI)
+    InGameUI_thread = threading.Thread(target=InGameUI, name="InGameUIThread")
     InGameUI_thread.start()
 
     # ⚙️ Uruchamiamy backend (YOLO + callback)
@@ -96,7 +122,8 @@ def main():
     backend_thread = threading.Thread(
         target=GenerateBackendMark,
         args=(settings_path, prediction_raw_path, when_capture_ready),
-        daemon=True
+        daemon=True,
+        name="GenerateMark"
     )
     backend_thread.start()
 
@@ -105,6 +132,10 @@ def main():
     # czekamy aż użytkownik zamknie InGameUI
     InGameUI_thread.join()
     print("[INFO] InGameUI zakończone — kończę program.")
+
+    task_queue.put(None)
+    time.sleep(0.1)
+    task_queue.join()
 
 
 if __name__ == "__main__":

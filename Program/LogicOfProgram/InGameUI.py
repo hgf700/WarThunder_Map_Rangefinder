@@ -17,6 +17,7 @@ def InGameUI():
 
     def close_window():
         root.destroy()
+        os._exit(0)
 
     def mode_changed():
         if mode.get() == "manual":
@@ -80,16 +81,28 @@ def InGameUI():
     manual_setting_button.grid_remove()
 
     def refresh_meters():
-        try:
-            new_value = ReadFromFile(meters_path)
-            meters.set(new_value)
-        except Exception as e:
-            print(f"[ERROR] Błąd przy odczycie meters: {e}")
-        root.after(500, refresh_meters)  # odśwież co 0.5 s
+        last_mtime = None
 
-    
-    refresh_meters()  # start odświeżania
+        def _refresh():
+            nonlocal last_mtime
+            try:
+                if os.path.exists(meters_path):
+                    mtime = os.path.getmtime(meters_path)
+                    if mtime != last_mtime:
+                        new_value = ReadFromFile(meters_path)
+                        meters.set(new_value)
+                        last_mtime = mtime
+                        print(f"[INFO] Zaktualizowano Meters: {new_value}")
+                else:
+                    print(f"[WARN] Plik {meters_path} nie istnieje.")
+            except Exception as e:
+                print(f"[ERROR] Błąd przy odczycie meters: {e}")
+            finally:
+                root.after(500, _refresh)
 
+        _refresh()
+
+    refresh_meters()
     root.mainloop()
 
     return modeA_M["mode"]

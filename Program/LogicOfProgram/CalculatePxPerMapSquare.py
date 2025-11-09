@@ -6,6 +6,8 @@ import functools
 
 print = functools.partial(print, flush=True)
 
+laptop=0
+
 def CalculatePxPerMapSquare(resolutionPX):
 
     Pixels_per_square = {"1square": None}
@@ -15,10 +17,12 @@ def CalculatePxPerMapSquare(resolutionPX):
     elif resolutionPX=="2048x1152":
         resolution = 2
     elif resolutionPX:
-        resolution=0
-        print("error")
-        # resolution=1
-        # print("1366x768 calculate")
+        if laptop==1:
+            resolution=1
+            print("1366x768 calculate")
+        else:
+            resolution=0
+            print("error")
 
     print(resolutionPX)
 
@@ -35,10 +39,11 @@ def CalculatePxPerMapSquare(resolutionPX):
 
 
 
-    capture_img = cv2.imread(str(prediction_raw_path), cv2.IMREAD_GRAYSCALE)
-
-    # photo = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Program\photo\image.png"
-    # capture_img = cv2.imread(str(photo), cv2.IMREAD_GRAYSCALE)
+    if laptop==1:
+        photo = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Program\photo\image.png"
+        capture_img = cv2.imread(str(photo), cv2.IMREAD_GRAYSCALE)
+    else:
+        capture_img = cv2.imread(str(prediction_raw_path), cv2.IMREAD_GRAYSCALE)
 
 
 
