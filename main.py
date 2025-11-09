@@ -1,4 +1,5 @@
 import threading
+import traceback
 from Program.LogicOfProgram.SettingsUI import SettingsUI
 from Program.LogicOfProgram.InGameUI import InGameUI
 from Program.LogicOfProgram.GenerateBackendMark import GenerateBackendMark
@@ -15,6 +16,30 @@ current_resolution = None
 # 🔐 Flaga i blokada do wątku meters
 meter_thread_running = False
 meter_lock = threading.Lock()
+
+def handle_thread_exception(args):
+    print("\n--- [BŁĄD W WĄTKU] ---")
+
+    thread_name = getattr(args.thread, "name", "Nieznany wątek")
+    print(f"Wątek: {thread_name}")
+    print(f"Typ: {args.exc_type.__name__}")
+    print(f"Wiadomość: {args.exc_value}")
+    print(f"Czy wątek żyje: {args.thread.is_alive() if args.thread else 'brak danych'}")
+
+    print("\nŚlad stosu:")
+    traceback.print_exception(args.exc_type, args.exc_value, args.exc_traceback)
+
+    # Lista aktywnych wątków
+    enumeration = threading.enumerate()
+    print(f"\nAktywne wątki ({len(enumeration)}):")
+    for i in enumeration:
+        print(f"  - {i.name} (alive={i.is_alive()})")
+
+    # Rozmiar stosu (globalny, nie dla konkretnego wątku)
+    size = threading.stack_size()
+    print(f"\nDomyślny rozmiar stosu wątków: {size if size != 0 else 'system default'}")
+
+    print("--- KONIEC ---\n")
 
 def when_capture_ready(number):
     """Wywoływane po wykonaniu detekcji YOLO"""
@@ -48,8 +73,11 @@ def when_capture_ready(number):
     meter_thread.start()
 
 
+
 def main():
     global overlay, app, current_resolution
+
+    threading.excepthook = handle_thread_exception
 
     # 📏 Ustawienia rozdzielczości
     res = SettingsUI()
