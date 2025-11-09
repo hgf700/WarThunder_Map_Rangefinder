@@ -74,7 +74,8 @@ When using the Map Rangefinder:
 
 ## plans for future
 
-implement automatic scale detection which will be requiring pytesseract ocr and cv2 thresholding
+implement automatic scale detection which will be requiring pytesseract ocr and cv2 thresholding 
+improve threading to hybrid aproach ThreadPoolExecutor + Queue
 
 ## ⚠️ Disclaimer
 
