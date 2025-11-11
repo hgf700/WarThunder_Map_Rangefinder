@@ -51,6 +51,7 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
 
 8. In-game, **press `Alt + Left Mouse Button`** on the **minimap** (bottom-left corner of the game interface).  
    - After a short moment, the **distance in meters** should appear on the UI.  
+   - **Note:** The map resolution must be set to the default size (100%).
    - **Recommended:** works great with squadron and map pings.
 
 ## ⚙️ How It Works
