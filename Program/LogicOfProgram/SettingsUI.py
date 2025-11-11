@@ -3,8 +3,9 @@ from tkinter import ttk
 import os
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import settings_path
+from Program.LogicOfProgram.development import development
 import functools
-import Development
+
 
 print = functools.partial(print, flush=True)
 
@@ -40,7 +41,7 @@ def SettingsUI():
         
         res2=[1920, 1080,1584, 741, 1904, 1066]
         res3=[2048, 1152, 1636, 736, 2035, 1138]
-        if Development.development==1:
+        if development==1:
             res1=[1366, 768, 987, 389, 1351, 703]
 
         if res == "1920x1080":
@@ -48,7 +49,7 @@ def SettingsUI():
         elif res == "2048x1152":
             save_to_file(res3[0],res3[1],res3[2],res3[3],res3[4],res3[5])
         elif res == "1366x768":
-            if Development.development==1:
+            if development==1:
                 save_to_file(res1[0],res1[1],res1[2],res1[3],res1[4],res1[5])
             else:
                 print("error settingsui")
@@ -68,7 +69,7 @@ def SettingsUI():
         print("error or no seted resolution")
         resolution.set("error")
 
-    if Development.development==1:
+    if development==1:
         r1366x768_button = ttk.Radiobutton(mainframe, text="1366x768", variable=resolution,
                                         value="1366x768", command=resolution_changed)
         r1366x768_button.grid(column=1, row=2, sticky=E)

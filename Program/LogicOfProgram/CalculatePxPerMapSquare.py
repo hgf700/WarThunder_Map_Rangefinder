@@ -2,12 +2,10 @@ import cv2
 import numpy as np
 import os
 from Program.LogicOfProgram.PathToPrograms import prediction_raw_path, PxPerMapSquare_path,Letters_return_func
+from Program.LogicOfProgram.development import development
 import functools
-import Development
 
 print = functools.partial(print, flush=True)
-
-development=0
 
 def CalculatePxPerMapSquare(resolutionPX):
     Pixels_per_square = {"1square": None}
@@ -17,7 +15,7 @@ def CalculatePxPerMapSquare(resolutionPX):
     elif resolutionPX=="2048x1152":
         resolution = 2
     elif resolutionPX:
-        if Development.development==1:
+        if development==1:
             resolution=1
             print("1366x768 calculate")
         else:
@@ -33,7 +31,7 @@ def CalculatePxPerMapSquare(resolutionPX):
     D_letter = cv2.imread(str(D_path), cv2.IMREAD_GRAYSCALE)
     F_letter = cv2.imread(str(F_path), cv2.IMREAD_GRAYSCALE)
 
-    if Development.development==1:
+    if development==1:
         photo = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Program\photo\image.png"
         capture_img = cv2.imread(str(photo), cv2.IMREAD_GRAYSCALE)
     else:
