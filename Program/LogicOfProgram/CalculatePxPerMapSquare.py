@@ -12,7 +12,7 @@ def CalculatePxPerMapSquare(resolutionPX):
 
     if resolutionPX=="1920x1080":
         resolution = 1
-    elif resolutionPX=="2048x1152":
+    elif resolutionPX=="2560x1440":
         resolution = 2
     elif resolutionPX:
         if development==1:
