@@ -3,7 +3,7 @@ from tkinter import ttk
 import os
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import settings_path
-from Program.LogicOfProgram.development import development
+from Program.LogicOfProgram.Development import development
 import functools
 
 

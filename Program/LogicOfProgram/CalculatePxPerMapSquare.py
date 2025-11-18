@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import os
 from Program.LogicOfProgram.PathToPrograms import prediction_raw_path, PxPerMapSquare_path,Letters_return_func
-from Program.LogicOfProgram.development import development
+from Program.LogicOfProgram.Development import development
 import functools
 
 print = functools.partial(print, flush=True)
