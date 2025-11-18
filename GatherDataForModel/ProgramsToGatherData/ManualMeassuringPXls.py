@@ -6,14 +6,14 @@ import os
 # img = cv2.imread(r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\ManagingData\fragments\map_020.png")
 # file="daniel_low_resolution1"
 # img = cv2.imread(fr"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\photo\{file}.png")
-img = cv2.imread(fr"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Program\photo\image.png")
+img = cv2.imread(fr"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Program\photo\daniel_of.png")
 
 
 if img is None:
     print("Nie udało się wczytać obrazu!")
     exit()
 
-scale=1
+scale=0.4
 small_img = cv2.resize(img, (0,0), fx=scale, fy=scale)
 
 image_height, image_width = img.shape[:2]

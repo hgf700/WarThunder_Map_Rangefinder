@@ -39,14 +39,14 @@ def SettingsUI():
         res = resolution.get()
 
         
-        res2=[1920, 1080,1584, 741, 1904, 1066]
-        res3=[2048, 1152, 1636, 736, 2035, 1138]
+        res2=[1920, 1080,1584, 741, 1904, 1066]# fullhd
+        res3=[2560, 1440, 2045, 922, 2542, 1420] #4k
         if development==1:
-            res1=[1366, 768, 987, 389, 1351, 703]
+            res1=[1366, 768, 987, 389, 1351, 703] # dev laptop
 
         if res == "1920x1080":
             save_to_file(res2[0],res2[1],res2[2],res2[3],res2[4],res2[5])
-        elif res == "2048x1152":
+        elif res == "2560x1440":
             save_to_file(res3[0],res3[1],res3[2],res3[3],res3[4],res3[5])
         elif res == "1366x768":
             if development==1:
@@ -78,9 +78,9 @@ def SettingsUI():
                                         value="1920x1080", command=resolution_changed)
     r1920x1080_button.grid(column=1, row=3, sticky=E)
 
-    r2048x1152_button = ttk.Radiobutton(mainframe, text="2048x1152", variable=resolution,
-                                        value="2048x1152", command=resolution_changed)
-    r2048x1152_button.grid(column=1, row=4, sticky=E)
+    r2560x1440_button = ttk.Radiobutton(mainframe, text="2560x1440", variable=resolution,
+                                        value="2560x1440", command=resolution_changed)
+    r2560x1440_button.grid(column=1, row=4, sticky=E)
 
     ttk.Label(mainframe, text="Current Resolution").grid(column=1, row=5, sticky=W)
     scale_entry = ttk.Entry(mainframe, textvariable=resolution, state="readonly", width=10)
