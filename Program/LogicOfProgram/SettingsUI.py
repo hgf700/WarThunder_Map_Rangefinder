@@ -70,7 +70,7 @@ def SettingsUI():
         resolution.set("error")
 
     if development==1:
-        r1366x768_button = ttk.Radiobutton(mainframe, text="1366x768", variable=resolution,
+        r1366x768_button = ttk.Radiobutton(mainframe, text="1366x768_development", variable=resolution,
                                         value="1366x768", command=resolution_changed)
         r1366x768_button.grid(column=1, row=2, sticky=E)
 

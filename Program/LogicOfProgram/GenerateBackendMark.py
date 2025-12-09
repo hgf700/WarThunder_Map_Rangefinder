@@ -10,6 +10,7 @@ import functools
 
 print = functools.partial(print, flush=True)
 
+#on capture flaga dla callback
 def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
 # Parametry kółka do wizualnego feedbacku (BGR)
     radius1 = 8
@@ -93,6 +94,7 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
         cv2.imwrite(prediction_raw_path, img)
         print(f"[+] Screenshot zapisany jako {prediction_raw_path}")
 
+#callback
         if on_capture:
             on_capture("1")
 

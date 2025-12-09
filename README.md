@@ -1,7 +1,7 @@
 # 🛰️ Map Rangefinder for War Thunder
 
 This project is a **Map Rangefinder tool** designed for **War Thunder**, allowing automatic distance calculation between the **player’s position** and a **map marker** generated where the user clicks on the in-game minimap (located in the bottom-left corner, not the full map opened with the *M* key).  
-Additionally, this project should **be compatible with Linux systems** — although it was **fully tested and developed on Windows**.
+Additionally, this project should **be compatible with Linux systems** because it mainly uses **OpenCV** and **Tesseract OCR** — although it was **fully tested and developed on Windows**.
 
 The tool uses a **YOLOv8 neural network** for on-screen object detection and combines it with **pixel-to-meter calibration** to provide **real-time distance measurements** inside the game.
 
@@ -21,7 +21,7 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
 
 - 🐍 **Python 3.10+**  
 - 🤖 **YOLOv8 (Ultralytics)** — object detection model  
-- 🪟 **Tkinter** — for the in-game overlay / UI  
+- 🖼️ **Tkinter** — for the in-game overlay / UI  
 - 🧵 **Threading** — to run backend and UI concurrently  
 - 🎥 **OpenCV** — for frame capture and preprocessing  
 
@@ -75,8 +75,9 @@ When using the Map Rangefinder:
 
 ## plans for future
 
-implement automatic scale detection which will be requiring pytesseract ocr and cv2 thresholding 
+implement automatic scale detection which will be requiring Tesseract ocr and cv2 thresholding 
 improve threading to hybrid aproach ThreadPoolExecutor + Queue
+and posibly move from notepads to redis 
 
 ## ⚠️ Disclaimer
 

@@ -65,8 +65,9 @@ def handle_thread_exception(args):
 
     print("--- KONIEC ---\n")
 
+# funckja dla callback
 def when_capture_ready(number):
-    """Wywoływane po wykonaniu detekcji YOLO"""
+    """Wywoływane po wykonaniu detekcji YOLO (funckja dla callback)"""
     global meter_thread_running
 
     print(f"[YOLO] Uruchamiam detekcję dla {number}")
@@ -82,9 +83,13 @@ def when_capture_ready(number):
     def meter_thread_func():
         global meter_thread_running
         try:
+            print("meter_thread_func task queue start")
             print("[DEBUG] Uruchamiam CalculateMetersPerPX w osobnym wątku.")
             task_queue.put(lambda: CalculatePxPerMapSquare(current_resolution))
             task_queue.put(ManageYoloResponse)
+            print("meter_thread_func task queue end")
+            task_queue.join()
+
         except Exception as e:
             print(f"[ERROR] Błąd w wątku obliczania metrów: {e}")
             traceback.print_exc()
@@ -118,7 +123,7 @@ def main():
     InGameUI_thread.start()
 
     # ⚙️ Uruchamiamy backend (YOLO + callback)
-    print("[DEBUG] Uruchamiam backend_thread...")
+    print("[DEBUG] Uruchamiam backend_thread...wykonanie callback when_capture_ready")
     backend_thread = threading.Thread(
         target=GenerateBackendMark,
         args=(settings_path, prediction_raw_path, when_capture_ready),
