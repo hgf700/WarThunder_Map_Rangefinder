@@ -68,6 +68,7 @@ When using the Map Rangefinder:
    ![Insert scale](assets/5.JPG)
 
 4. **User interaction:** Press `Alt + Left Mouse Button` on the minimap (**bottom-right corner**) area of the minimap will then be captured as a screenshot.
+
    ![After pressing Alt + LMouse button on area of minimap, screenshot is being created](assets/1.jpg)
 
 5. **YOLO detection:** The neural network analyzes the screenshot to detect both the **player** and the **marker** and the calculated distance will be displayed on the overlay.
