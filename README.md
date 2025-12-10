@@ -72,6 +72,7 @@ When using the Map Rangefinder:
    ![After pressing Alt + LMouse button on area of minimap, screenshot is being created](assets/1.jpg)
 
 5. **YOLO detection:** The neural network analyzes the screenshot to detect both the **player** and the **marker** and the calculated distance will be displayed on the overlay.
+
    ![YOLO Neural network analyzing the capture](assets/2.jpg)
 
 ## plans for future
