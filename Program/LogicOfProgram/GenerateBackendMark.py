@@ -7,6 +7,7 @@ import threading
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import settings_path, prediction_raw_path
 import functools
+from Program.LogicOfProgram.Development import writeImage
 
 print = functools.partial(print, flush=True)
 
@@ -22,20 +23,20 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
     def load_settings_box():
         read = ReadFromFile(settings_path)
         if not read:
-            print(f"[!] Plik {settings_path} jest pusty lub nie istnieje.")
+            print(f"[!] file {settings_path} is empty or didnt exist.")
             return 0, 0, 0, 0
 
         parts = read.strip().split()
         if len(parts) < 6:
-            print(f"[!] Za mało wartości ({len(parts)}) w settings.txt: {parts}")
+            print(f"[!] too small value ({len(parts)}) in settings.txt: {parts}")
             return 0, 0, 0, 0
 
         try:
             MIN_X, MIN_Y, MAX_X, MAX_Y = map(int, parts[2:6])
-            print(f"[OK] Wczytano współrzędne: {MIN_X}, {MIN_Y}, {MAX_X}, {MAX_Y}")
+            print(f"[OK] lodaded cordinates: {MIN_X}, {MIN_Y}, {MAX_X}, {MAX_Y}")
             return MIN_X, MIN_Y, MAX_X, MAX_Y
         except ValueError as e:
-            print(f"[!] Błąd przy konwersji wartości: {e}")
+            print(f"[!] error while convertion of data: {e}")
             return 0, 0, 0, 0
 
         
@@ -44,7 +45,7 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
     MIN_X, MIN_Y, MAX_X, MAX_Y=load_settings_box()
 
     def capture_region(x1, y1, x2, y2):
-        """Robi screenshot tylko z określonego obszaru ekranu."""
+        """ ss only in allowed area of screen."""
         with mss.mss() as sct:
             monitor = {"top": y1, "left": x1, "width": x2 - x1, "height": y2 - y1}
             img = sct.grab(monitor)
@@ -54,13 +55,12 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
 
 
     def draw_marker(img, x, y, alpha=Alpha):
-        """Rysuje marker w miejscu kliknięcia."""
+        """Draw marker in place of click"""
         overlay = img.copy()
         cv2.circle(overlay, (x - MIN_X, y - MIN_Y), radius1, color1, 2)
         cv2.circle(overlay, (x - MIN_X, y - MIN_Y), radius2, color2, 2)
         cv2.addWeighted(overlay, alpha, img, 1 - alpha, 0, img)
         return img
-
 
     alt_pressed=False
 
@@ -69,20 +69,18 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
         if key == keyboard.Key.alt_l or key == keyboard.Key.alt_r:
             alt_pressed = True
 
-
     def on_release(key):
         global alt_pressed
         if key == keyboard.Key.alt_l or key == keyboard.Key.alt_r:
             alt_pressed = False
 
-
     def process_click(x, y):
-        """Funkcja wykonywana w osobnym wątku po kliknięciu."""
+        """function handled in different thread after click."""
         x = max(MIN_X, min(x, MAX_X))
         y = max(MIN_Y, min(y, MAX_Y))
 
-        print(f"[DEBUG] Klik: ({x},{y}), Dozwolony: X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y}]",flush=True)
-        print(f"[+] Kliknięto w dozwolonym zakresie: ({x},{y})",flush=True)
+        print(f"[DEBUG] click: ({x},{y}), allowed: X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y}]",flush=True)
+        print(f"[+] click in allowed are: ({x},{y})",flush=True)
 
         # Zrób screenshot tylko regionu minimapy
         img = capture_region(MIN_X, MIN_Y, MAX_X, MAX_Y)
@@ -92,20 +90,21 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
 
         # Nazwa pliku z numeracją (żeby nie nadpisywać)
         cv2.imwrite(prediction_raw_path, img)
-        print(f"[+] Screenshot zapisany jako {prediction_raw_path}")
+        print(f"[+] ss saved as {prediction_raw_path}")
 
 #callback
         if on_capture:
             on_capture("1")
 
         # Podgląd (opcjonalny)
-        cv2.imshow("Preview", img)
-        cv2.waitKey(500)
+        if(writeImage==1):
+            cv2.imshow("Preview", img)
+            cv2.waitKey(500)
         cv2.destroyAllWindows()
 
 
     def handle_region_click(x, y):
-        """Uruchamia wątek, który przetworzy kliknięcie."""
+        """activate thread to handling mouse click."""
         thread = threading.Thread(target=process_click, args=(x, y))
         thread.daemon = True  # zakończy się razem z programem
         thread.start()
@@ -117,7 +116,7 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
         if pressed:
             # Blokuj środkowy i prawy przycisk
             if button == mouse.Button.right or button == mouse.Button.middle:
-                print(f"[Zablokowano przycisk]: {button}")
+                print(f"[Ignore right and scroll]: {button}")
                 return
 
             if button==mouse.Button.left and pressed and alt_pressed:
@@ -126,7 +125,7 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
                 if MIN_X <= x <= MAX_X and MIN_Y <= y <= MAX_Y:
                     handle_region_click(x, y)
                 else:
-                    print(f"[Ignoruję kliknięcie poza minimapą]: ({x},{y})")
+                    print(f"[Ignore click apart minimap]: ({x},{y})")
                     print(f"X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y})")
 
     # ----- Obsługa ESC -----
@@ -138,16 +137,11 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
     #     except Exception as e:
     #         print(f"Błąd przy obsłudze klawiatury: {e}")
 
-    print("[*] Listener myszy")
+    print("[*] Listener ")
     with keyboard.Listener(on_press=on_press, on_release=on_release) as kl, \
         mouse.Listener(on_click=on_click) as ml:
         kl.join()
         ml.join()
 
-    # print("[*] Listener myszy i klawiatury uruchomiony.")
-    # with mouse.Listener(on_click=on_click) as mouse_listener, \
-    #     keyboard.Listener(on_press=on_press) as key_listener:
-    #     mouse_listener.join()
-    # return 
 
 # GenerateBackendMark(settings_path,captures_folder)

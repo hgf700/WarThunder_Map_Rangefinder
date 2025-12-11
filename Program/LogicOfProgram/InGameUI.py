@@ -96,11 +96,11 @@ def InGameUI():
                         new_value = ReadFromFile(meters_path)
                         meters.set(new_value)
                         last_mtime = mtime
-                        print(f"[INFO] Zaktualizowano Meters: {new_value}")
+                        print(f"[INFO] updated Meters: {new_value}")
                 else:
-                    print(f"[WARN] Plik {meters_path} nie istnieje.")
+                    print(f"[WARN] file {meters_path} do not exist.")
             except Exception as e:
-                print(f"[ERROR] Błąd przy odczycie meters: {e}")
+                print(f"[ERROR] while reading meters: {e}")
             finally:
                 root.after(500, _refresh)
 

@@ -79,7 +79,8 @@ When using the Map Rangefinder:
 
 implement automatic scale detection which will be requiring Tesseract ocr and cv2 thresholding 
 improve threading to hybrid aproach ThreadPoolExecutor + Queue
-and posibly move from notepads to redis 
+and posibly move from notepads to redis , multiprocessing only for yolo rather then threads
+
 
 ## ⚠️ Disclaimer
 

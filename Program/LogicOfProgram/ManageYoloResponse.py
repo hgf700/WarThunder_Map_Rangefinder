@@ -10,7 +10,7 @@ def ManageYoloResponse():
     parts=ReadFromFile(prediction_path)
     
     if not parts:   
-        print("[!] Brak danych w pliku prediction.txt")
+        print("[!] no data in file prediction.txt")
         return
     
     def save_to_file_meters(meters):
@@ -43,12 +43,12 @@ def ManageYoloResponse():
         Px=(Px1+Px2)/2
         Py=(Py1+Py2)/2
 
-        #pitagoras
+        #pitagoras function
         distance = math.hypot(Px - Mx, Py - My)
 
         print(f"[INFO] Marker: ({Mx}, {My}) | Conf: {Mpred:.2f}")
         print(f"[INFO] Player: ({Px}, {Py}) | Conf: {Ppred:.2f}")
-        print(f"[INFO] Odległość: {distance}px")
+        print(f"[INFO] distance: {distance}px")
 
         resolution =ReadFromFile(settings_path)
         parts2 = [int(x) for x in resolution.split()]
@@ -74,14 +74,14 @@ def ManageYoloResponse():
 
 
         print(f"[INFO] 1 map square = {PxPerMap} m")
-        print(f"[INFO] Odległość w metrach: {distance_m} m")
+        print(f"[INFO] distance in meters: {distance_m} m")
 
         save_to_file_meters(distance_m)
 
         return distance_m
 
     except ValueError as e:
-        print("[!] Błąd przy konwersji wartości:", e)
+        print("[!] error while converting values:", e)
         return 
         
 # ManageYoloResponse()

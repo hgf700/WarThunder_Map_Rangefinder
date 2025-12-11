@@ -24,16 +24,16 @@ def UsageOfYolo():
                 conf = box.conf[0]
                 cls = int(box.cls[0])
                 f.write(f"{cls} {conf:.2f} {x1:.0f} {y1:.0f} {x2:.0f} {y2:.0f} ")
-                print(f"Klasa: {cls}, Conf: {conf:.2f}, BBox: ({x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f})")
+                print(f"class: {cls}, Conf: {conf:.2f}, BBox: ({x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f})")
 
     # Zapisz obraz z detekcjami
     img_pred = results[0].plot()
     success = cv2.imwrite(output_image_path, img_pred)
 
     if success:
-        print(f"[✔] Wyniki zapisano:\n{prediction_path}\n{output_image_path}")
+        print(f"[✔] value saved:\n{prediction_path}\n{output_image_path}")
     else:
-        print("[❌] Błąd przy zapisie prediction.png")
+        print("[❌] errow while saving prediction.png")
 
     cv2.destroyAllWindows()
 

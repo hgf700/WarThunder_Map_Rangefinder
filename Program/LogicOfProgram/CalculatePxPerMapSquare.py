@@ -17,7 +17,7 @@ def CalculatePxPerMapSquare(resolutionPX):
     elif resolutionPX:
         if development==1:
             resolution=1
-            print("1366x768 calculate")
+            print("1366x768 dev view")
         else:
             resolution=0
             print("error")
@@ -39,7 +39,7 @@ def CalculatePxPerMapSquare(resolutionPX):
 
 
     if capture_img is None:
-        raise FileNotFoundError(f"Nie znaleziono pliku: {prediction_raw_path}")
+        raise FileNotFoundError(f"not found file: {prediction_raw_path}")
 
     # dopasowanie liter
     Capture_B = cv2.matchTemplate(capture_img, B_letter, cv2.TM_CCOEFF_NORMED)
@@ -68,7 +68,7 @@ def CalculatePxPerMapSquare(resolutionPX):
     }
 
     centerY = (y_B + y_D + y_F) / 3
-    print(f"Średnia pozycja Y: {centerY:.2f}")
+    print(f"average position of Y: {centerY:.2f}")
 
     # usuń literę, która najbardziej odstaje od średniej
     outlier = max(positions.items(), key=lambda x: abs(x[1][0] - centerY))[0]
@@ -83,8 +83,8 @@ def CalculatePxPerMapSquare(resolutionPX):
 
     pixels_per_square=int(pixels_per_square)
 
-    print(f"\nLitery {keys[0]} i {keys[1]} zostały użyte do obliczenia skali.")
-    print(f"1 kwadrat = {pixels_per_square} pikseli")
+    print(f"Letter {keys[0]} and {keys[1]} where used to calculate scale.")
+    print(f"1 square = {pixels_per_square} px")
 
     def save_to_file(pixels_per_square):
         with open(PxPerMapSquare_path, "w") as f:

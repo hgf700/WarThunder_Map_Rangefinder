@@ -39,10 +39,10 @@ def SettingsUI():
         res = resolution.get()
 
         
-        res2=[1920, 1080,1584, 741, 1904, 1066]# fullhd
-        res3=[2560, 1440, 2045, 922, 2542, 1420] #4k
+        res2=[1920, 1080, 1584, 741, 1904, 1066]#1920x1080
+        res3=[2560, 1440, 2045, 922, 2542, 1420]#2560x1440
         if development==1:
-            res1=[1366, 768, 987, 389, 1351, 703] # dev laptop
+            res1=[1366, 768, 987, 389, 1351, 703] # dev laptop 1366x768
 
         if res == "1920x1080":
             save_to_file(res2[0],res2[1],res2[2],res2[3],res2[4],res2[5])
@@ -63,7 +63,7 @@ def SettingsUI():
             values = list(map(int, settings.split()))
             resolution.set(f"{values[0]}x{values[1]}")
         except Exception as e:
-            print(f"[!] Błąd przy parsowaniu settings.txt: {e}")
+            print(f"[!] Error while parsing settings.txt: {e}")
             resolution.set("error")
     else:
         print("error or no seted resolution")
