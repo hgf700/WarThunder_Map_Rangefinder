@@ -5,10 +5,12 @@ from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import scale_path,meters_path
 import os
 import functools
+import threading
+
+mode_selected = None
+# mode_event = threading.Event()
 
 print = functools.partial(print, flush=True)
-
-app_mode=None
 
 def InGameUI():
     root = Tk()
@@ -17,7 +19,7 @@ def InGameUI():
 
     modeA_M = {"mode": "auto"}
 
-    global app_mode
+    # global mode_selected
 
     def close_window():
         # global stop_threads
@@ -29,20 +31,29 @@ def InGameUI():
         if mode.get() == "manual":
             manual_setting_button.grid(column=1, row=3)
             modeA_M["mode"] = "manual"
-            app_mode="manual"
+            auto_setting_button.grid_remove()
+            # mode_selected="manual"
+            # mode_event.set()
         elif mode.get() == "auto":
-            manual_setting_button.grid_remove()
+            auto_setting_button.grid(column=1, row=3)
             modeA_M["mode"] = "auto"
-            app_mode="auto"
+            manual_setting_button.grid_remove()
+            # mode_selected="auto"
+            # mode_event.set()
         else:
             modeA_M["mode"] = "error mode"
-            app_mode="error mode"
+            # auto_setting_buttontest.grid_remove()
+            # mode_selected="error mode"
+            # mode_event.set()
 
     def open_scale():
         value = ManualScale(root)  
         if value:
             scale.set(value)
             print(f"ingameui: {value}")
+
+    def auto_set_scale():
+        print("asd")
 
     def start_move(event):
         root.x = event.x
@@ -75,6 +86,9 @@ def InGameUI():
     
     #manual button
     manual_setting_button = ttk.Button(mainframe, text="Scale", command=open_scale, width=8)
+
+    #auto scale button
+    auto_setting_button = ttk.Button(mainframe, text="Repeat Scale", command=auto_set_scale, width=8)
 
     mode = StringVar(value="auto")
     auto_button = ttk.Radiobutton(mainframe, text="A", variable=mode, value="auto", command=mode_changed)

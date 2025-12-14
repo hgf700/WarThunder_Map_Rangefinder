@@ -4,6 +4,7 @@ import traceback
 import time
 from functools import partial
 from Program.LogicOfProgram.SettingsUI import SettingsUI
+# from Program.LogicOfProgram.InGameUI import InGameUI, mode_selected, mode_event
 from Program.LogicOfProgram.InGameUI import InGameUI
 from Program.LogicOfProgram.GenerateBackendMark import GenerateBackendMark
 from Program.LogicOfProgram.UsageOfYolo import UsageOfYolo
@@ -81,6 +82,8 @@ def main():
     # 🎮 Uruchamiamy InGameUI (oddzielny wątek, działa do ESC/krzyżyka)
     InGameUI_thread = threading.Thread(target=InGameUI, name="InGameUIThread")
     InGameUI_thread.start()
+
+    # mode=mode_event.wait()
 
     # ⚙️ Uruchamiamy backend (YOLO + callback)
     print("[DEBUG] start backend_thread...execute callback when_capture_ready")
