@@ -80,4 +80,4 @@ def OCR_A_andTresholdingPhoto():
         plt.axis('off')
         plt.show()
 
-# OCR_A_andTresholdingPhoto()
+OCR_A_andTresholdingPhoto()

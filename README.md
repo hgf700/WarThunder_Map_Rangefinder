@@ -80,18 +80,38 @@ When using the Map Rangefinder:
 3. **Insert scale:** for **M** Enter your map scale using **numbers** only then click **Set**  
    ![Insert scale](assets/5.JPG)
 
-4. **To get access for automatic** for **A** download from link tesseract ocr
-     https://tesseract-ocr.com/#download  
-   - After installation in this directory, or add Tesseract to the system path:  
-     `C:\Program Files\Tesseract-OCR\` (or ensure it is added to **PATH**).
-     
+4. **Automatic Mode – OCR Setup (A)**  
+   To use **Automatic mode (A)**, download **Tesseract OCR** from:  
+   https://tesseract-ocr.com/#download  
+
+   After installation, either:
+   - place Tesseract in the project directory, **or**
+   - add it to the system **PATH**, for example:
+     ```
+     C:\Program Files\Tesseract-OCR\
+     ```
+
    ![Auto scale](assets/6.JPG)
 
-5. **User interaction:** Press `Alt + Left Mouse Button` on the minimap (**bottom-right corner**) area of the minimap will then be captured as a screenshot.
+5. **Automatic Scale Detection (A)**  
+   In **Automatic mode (A)**, press **Repeat Scale**.  
+   The program will process previously captured minimap screenshots and apply **image thresholding** to the minimap scale area.
+
+   ![Thresholded minimap scale](assets/7.png)
+
+6. **OCR Processing (A)**  
+   The OCR engine automatically scans the detected scale region and attempts to extract the numeric value.  
+   - Icons, enemy markers, or ally indicators may interfere with detection and affect OCR accuracy.
+
+   ![OCR input](assets/8.JPG)  
+   ![OCR result](assets/9.JPG)
+
+
+7. **User interaction:** Press `Alt + Left Mouse Button` on the minimap (**bottom-right corner**) area of the minimap will then be captured as a screenshot.
 
    ![After pressing Alt + LMouse button on area of minimap, screenshot is being created](assets/1.jpg)
 
-6. **YOLO detection:** The neural network analyzes the screenshot to detect both the **player** and the **marker** and the calculated distance will be displayed on the overlay.
+8. **YOLO detection:** The neural network analyzes the screenshot to detect both the **player** and the **marker** and the calculated distance will be displayed on the overlay.
 
    ![YOLO Neural network analyzing the capture](assets/2.jpg)
 
