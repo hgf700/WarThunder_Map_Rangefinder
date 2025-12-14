@@ -11,7 +11,8 @@ from Program.LogicOfProgram.Development import writeImage
 
 print = functools.partial(print, flush=True)
 
-#on capture flaga dla callback
+#on capture flaga dla callback 
+# Python traktuje None jako False.
 def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
 # Parametry kółka do wizualnego feedbacku (BGR)
     radius1 = 8
@@ -88,11 +89,11 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
         # Narysuj marker w miejscu kliknięcia
         img = draw_marker(img, x, y)
 
-        # Nazwa pliku z numeracją (żeby nie nadpisywać)
         cv2.imwrite(prediction_raw_path, img)
         print(f"[+] ss saved as {prediction_raw_path}")
 
-#callback
+#callback 
+# Python traktuje None jako False.
         if on_capture:
             on_capture("1")
 

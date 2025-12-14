@@ -66,12 +66,11 @@ def ManageYoloResponse():
         # distance – odległość w pikselach (np. wynik np.hypot)
         # line – długość odcinka między literami A i E w pikselach
         # scale – wartość w metrach odpowiadająca temu odcinkowi (np. 400 m)
-         # przeliczenie pikseli na metry
+        # przeliczenie pikseli na metry
 
         distance_m = (distance / PxPerMap) * scale
 
         distance_m = int(distance_m)             # zaokrąglenie do liczby całkowitej
-
 
         print(f"[INFO] 1 map square = {PxPerMap} m")
         print(f"[INFO] distance in meters: {distance_m} m")

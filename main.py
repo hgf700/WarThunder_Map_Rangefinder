@@ -11,14 +11,7 @@ from Program.LogicOfProgram.CalculatePxPerMapSquare import CalculatePxPerMapSqua
 from Program.LogicOfProgram.ManageYoloResponse import ManageYoloResponse
 from Program.LogicOfProgram.PathToPrograms import settings_path, prediction_raw_path
 
-# 🌐 Zmienne globalne
-overlay = None
-app = None
 current_resolution = None
-
-# 🔐 Flaga i blokada do wątku meters
-meter_thread_running = False
-meter_lock = threading.Lock()
 
 task_queue = queue.Queue()
 
@@ -39,7 +32,6 @@ def worker():
             traceback.print_exc()
         finally:
             task_queue.task_done()
-
 
 def handle_thread_exception(args):
     print("\n--- [Error in thread] ---")
@@ -62,49 +54,17 @@ def handle_thread_exception(args):
     # Rozmiar stosu (globalny, nie dla konkretnego wątku)
     size = threading.stack_size()
     print(f"default size of thread stack: {size if size != 0 else 'system default'}")
-
     print("--- end thread exception ---\n")
 
 # funckja dla callback
 def when_capture_ready(number):
     """executed after callback from yolo detection (function callback)"""
-    global meter_thread_running
-
-    print(f"[YOLO] start detection {number}")
-
-    # 🔒 Tylko jeden wątek CalculateMetersPerPX + ManageYoloResponse na raz
-    with meter_lock:
-        if meter_thread_running:
-            print("[DEBUG] thread meters is alive already.")
-            return
-        meter_thread_running = True
-
-    def meter_thread_func():
-        global meter_thread_running
-        try:
-            print("meter_thread_func task queue start")
-            print("[DEBUG] start CalculateMetersPerPX in different thread.")
-            task_queue.put(UsageOfYolo())
-            task_queue.put(lambda: CalculatePxPerMapSquare(current_resolution))
-            task_queue.put(ManageYoloResponse)
-            print("meter_thread_func task queue end")
-            task_queue.join()
-
-        except Exception as e:
-            print(f"[ERROR] error in thread calculate meters: {e}")
-            traceback.print_exc()
-        finally:
-            # 🔄 Reset flagi po zakończeniu wątku
-            with meter_lock:
-                meter_thread_running = False
-
-    meter_thread=threading.Thread(target=meter_thread_func, daemon=True, name="MeterWorker")
-    meter_thread.start()
-
-
+    task_queue.put(UsageOfYolo)
+    task_queue.put(lambda: CalculatePxPerMapSquare(current_resolution))
+    task_queue.put(ManageYoloResponse)
 
 def main():
-    global overlay, app, current_resolution
+    global current_resolution
 
     threading.excepthook = handle_thread_exception
     
@@ -131,19 +91,6 @@ def main():
         name="GenerateMark"
     )
     backend_thread.start()
-
-
-    # Pętla główna obsługi zadań
-    # while not stop_threads:
-    #     try:
-    #         task = task_queue.get(timeout=0.5)
-    #         # jeśli chcesz, możesz tu od razu wykonać task:
-    #         if task is not None:
-    #             task()
-    #         task_queue.task_done()
-    #     except queue.Empty:
-    #         continue
-
 
     print("[DEBUG] all threads are active. Program works in parallel.")
 
