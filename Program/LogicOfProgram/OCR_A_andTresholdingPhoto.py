@@ -1,0 +1,78 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+import pytesseract
+from Program.LogicOfProgram.Development import showImagePLT,development
+from Program.LogicOfProgram.PathToPrograms import tresholding_PNG_path,prediction_raw_path,tresholding_TXT_path,scale_path
+
+# 🔧 Ścieżki
+def OCR_A_andTresholdingPhoto():
+    if development==1:
+        photo = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Program\photo\image.png"
+        image = cv2.imread(str(photo), cv2.IMREAD_GRAYSCALE)
+    else:
+        image = cv2.imread(str(prediction_raw_path), cv2.IMREAD_GRAYSCALE)
+
+    if image is None:
+        raise FileNotFoundError(f"Nie znaleziono obrazu: {image}")
+    
+    # 🔧 Jeśli Tesseract nie jest w PATH:
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+    height, width = image.shape
+    cut_ratio_h = 0.075  
+    cut_ratio_w = 0.4
+
+    cut_start_h = int(height * (1 - cut_ratio_h))
+    cut_start_w = int(width * (1 - cut_ratio_w))
+
+    roi = image[cut_start_h:, cut_start_w:] 
+
+    # ⚙️ Progowanie kontrastowe
+    lower_thresh = 0
+    upper_thresh = 40
+    mask = cv2.inRange(roi, lower_thresh, upper_thresh)
+
+    # 🔄 Odwrócenie (czarny tekst na białym tle)
+    # processed = cv2.bitwise_not(mask)
+    processed = mask
+
+    if showImagePLT==1:
+        fig, axes = plt.subplots(1, 2, figsize=(10,5))
+        axes[0].imshow(image, cmap="gray")
+        axes[0].set_title("Oryginalny obraz")
+        axes[0].axis("off")
+
+        axes[1].imshow(processed, cmap="gray")
+        axes[1].set_title("Progowanie dolnej części")
+        axes[1].axis("off")
+        plt.show()
+
+    cv2.imwrite(tresholding_PNG_path, processed)
+
+    processed = cv2.GaussianBlur(processed, (3,3), 0)
+    processed = cv2.resize(processed, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+
+    # 🔤 OCR
+    config = r'--oem 3 --psm 6 -c tessedit_char_whitelist=0123456789'
+    text = pytesseract.image_to_string(processed, config=config, lang='eng')
+
+    print("Rozpoznany tekst:")
+    print(text)
+
+#scale folder
+    with open(scale_path, "w") as f:
+        f.write(text)
+
+    with open(tresholding_TXT_path, 'w', encoding='utf-8') as f:
+        f.write(text)
+
+    print(f"Wynik OCR zapisany w: {tresholding_TXT_path}")
+
+    if showImagePLT==1:
+        plt.imshow(processed, cmap='gray')
+        plt.axis('off')
+        plt.show()
+
+OCR_A_andTresholdingPhoto()

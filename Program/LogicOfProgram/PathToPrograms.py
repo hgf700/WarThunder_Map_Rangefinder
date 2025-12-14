@@ -29,7 +29,8 @@ prediction_path = prediction_folder / "prediction.txt"
 
 tresholding_folder = logic_of_program / "thresholding"
 tresholding_folder.mkdir(parents=True, exist_ok=True)
-tresholding_path = tresholding_folder / "thresholding.txt"
+tresholding_TXT_path = tresholding_folder / "thresholding.txt"
+tresholding_PNG_path = tresholding_folder / "tresholded.png"
 
 project_root = logic_of_program.parent
 file = "train_yolo_wt"
