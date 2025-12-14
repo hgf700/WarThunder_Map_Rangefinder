@@ -2,3 +2,4 @@
 
 development=1
 writeImage=0
+showImagePLT=0

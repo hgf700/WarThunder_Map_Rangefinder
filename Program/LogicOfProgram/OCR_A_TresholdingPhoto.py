@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from Program.LogicOfProgram.Development import writeImage,development
+from Program.LogicOfProgram.Development import showImagePLT,development
 from Program.LogicOfProgram.PathToPrograms import tresholding_folder,prediction_raw_path
 
 # Ścieżki
@@ -41,7 +41,7 @@ def OCR_A_TresholdingPhoto():
     combined = np.vstack((upper_part, result_lower))
 
     # Wyświetlenie wyników
-    if writeImage==1:
+    if showImagePLT==1:
         fig, axes = plt.subplots(1, 2, figsize=(10,5))
         axes[0].imshow(image, cmap="gray")
         axes[0].set_title("Oryginalny obraz")

@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from Program.LogicOfProgram.OCR_A_TresholdingPhoto import OCR_A_TresholdingPhoto
 from Program.LogicOfProgram.ManualScale import ManualScale
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import scale_path,meters_path
@@ -53,7 +54,7 @@ def InGameUI():
             print(f"ingameui: {value}")
 
     def auto_set_scale():
-        print("asd")
+        OCR_A_TresholdingPhoto()
 
     def start_move(event):
         root.x = event.x
