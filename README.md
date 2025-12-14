@@ -1,6 +1,6 @@
 # 🛰️ Map Rangefinder for War Thunder
 
-This project is a **Map Rangefinder tool** designed for **War Thunder**, allowing automatic distance calculation between the **player’s position** and a **map marker** generated where the user clicks on the **in-game minimap** (bottom-right corner — **not** the full map opened with the `M` key).
+This project is a **Map Rangefinder tool** designed for **War Thunder**, allowing automatic distance calculation between the **player’s position** and a **map marker** generated where the user clicks on the **in-game minimap** (bottom-right corner **not** the full map opened with the `M` key).
 
 The project is intended to be **compatible with Linux systems**, as it mainly relies on **OpenCV** and **Tesseract OCR**.  
 However, it was **fully developed and tested on Windows**.
@@ -40,9 +40,6 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
    ```bash
    pip install -r requirments/requirmentsWindows.txt
 
-
-
-
 3. **Run the program**
     ```bash
     python main.py
@@ -58,11 +55,15 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
    - After installation in this directory, or add Tesseract to the system path:  
      `C:\Program Files\Tesseract-OCR\` (or ensure it is added to **PATH**).
 
-6. **Enter the current minimap scale** (only the numeric value, without "m" or "meters").
+6. **Enter the current minimap scale (M)** (only the numeric value, without "m" or "meters").
 
-7. Click **Set** to confirm the scale.
+7. Click **Set (M)** to confirm the scale. 
 
-8. In-game, **press `Alt + Left Mouse Button`** on the **minimap** (bottom-right corner of the game interface).  
+8. **Automatic Measurement (A)**  
+   If **Tesseract OCR** is installed, all you need is a previously captured minimap screenshot.  
+   - Press **Repeat Scale (A)** to perform the automatic measurement using the existing screenshot.
+
+9. In-game, **press `Alt + Left Mouse Button`** on the **minimap** (bottom-right corner of the game interface).  
    - After a short moment, the **distance in meters** should appear on the UI.  
    - **Note:** The map resolution must be set to the default size (100%) in the future will be migrated to (130%).
    - **Recommended:** works great with squadron and map pings.
@@ -88,7 +89,7 @@ When using the Map Rangefinder:
    - place Tesseract in the project directory, **or**  
    - add it to the system **PATH**.  
 
-   > ⚠️ If Tesseract is not in the PATH, the installation directory must match (mostly the default download route):
+   > ⚠️ If Tesseract is not in the PATH, the installation directory must match (the default download route):
      ```
      C:\Program Files\Tesseract-OCR\
      ```
@@ -97,7 +98,7 @@ When using the Map Rangefinder:
 5. **Automatic Scale Detection (A)**  
    In **Automatic mode (A)**, press **Repeat Scale**.  
    The program will process previously captured minimap screenshots and apply **image thresholding** to the minimap scale area.
-   
+
    ![Thresholded minimap scale](assets/7.png)
 
 6. **OCR Processing (A)**  
