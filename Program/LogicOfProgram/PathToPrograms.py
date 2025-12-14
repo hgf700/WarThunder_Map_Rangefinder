@@ -20,6 +20,7 @@ settings_path = settings_folder / "settings.txt"
 prediction_raw_folder = logic_of_program / "prediction" 
 prediction_raw_folder.mkdir(parents=True, exist_ok=True)
 prediction_raw_path = prediction_raw_folder / "capture.png"
+cleanPhoto_raw_path = prediction_raw_folder / "cleanPhoto.png"
 
 # print(prediction_raw_path)
 

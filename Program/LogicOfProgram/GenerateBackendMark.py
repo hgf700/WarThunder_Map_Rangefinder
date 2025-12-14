@@ -11,6 +11,36 @@ from Program.LogicOfProgram.Development import writeImage
 
 print = functools.partial(print, flush=True)
 
+def load_settings_box():
+    read = ReadFromFile(settings_path)
+    if not read:
+        print(f"[!] file {settings_path} is empty or didnt exist.")
+        return 0, 0, 0, 0
+
+    parts = read.strip().split()
+    if len(parts) < 6:
+        print(f"[!] too small value ({len(parts)}) in settings.txt: {parts}")
+        return 0, 0, 0, 0
+
+    try:
+        MIN_X, MIN_Y, MAX_X, MAX_Y = map(int, parts[2:6])
+        print(f"[OK] lodaded cordinates: {MIN_X}, {MIN_Y}, {MAX_X}, {MAX_Y}")
+        return MIN_X, MIN_Y, MAX_X, MAX_Y
+    except ValueError as e:
+        print(f"[!] error while convertion of data: {e}")
+        return 0, 0, 0, 0
+
+        
+        # return tuple(map(int, read[2:6]))
+def capture_region(x1, y1, x2, y2):
+    """ ss only in allowed area of screen."""
+    with mss.mss() as sct:
+        monitor = {"top": y1, "left": x1, "width": x2 - x1, "height": y2 - y1}
+        img = sct.grab(monitor)
+        img_bgr = np.array(img)
+        img_bgr = cv2.cvtColor(img_bgr, cv2.COLOR_BGRA2BGR)
+        return img_bgr  
+
 #on capture flaga dla callback 
 # Python traktuje None jako False.
 def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):

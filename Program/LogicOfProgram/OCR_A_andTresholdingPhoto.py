@@ -4,15 +4,22 @@ import matplotlib.pyplot as plt
 import os
 import pytesseract
 from Program.LogicOfProgram.Development import showImagePLT,development
-from Program.LogicOfProgram.PathToPrograms import tresholding_PNG_path,prediction_raw_path,tresholding_TXT_path,scale_path
+from Program.LogicOfProgram.PathToPrograms import tresholding_PNG_path,prediction_raw_path,tresholding_TXT_path,scale_path,cleanPhoto_raw_path
+from Program.LogicOfProgram.GenerateBackendMark import load_settings_box,capture_region
 
 # 🔧 Ścieżki
 def OCR_A_andTresholdingPhoto():
+    MIN_X, MIN_Y, MAX_X, MAX_Y=load_settings_box()
+
+    captureRegionClean = capture_region(MIN_X, MIN_Y, MAX_X, MAX_Y)
+
+    cv2.imwrite(cleanPhoto_raw_path, captureRegionClean)
+
     if development==1:
         photo = r"C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\Program\photo\image.png"
         image = cv2.imread(str(photo), cv2.IMREAD_GRAYSCALE)
     else:
-        image = cv2.imread(str(prediction_raw_path), cv2.IMREAD_GRAYSCALE)
+        image = cv2.imread(str(cleanPhoto_raw_path), cv2.IMREAD_GRAYSCALE)
 
     if image is None:
         raise FileNotFoundError(f"image not found: {image}")
@@ -80,4 +87,4 @@ def OCR_A_andTresholdingPhoto():
         plt.axis('off')
         plt.show()
 
-OCR_A_andTresholdingPhoto()
+# OCR_A_andTresholdingPhoto()
