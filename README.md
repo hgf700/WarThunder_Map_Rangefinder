@@ -1,19 +1,22 @@
 # 🛰️ Map Rangefinder for War Thunder
 
-This project is a **Map Rangefinder tool** designed for **War Thunder**, allowing automatic distance calculation between the **player’s position** and a **map marker** generated where the user clicks on the in-game minimap (located in the bottom-right corner, **not** the full map opened with the M key).  
-Additionally, this project should **be compatible with Linux systems** because it mainly uses **OpenCV** and **Tesseract OCR** although it was **fully tested and developed on Windows**.
+This project is a **Map Rangefinder tool** designed for **War Thunder**, allowing automatic distance calculation between the **player’s position** and a **map marker** generated where the user clicks on the **in-game minimap** (bottom-right corner — **not** the full map opened with the `M` key).
 
-The tool uses a **YOLOv8 neural network** for on-screen object detection and combines it with **pixel-to-meter calibration** to provide **real-time distance measurements** inside the game.
+The project is intended to be **compatible with Linux systems**, as it mainly relies on **OpenCV** and **Tesseract OCR**.  
+However, it was **fully developed and tested on Windows**.
+
+The tool uses a **YOLOv8 neural network** for on-screen object detection and combines it with **pixel-to-meter calibration** to provide **real-time distance measurements** directly inside the game.
 
 ---
 
-## ⚙️ How It Works (shortly)
+## ⚙️ How It Works (Short Overview)
 
 1. The user runs the program and selects their **screen resolution**.  
-2. When the user **presses `Alt + Left Mouse Button`** inside the minimap area, a **screenshot** of the minimap is taken and a **marker** is generated at the click location.  
-3. The **YOLOv8 model** detects both the **player** and the **marker** on the captured image.  
-4. The **pixel-per-square value** (minimap scale) must be **manually entered by the user** once, and is then used for automatic distance calculations.  
-5. The **distance in meters** is displayed in a small **in-game overlay (Tkinter UI)**.
+2. When the user **presses `Alt + Left Mouse Button`** inside the minimap area, a **screenshot** of the minimap is captured and a **marker** is generated at the click location.  
+3. The **YOLOv8 model** detects both the **player position** and the **marker** on the captured image.  
+4. The **pixels-per-square value** (minimap scale) must be **manually entered once** and is then reused for automatic distance calculations.  
+   - Alternatively, **Automatic mode** can be used, which requires **Tesseract OCR**.  
+5. The calculated **distance in meters** is displayed in a small **in-game overlay (Tkinter UI)**.
 
 ---
 
@@ -21,19 +24,24 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
 
 - 🐍 **Python 3.10+**  
 - 🤖 **YOLOv8 (Ultralytics)** — object detection model  
-- 🖼️ **Tkinter** — for the in-game overlay / UI  
-- 🧵 **Threading** — to run backend and UI concurrently  
-- 🎥 **OpenCV** — for frame capture and preprocessing  
+- 🖼️ **Tkinter** — in-game overlay / UI  
+- 🧵 **Threading** — concurrent backend processing and UI  
+- 🎥 **OpenCV** — frame capture and image preprocessing  
+- 🔎 **Tesseract OCR** — automatic minimap scale detection  
 
 ---
 
-## 🚀 Usage for Windows
+## 🚀 Usage (Windows)
 
-1. **Download Python** and during installation select **"Add Python to PATH"**, or add it manually to your environment variables later.
+1. **Install Python**  
+   During installation, select **"Add Python to PATH"** (or add it manually later).
 
-2. **Install all dependencies:**
+2. **Install dependencies**
    ```bash
    pip install -r requirments/requirmentsWindows.txt
+
+
+
 
 3. **Run the program**
     ```bash
@@ -42,8 +50,13 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
 4. **Select your current game resolution** and click **Submit**.  
    - If your resolution is not listed, please **create a pull request** and send a **print screen of your game with minimap including the scale bar** so it can be added in the future.
 
-5. The in-game UI (overlay) will appear it is **!!!hoverable!!!**.  
-   - Click the **M** button to choose manual and click set to open the **manual scale setting** window.
+5. The in-game UI (overlay) will appear and is **!!!hoverable!!!**.  
+
+   - Click the **M** button to select **Manual** mode, then click **Set** to open the **manual scale setting** window.  
+   - Click the **A** button to select **Automatic** mode. This requires **Tesseract OCR**, which can be downloaded from:  
+     https://tesseract-ocr.com/#download  
+   - After installation in this directory, or add Tesseract to the system path:  
+     `C:\Program Files\Tesseract-OCR\` (or ensure it is added to **PATH**).
 
 6. **Enter the current minimap scale** (only the numeric value, without "m" or "meters").
 
@@ -61,23 +74,28 @@ When using the Map Rangefinder:
 1. **Settings with resolutions:** Select your current game resolution and click **Submit**.  
    ![Settings with resolutions](assets/3.JPG)
 
-2. **In-game UI:** The overlay appears and is **!!!hoverable!!!** to activate Manual mode click button **M**.  
+2. **In-game UI:** The overlay appears and is **!!!hoverable!!!** to activate Manual mode click button **M** alternatively to activate Automatic press **A**.  
    ![In-game UI](assets/4.JPG)
 
-3. **Insert scale:** Enter your map scale using **numbers** only then click **Set**  
+3. **Insert scale:** for **M** Enter your map scale using **numbers** only then click **Set**  
    ![Insert scale](assets/5.JPG)
 
-4. **User interaction:** Press `Alt + Left Mouse Button` on the minimap (**bottom-right corner**) area of the minimap will then be captured as a screenshot.
+4. **To get access for automatic** for **A** download from link tesseract ocr
+     https://tesseract-ocr.com/#download  
+   - After installation in this directory, or add Tesseract to the system path:  
+     `C:\Program Files\Tesseract-OCR\` (or ensure it is added to **PATH**).
+   ![Auto scale](assets/6.JPG)
+
+5. **User interaction:** Press `Alt + Left Mouse Button` on the minimap (**bottom-right corner**) area of the minimap will then be captured as a screenshot.
 
    ![After pressing Alt + LMouse button on area of minimap, screenshot is being created](assets/1.jpg)
 
-5. **YOLO detection:** The neural network analyzes the screenshot to detect both the **player** and the **marker** and the calculated distance will be displayed on the overlay.
+6. **YOLO detection:** The neural network analyzes the screenshot to detect both the **player** and the **marker** and the calculated distance will be displayed on the overlay.
 
    ![YOLO Neural network analyzing the capture](assets/2.jpg)
 
 ## plans for future
 
-implement automatic scale detection which will be requiring Tesseract ocr and cv2 thresholding 
 improve threading to hybrid aproach ThreadPoolExecutor + Queue
 and posibly move from notepads to redis , multiprocessing only for yolo rather then threads
 

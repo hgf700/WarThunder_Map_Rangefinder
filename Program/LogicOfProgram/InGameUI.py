@@ -6,7 +6,7 @@ from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import scale_path,meters_path
 import os
 import functools
-import threading
+# import threading
 
 mode_selected = None
 # mode_event = threading.Event()
@@ -54,7 +54,6 @@ def InGameUI():
             print(f"ingameui: {value}")
 
     def auto_set_scale():
-        # OCR_A_TresholdingPhoto()
         value = OCR_A_andTresholdingPhoto()  
         if value:
             scale.set(value)

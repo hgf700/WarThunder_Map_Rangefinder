@@ -15,9 +15,9 @@ def OCR_A_andTresholdingPhoto():
         image = cv2.imread(str(prediction_raw_path), cv2.IMREAD_GRAYSCALE)
 
     if image is None:
-        raise FileNotFoundError(f"Nie znaleziono obrazu: {image}")
+        raise FileNotFoundError(f"image not found: {image}")
     
-    # 🔧 Jeśli Tesseract nie jest w PATH:
+    # 🔧 Unless teseract is not in path
     pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
     height, width = image.shape[:2]
@@ -49,6 +49,7 @@ def OCR_A_andTresholdingPhoto():
         axes[1].axis("off")
         plt.show()
 
+    
     cv2.imwrite(tresholding_PNG_path, processed)
 
     processed = cv2.GaussianBlur(processed, (3,3), 0)
