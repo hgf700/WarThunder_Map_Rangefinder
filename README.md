@@ -97,6 +97,7 @@ When using the Map Rangefinder:
 5. **Automatic Scale Detection (A)**  
    In **Automatic mode (A)**, press **Repeat Scale**.  
    The program will process previously captured minimap screenshots and apply **image thresholding** to the minimap scale area.
+   
    ![Thresholded minimap scale](assets/7.png)
 
 6. **OCR Processing (A)**  
