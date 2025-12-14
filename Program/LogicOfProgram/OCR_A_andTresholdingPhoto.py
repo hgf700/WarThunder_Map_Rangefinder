@@ -74,8 +74,6 @@ def OCR_A_andTresholdingPhoto():
     with open(tresholding_TXT_path, 'w', encoding='utf-8') as f:
         f.write(text)
 
-    print(f"value of saved in {tresholding_TXT_path}")
-
     if showImagePLT==1:
         plt.imshow(processed, cmap='gray')
         plt.axis('off')
