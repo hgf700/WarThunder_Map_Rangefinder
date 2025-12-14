@@ -77,26 +77,26 @@ When using the Map Rangefinder:
 2. **In-game UI:** The overlay appears and is **!!!hoverable!!!** to activate Manual mode click button **M** alternatively to activate Automatic press **A**.  
    ![In-game UI](assets/4.JPG)
 
-3. **Insert scale:** for **M** Enter your map scale using **numbers** only then click **Set**  
+3. **Insert scale - Manual Setup (M):** for **M** Enter your map scale using **numbers** only then click **Set**  
    ![Insert scale](assets/5.JPG)
 
 4. **Automatic Mode – OCR Setup (A)**  
    To use **Automatic mode (A)**, download **Tesseract OCR** from:  
    https://tesseract-ocr.com/#download  
 
-   After installation, either:
-   - place Tesseract in the project directory, **or**
-   - add it to the system **PATH**, for example:
+   After installation, either:  
+   - place Tesseract in the project directory, **or**  
+   - add it to the system **PATH**.  
+
+   > ⚠️ If Tesseract is not in the PATH, the installation directory must match (mostly the default download route):
      ```
      C:\Program Files\Tesseract-OCR\
      ```
-
    ![Auto scale](assets/6.JPG)
 
 5. **Automatic Scale Detection (A)**  
    In **Automatic mode (A)**, press **Repeat Scale**.  
    The program will process previously captured minimap screenshots and apply **image thresholding** to the minimap scale area.
-
    ![Thresholded minimap scale](assets/7.png)
 
 6. **OCR Processing (A)**  
