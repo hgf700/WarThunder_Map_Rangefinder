@@ -84,6 +84,7 @@ When using the Map Rangefinder:
      https://tesseract-ocr.com/#download  
    - After installation in this directory, or add Tesseract to the system path:  
      `C:\Program Files\Tesseract-OCR\` (or ensure it is added to **PATH**).
+     
    ![Auto scale](assets/6.JPG)
 
 5. **User interaction:** Press `Alt + Left Mouse Button` on the minimap (**bottom-right corner**) area of the minimap will then be captured as a screenshot.
