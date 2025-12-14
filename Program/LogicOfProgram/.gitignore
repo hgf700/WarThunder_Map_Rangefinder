@@ -1,10 +1,10 @@
 captures/
 concepts/
-settings/
-scale/
-meters/
+settings/*
+scale/*
+meters/*
 Todo/
 __pycache__/
-prediction/
+prediction/*
 MetersPerPx/
-PxPerMapSquare/
+PxPerMapSquare/*

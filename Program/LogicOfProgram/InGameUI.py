@@ -8,7 +8,7 @@ import functools
 
 print = functools.partial(print, flush=True)
 
-# stop_threads = False
+app_mode=None
 
 def InGameUI():
     root = Tk()
@@ -16,6 +16,8 @@ def InGameUI():
     root.attributes('-topmost', True)
 
     modeA_M = {"mode": "auto"}
+
+    global app_mode
 
     def close_window():
         # global stop_threads
@@ -27,9 +29,14 @@ def InGameUI():
         if mode.get() == "manual":
             manual_setting_button.grid(column=1, row=3)
             modeA_M["mode"] = "manual"
-        else:
+            app_mode="manual"
+        elif mode.get() == "auto":
             manual_setting_button.grid_remove()
             modeA_M["mode"] = "auto"
+            app_mode="auto"
+        else:
+            modeA_M["mode"] = "error mode"
+            app_mode="error mode"
 
     def open_scale():
         value = ManualScale(root)  

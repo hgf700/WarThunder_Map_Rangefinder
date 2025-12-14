@@ -17,8 +17,8 @@ def save_to_file(width, height, MiniMapStartX,MiniMapStartY,MiniMapEndX,MiniMapE
 def SettingsUI():
     root = Tk()
     root.title("Settings")
-    root.overrideredirect(True)
-    root.attributes('-topmost', False)
+    # root.overrideredirect(True)
+    # root.attributes('-topmost', False)
 
     result = {"resolution": None}
 

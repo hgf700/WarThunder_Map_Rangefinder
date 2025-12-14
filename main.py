@@ -23,17 +23,17 @@ meter_lock = threading.Lock()
 task_queue = queue.Queue()
 
 def worker():
-    """Worker do obsługi zadań z kolejki."""
+    """Worker to handle queue."""
     while True:
         task = task_queue.get()
         if task is None:  # sygnał zakończenia
             task_queue.task_done()
-            print("[WORKER] Zatrzymuję worker thread.")
+            print("[WORKER] stopped worker thread.")
             break
         try:
             result = task()
             if result is not None:
-                print(f"[WORKER OK] Wynik: {result}")
+                print(f"[WORKER OK] result: {result}")
         except Exception as e:
             print(f"[WORKER ERR] {e}")
             traceback.print_exc()
@@ -42,41 +42,40 @@ def worker():
 
 
 def handle_thread_exception(args):
-    print("\n--- [BŁĄD W WĄTKU] ---")
+    print("\n--- [Error in thread] ---")
 
-    thread_name = getattr(args.thread, "name", "Nieznany wątek")
-    print(f"Wątek: {thread_name}")
-    print(f"Typ: {args.exc_type.__name__}")
-    print(f"Wiadomość: {args.exc_value}")
-    print(f"Czy wątek żyje: {args.thread.is_alive() if args.thread else 'brak danych'}")
+    thread_name = getattr(args.thread, "name", "unknown thread")
+    print(f"thread: {thread_name}")
+    print(f"type: {args.exc_type.__name__}")
+    print(f"mesage: {args.exc_value}")
+    print(f"is thread alive: {args.thread.is_alive() if args.thread else 'none data'}")
 
-    print("\nŚlad stosu:")
+    print("thread stack")
     traceback.print_exception(args.exc_type, args.exc_value, args.exc_traceback)
 
     # Lista aktywnych wątków
     enumeration = threading.enumerate()
-    print(f"\nAktywne wątki ({len(enumeration)}):")
+    print(f"active thread ({len(enumeration)}):")
     for i in enumeration:
         print(f"  - {i.name} (alive={i.is_alive()})")
 
     # Rozmiar stosu (globalny, nie dla konkretnego wątku)
     size = threading.stack_size()
-    print(f"\nDomyślny rozmiar stosu wątków: {size if size != 0 else 'system default'}")
+    print(f"default size of thread stack: {size if size != 0 else 'system default'}")
 
-    print("--- KONIEC ---\n")
+    print("--- end thread exception ---\n")
 
 # funckja dla callback
 def when_capture_ready(number):
-    """Wywoływane po wykonaniu detekcji YOLO (funckja dla callback)"""
+    """executed after callback from yolo detection (function callback)"""
     global meter_thread_running
 
-    print(f"[YOLO] Uruchamiam detekcję dla {number}")
-    UsageOfYolo()
+    print(f"[YOLO] start detection {number}")
 
     # 🔒 Tylko jeden wątek CalculateMetersPerPX + ManageYoloResponse na raz
     with meter_lock:
         if meter_thread_running:
-            print("[DEBUG] Wątek meters już działa — pomijam uruchomienie nowego.")
+            print("[DEBUG] thread meters is alive already.")
             return
         meter_thread_running = True
 
@@ -84,14 +83,15 @@ def when_capture_ready(number):
         global meter_thread_running
         try:
             print("meter_thread_func task queue start")
-            print("[DEBUG] Uruchamiam CalculateMetersPerPX w osobnym wątku.")
+            print("[DEBUG] start CalculateMetersPerPX in different thread.")
+            task_queue.put(UsageOfYolo())
             task_queue.put(lambda: CalculatePxPerMapSquare(current_resolution))
             task_queue.put(ManageYoloResponse)
             print("meter_thread_func task queue end")
             task_queue.join()
 
         except Exception as e:
-            print(f"[ERROR] Błąd w wątku obliczania metrów: {e}")
+            print(f"[ERROR] error in thread calculate meters: {e}")
             traceback.print_exc()
         finally:
             # 🔄 Reset flagi po zakończeniu wątku
@@ -113,17 +113,17 @@ def main():
     # 📏 Ustawienia rozdzielczości
     res = SettingsUI()
     if not res or res == "error":
-        print("Nie wybrano rozdzielczości lub błąd.")
+        print("resolution not selected or error.")
         return
     current_resolution = res
-    print(f"Ustawiono rozdzielczość: {res}")
+    print(f"setted resolution: {res}")
 
     # 🎮 Uruchamiamy InGameUI (oddzielny wątek, działa do ESC/krzyżyka)
     InGameUI_thread = threading.Thread(target=InGameUI, name="InGameUIThread")
     InGameUI_thread.start()
 
     # ⚙️ Uruchamiamy backend (YOLO + callback)
-    print("[DEBUG] Uruchamiam backend_thread...wykonanie callback when_capture_ready")
+    print("[DEBUG] start backend_thread...execute callback when_capture_ready")
     backend_thread = threading.Thread(
         target=GenerateBackendMark,
         args=(settings_path, prediction_raw_path, when_capture_ready),
@@ -145,11 +145,11 @@ def main():
     #         continue
 
 
-    print("[DEBUG] Wszystkie wątki uruchomione. Program działa równolegle.")
+    print("[DEBUG] all threads are active. Program works in parallel.")
 
     # czekamy aż użytkownik zamknie InGameUI
     InGameUI_thread.join()
-    print("[INFO] InGameUI zakończone — kończę program.")
+    print("[INFO] InGameUI closed — closing program.")
 
     task_queue.put(None)
     time.sleep(0.1)

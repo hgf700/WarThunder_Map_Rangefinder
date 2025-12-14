@@ -1,4 +1,4 @@
 #for developing and testing single functions
 
-development=0
+development=1
 writeImage=0
