@@ -20,7 +20,7 @@ def OCR_A_andTresholdingPhoto():
     # 🔧 Jeśli Tesseract nie jest w PATH:
     pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-    height, width = image.shape
+    height, width = image.shape[:2]
     cut_ratio_h = 0.075  
     cut_ratio_w = 0.4
 
@@ -52,27 +52,33 @@ def OCR_A_andTresholdingPhoto():
     cv2.imwrite(tresholding_PNG_path, processed)
 
     processed = cv2.GaussianBlur(processed, (3,3), 0)
-    processed = cv2.resize(processed, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+    processed = cv2.adaptiveThreshold(
+        mask,
+        255,
+        cv2.ADAPTIVE_THRESH_MEAN_C,
+        cv2.THRESH_BINARY,
+        11,
+        2
+    )
 
     # 🔤 OCR
     config = r'--oem 3 --psm 6 -c tessedit_char_whitelist=0123456789'
     text = pytesseract.image_to_string(processed, config=config, lang='eng')
 
-    print("Rozpoznany tekst:")
-    print(text)
+    print(f"ocr recognized: {text}")
 
-#scale folder
+    #scale folder
     with open(scale_path, "w") as f:
         f.write(text)
 
     with open(tresholding_TXT_path, 'w', encoding='utf-8') as f:
         f.write(text)
 
-    print(f"Wynik OCR zapisany w: {tresholding_TXT_path}")
+    print(f"value of saved in {tresholding_TXT_path}")
 
     if showImagePLT==1:
         plt.imshow(processed, cmap='gray')
         plt.axis('off')
         plt.show()
 
-OCR_A_andTresholdingPhoto()
+# OCR_A_andTresholdingPhoto()
