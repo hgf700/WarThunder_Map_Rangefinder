@@ -4,26 +4,32 @@ import numpy as np
 from pynput import mouse, keyboard
 import os
 import threading
+import functools
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import settings_path, prediction_raw_path
-import functools
 from Program.LogicOfProgram.Development import writeImage
+from Program.LogicOfProgram.logger import setup_logger
 
 print = functools.partial(print, flush=True)
+
+logger = setup_logger(__name__)
 
 def load_settings_box():
     read = ReadFromFile(settings_path)
     if not read:
+        logger.debug(f"file {settings_path} is empty or didnt exist")
         print(f"[!] file {settings_path} is empty or didnt exist.")
         return 0, 0, 0, 0
 
     parts = read.strip().split()
     if len(parts) < 6:
+        logger.debug(f"too small value ({len(parts)}) in settings.txt: {parts}")
         print(f"[!] too small value ({len(parts)}) in settings.txt: {parts}")
         return 0, 0, 0, 0
 
     try:
         MIN_X, MIN_Y, MAX_X, MAX_Y = map(int, parts[2:6])
+        logger.debug(f"lodaded cordinates: {MIN_X}, {MIN_Y}, {MAX_X}, {MAX_Y}")
         print(f"[OK] lodaded cordinates: {MIN_X}, {MIN_Y}, {MAX_X}, {MAX_Y}")
         return MIN_X, MIN_Y, MAX_X, MAX_Y
     except ValueError as e:
@@ -49,41 +55,9 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
     radius2 = 6
     color1 = (0, 165, 255)  # pomarańczowy
     color2 = (39, 250, 0)   # zielony
-    Alpha = 0.4
-
-    def load_settings_box():
-        read = ReadFromFile(settings_path)
-        if not read:
-            print(f"[!] file {settings_path} is empty or didnt exist.")
-            return 0, 0, 0, 0
-
-        parts = read.strip().split()
-        if len(parts) < 6:
-            print(f"[!] too small value ({len(parts)}) in settings.txt: {parts}")
-            return 0, 0, 0, 0
-
-        try:
-            MIN_X, MIN_Y, MAX_X, MAX_Y = map(int, parts[2:6])
-            print(f"[OK] lodaded cordinates: {MIN_X}, {MIN_Y}, {MAX_X}, {MAX_Y}")
-            return MIN_X, MIN_Y, MAX_X, MAX_Y
-        except ValueError as e:
-            print(f"[!] error while convertion of data: {e}")
-            return 0, 0, 0, 0
-
+    Alpha = 0.4 
         
-        # return tuple(map(int, read[2:6]))
-    
     MIN_X, MIN_Y, MAX_X, MAX_Y=load_settings_box()
-
-    def capture_region(x1, y1, x2, y2):
-        """ ss only in allowed area of screen."""
-        with mss.mss() as sct:
-            monitor = {"top": y1, "left": x1, "width": x2 - x1, "height": y2 - y1}
-            img = sct.grab(monitor)
-            img_bgr = np.array(img)
-            img_bgr = cv2.cvtColor(img_bgr, cv2.COLOR_BGRA2BGR)
-            return img_bgr
-
 
     def draw_marker(img, x, y, alpha=Alpha):
         """Draw marker in place of click"""
@@ -151,11 +125,15 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
                 return
 
             if button==mouse.Button.left and pressed and alt_pressed:
-                print(f"alt+lpm")
+                print(f"alt+lpm in allowed are: {x},{y}")
+                
+                logger.debug(f"alt+lpm click")
                 # Tylko kliknięcia w określonym zakresie
                 if MIN_X <= x <= MAX_X and MIN_Y <= y <= MAX_Y:
                     handle_region_click(x, y)
                 else:
+                    logger.debug(f"with alt | Ignore click apart minimap: ({x},{y}")
+                    logger.debug(f"with alt | X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y} ")
                     print(f"[Ignore click apart minimap]: ({x},{y})")
                     print(f"X[{MIN_X},{MAX_X}] Y[{MIN_Y},{MAX_Y})")
 

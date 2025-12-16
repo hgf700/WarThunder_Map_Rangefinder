@@ -11,6 +11,10 @@ from Program.LogicOfProgram.UsageOfYolo import UsageOfYolo
 from Program.LogicOfProgram.CalculatePxPerMapSquare import CalculatePxPerMapSquare
 from Program.LogicOfProgram.ManageYoloResponse import ManageYoloResponse
 from Program.LogicOfProgram.PathToPrograms import settings_path, prediction_raw_path
+from Program.LogicOfProgram.logger import setup_logger
+from Program.LogicOfProgram.Development import development
+
+logger = setup_logger(__name__)
 
 current_resolution = None
 
@@ -56,6 +60,8 @@ def handle_thread_exception(args):
     size = threading.stack_size()
     print(f"default size of thread stack: {size if size != 0 else 'system default'}")
     print("--- end thread exception ---\n")
+    logger.debug(f"thread error: ")
+
 
 # funckja dla callback
 def when_capture_ready(number):
@@ -66,6 +72,10 @@ def when_capture_ready(number):
 
 def main():
     global current_resolution
+
+    if(development==1):
+        print("IMPORTANT !!! go to file Program/LogicOfProgram/development.py and set everything to 0 !!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        logger.debug(f"go to file Program/LogicOfProgram/Development.py and set everything to 0")
 
     threading.excepthook = handle_thread_exception
     

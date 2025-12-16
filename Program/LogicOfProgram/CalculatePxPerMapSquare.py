@@ -3,9 +3,12 @@ import numpy as np
 import os
 from Program.LogicOfProgram.PathToPrograms import prediction_raw_path, PxPerMapSquare_path,Letters_return_func
 from Program.LogicOfProgram.Development import development
+from Program.LogicOfProgram.logger import setup_logger
 import functools
 
 print = functools.partial(print, flush=True)
+
+logger = setup_logger(__name__)
 
 def CalculatePxPerMapSquare(resolutionPX):
     Pixels_per_square = {"1square": None}

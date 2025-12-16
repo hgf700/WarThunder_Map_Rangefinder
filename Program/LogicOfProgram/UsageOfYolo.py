@@ -3,6 +3,9 @@ import os
 import cv2
 import functools
 from Program.LogicOfProgram.PathToPrograms import model_path,prediction_raw_path,prediction_folder,prediction_path
+from Program.LogicOfProgram.logger import setup_logger
+
+logger = setup_logger(__name__)
 
 print = functools.partial(print, flush=True)
 

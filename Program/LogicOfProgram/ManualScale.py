@@ -3,6 +3,12 @@ from tkinter import ttk
 import os
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import scale_path
+import functools
+from Program.LogicOfProgram.logger import setup_logger
+
+logger = setup_logger(__name__)
+
+print = functools.partial(print, flush=True)
 
 def save_scale(value: str):
     with open(scale_path, "w") as f:
@@ -34,6 +40,7 @@ def ManualScale(parent=None):
             result.set(value)
             root.destroy()  # zamyka okno po kliknięciu „Set”
             print(f"manual scale : {value}")
+            logger.debug(f"manual scale : {value}")
 
     ttk.Button(mainframe, text="Set", command=ScaleM_put).grid(column=0, row=1, sticky=E)
     ttk.Label(mainframe, text="Seted").grid(column=1, row=1, sticky=W)

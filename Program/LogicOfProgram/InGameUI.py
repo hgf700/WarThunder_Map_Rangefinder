@@ -6,7 +6,9 @@ from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import scale_path,meters_path
 import os
 import functools
-# import threading
+from Program.LogicOfProgram.logger import setup_logger
+
+logger = setup_logger(__name__)
 
 mode_selected = None
 # mode_event = threading.Event()
@@ -33,16 +35,19 @@ def InGameUI():
             manual_setting_button.grid(column=1, row=3)
             modeA_M["mode"] = "manual"
             auto_setting_button.grid_remove()
+            logger.debug(f"manual")
             # mode_selected="manual"
             # mode_event.set()
         elif mode.get() == "auto":
             auto_setting_button.grid(column=1, row=3)
             modeA_M["mode"] = "auto"
             manual_setting_button.grid_remove()
+            logger.debug(f"auto")
             # mode_selected="auto"
             # mode_event.set()
         else:
             modeA_M["mode"] = "error mode"
+            logger.debug(f"error mode")
             # auto_setting_buttontest.grid_remove()
             # mode_selected="error mode"
             # mode_event.set()
@@ -51,12 +56,14 @@ def InGameUI():
         value = ManualScale(root)  
         if value:
             scale.set(value)
+            logger.debug(f"manually seted scale {value}")
             print(f"ingameui: {value}")
 
     def auto_set_scale():
         value = OCR_A_andTresholdingPhoto()  
         if value:
             scale.set(value)
+            logger.debug(f"auto seted scale {value}")
             print(f"ingameui: {value}")
 
     def start_move(event):

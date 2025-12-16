@@ -6,6 +6,12 @@ import pytesseract
 from Program.LogicOfProgram.Development import showImagePLT,development
 from Program.LogicOfProgram.PathToPrograms import tresholding_PNG_path,prediction_raw_path,tresholding_TXT_path,scale_path,cleanPhoto_raw_path
 from Program.LogicOfProgram.GenerateBackendMark import load_settings_box,capture_region
+import functools
+from Program.LogicOfProgram.logger import setup_logger
+
+logger = setup_logger(__name__)
+
+print = functools.partial(print, flush=True)
 
 # 🔧 Ścieżki
 def OCR_A_andTresholdingPhoto():
@@ -74,6 +80,7 @@ def OCR_A_andTresholdingPhoto():
     text = pytesseract.image_to_string(processed, config=config, lang='eng')
 
     print(f"ocr recognized: {text}")
+    logger.debug(f"ocr recognized: {text}")
 
     #scale folder
     with open(scale_path, "w") as f:

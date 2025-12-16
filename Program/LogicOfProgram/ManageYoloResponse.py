@@ -3,6 +3,9 @@ import math
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import prediction_path,settings_path,scale_path,meters_path,PxPerMapSquare_path
 import functools
+from Program.LogicOfProgram.logger import setup_logger
+
+logger = setup_logger(__name__)
 
 print = functools.partial(print, flush=True)
 
@@ -10,6 +13,7 @@ def ManageYoloResponse():
     parts=ReadFromFile(prediction_path)
     
     if not parts:   
+        logger.debug(f"no data in file prediction.txt")
         print("[!] no data in file prediction.txt")
         return
     
@@ -21,6 +25,13 @@ def ManageYoloResponse():
     parts = [p for p in cleaned.split(" ") if p.strip() != ""]
 
     parts=parts[:12]
+
+    EXPECTED_LEN=12
+
+    if len(parts) != EXPECTED_LEN:
+        print(f"YOLO detection incomplete: expected {EXPECTED_LEN}, got {len(parts)}")
+        logger.debug(f"YOLO detection incomplete: expected {EXPECTED_LEN}, got {len(parts)}")
+
     try:
         # 1 0.87 255 140 285 170 0 0.86 253 17 273 38  
         # mark,Mpred,Mx1,My1,Mx2,My2,player,Ppred,Px1,Py1,Px2,Py2= map(int, parts[:12])
@@ -38,6 +49,8 @@ def ManageYoloResponse():
         Px2 = int(parts[10])
         Py2 = int(parts[11])
 
+        
+
         Mx=(Mx1+Mx2)/2
         My=(My1+My2)/2
         Px=(Px1+Px2)/2
@@ -49,6 +62,8 @@ def ManageYoloResponse():
         print(f"[INFO] Marker: ({Mx}, {My}) | Conf: {Mpred:.2f}")
         print(f"[INFO] Player: ({Px}, {Py}) | Conf: {Ppred:.2f}")
         print(f"[INFO] distance: {distance}px")
+        
+        logger.debug(f"(0) Marker: ({Mx}, {My}) | Conf: {Mpred:.2f} (1) Player: ({Px}, {Py}) | Conf: {Ppred:.2f} distance: {distance}px")
 
         resolution =ReadFromFile(settings_path)
         parts2 = [int(x) for x in resolution.split()]
@@ -74,6 +89,8 @@ def ManageYoloResponse():
 
         print(f"[INFO] 1 map square = {PxPerMap} m")
         print(f"[INFO] distance in meters: {distance_m} m")
+        
+        logger.debug(f"1 map square = {PxPerMap} m | distance in meters: {distance_m} m")
 
         save_to_file_meters(distance_m)
 
@@ -81,6 +98,7 @@ def ManageYoloResponse():
 
     except ValueError as e:
         print("[!] error while converting values:", e)
+        logger.debug(f"error while converting values")
         return 
         
 # ManageYoloResponse()

@@ -5,10 +5,11 @@ from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import settings_path
 from Program.LogicOfProgram.Development import development
 import functools
+from Program.LogicOfProgram.logger import setup_logger
 
+logger = setup_logger(__name__)
 
 print = functools.partial(print, flush=True)
-
 
 def save_to_file(width, height, MiniMapStartX,MiniMapStartY,MiniMapEndX,MiniMapEndY):
     with open(settings_path, "w") as f:
@@ -43,7 +44,6 @@ def SettingsUI():
         res3=[2560, 1440, 2045, 922, 2542, 1420]#2560x1440
         if development==1:
             res1=[1366, 768, 987, 389, 1351, 703] # dev laptop 1366x768
-
         if res == "1920x1080":
             save_to_file(res2[0],res2[1],res2[2],res2[3],res2[4],res2[5])
         elif res == "2560x1440":
@@ -55,6 +55,7 @@ def SettingsUI():
                 print("error settingsui")
         
         result["resolution"] = res
+        logger.debug(f"seted resolution {res}")
         
     settings = ReadFromFile(settings_path)
 
@@ -64,9 +65,11 @@ def SettingsUI():
             resolution.set(f"{values[0]}x{values[1]}")
         except Exception as e:
             print(f"[!] Error while parsing settings.txt: {e}")
+            logger.debug(f"Error while parsing settings.txt: {e}")
             resolution.set("error")
     else:
         print("error or no seted resolution")
+        logger.debug(f"error or no seted resolution")
         resolution.set("error")
 
     if development==1:
