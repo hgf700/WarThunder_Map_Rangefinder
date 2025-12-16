@@ -79,19 +79,25 @@ def OCR_A_andTresholdingPhoto():
     config = r'--oem 3 --psm 6 -c tessedit_char_whitelist=0123456789'
     text = pytesseract.image_to_string(processed, config=config, lang='eng')
 
-    print(f"ocr recognized: {text}")
-    logger.debug(f"ocr recognized: {text}")
-
-    #scale folder
-    with open(scale_path, "w") as f:
-        f.write(text)
-
-    with open(tresholding_TXT_path, 'w', encoding='utf-8') as f:
-        f.write(text)
-
     if showImagePLT==1:
         plt.imshow(processed, cmap='gray')
         plt.axis('off')
         plt.show()
+    
+    try:
+        value = int(text.strip())
+        logger.debug(f"ocr recognized: {text}")
+        print(f"ocr recognized: {text}")
+
+        with open(scale_path, "w") as f:
+            f.write(text)
+
+        with open(tresholding_TXT_path, 'w', encoding='utf-8') as f:
+            f.write(text)
+
+        return value
+    except ValueError:
+        logger.warning(f"OCR failed, text='{text}'")
+        return None
 
 # OCR_A_andTresholdingPhoto()

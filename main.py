@@ -75,7 +75,7 @@ def main():
 
     if(development==1):
         print("IMPORTANT !!! go to file Program/LogicOfProgram/development.py and set everything to 0 !!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        logger.debug(f"go to file Program/LogicOfProgram/Development.py and set everything to 0")
+        logger.debug(f"go to file Program/LogicOfProgram/Development.py and set everything to 0 if you dont debugging")
 
     threading.excepthook = handle_thread_exception
     
@@ -85,6 +85,7 @@ def main():
     res = SettingsUI()
     if not res or res == "error":
         print("resolution not selected or error.")
+        logger.debug(f"resolution not selected or error.")
         return
     current_resolution = res
     print(f"setted resolution: {res}")

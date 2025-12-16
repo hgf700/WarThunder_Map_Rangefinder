@@ -30,7 +30,7 @@ def ManageYoloResponse():
 
     if len(parts) != EXPECTED_LEN:
         print(f"YOLO detection incomplete: expected {EXPECTED_LEN}, got {len(parts)}")
-        logger.debug(f"YOLO detection incomplete: expected {EXPECTED_LEN}, got {len(parts)}")
+        logger.error(f"YOLO detection incomplete: expected {EXPECTED_LEN}, got {len(parts)}")
 
     try:
         # 1 0.87 255 140 285 170 0 0.86 253 17 273 38  
