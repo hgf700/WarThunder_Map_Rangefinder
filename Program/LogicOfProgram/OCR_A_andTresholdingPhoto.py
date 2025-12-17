@@ -31,7 +31,7 @@ def OCR_A_andTresholdingPhoto():
         raise FileNotFoundError(f"image not found: {image}")
     
     # 🔧 Unless teseract is not in path
-    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    # pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
     height, width = image.shape[:2]
     cut_ratio_h = 0.075  

@@ -1,6 +1,6 @@
 #for developing and testing single functions
 
-development=1
+development=0
 showImagePLT=0
 writeImage=0
-generateLogs=1
+generateLogs=0
