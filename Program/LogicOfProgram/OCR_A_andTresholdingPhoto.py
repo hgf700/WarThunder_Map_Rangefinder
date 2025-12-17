@@ -85,19 +85,21 @@ def OCR_A_andTresholdingPhoto():
         plt.show()
     
     try:
-        value = int(text.strip())
-        logger.debug(f"ocr recognized: {text}")
-        print(f"ocr recognized: {text}")
+        # "" to remove all white spaces
+        value_string =f"{text.strip()}"
+        value_int=int(value_string)
+        logger.debug(f"ocr recognized: {value_int}")
+        print(f"ocr recognized: {value_int}")
 
         with open(scale_path, "w") as f:
-            f.write(text)
+            f.write(value_string)
 
         with open(tresholding_TXT_path, 'w', encoding='utf-8') as f:
-            f.write(text)
+            f.write(value_string)
 
-        return value
+        return value_int
     except ValueError:
-        logger.warning(f"OCR failed, text='{text}'")
+        logger.warning(f"OCR failed, text='{value_int}'")
         return None
 
 # OCR_A_andTresholdingPhoto()

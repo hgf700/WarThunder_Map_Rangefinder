@@ -99,7 +99,7 @@ def InGameUI():
     manual_setting_button = ttk.Button(mainframe, text="Scale", command=open_scale, width=8)
 
     #auto scale button
-    auto_setting_button = ttk.Button(mainframe, text="Repeat Scale", command=auto_set_scale, width=8)
+    auto_setting_button = ttk.Button(mainframe, text="Auto-Scale", command=auto_set_scale, width=8)
 
     mode = StringVar(value="auto")
     auto_button = ttk.Radiobutton(mainframe, text="A", variable=mode, value="auto", command=mode_changed)
