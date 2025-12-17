@@ -29,11 +29,11 @@ def load_settings_box():
 
     try:
         MIN_X, MIN_Y, MAX_X, MAX_Y = map(int, parts[2:6])
-        logger.debug(f"lodaded cordinates: {MIN_X}, {MIN_Y}, {MAX_X}, {MAX_Y}")
         print(f"[OK] lodaded cordinates: {MIN_X}, {MIN_Y}, {MAX_X}, {MAX_Y}")
         return MIN_X, MIN_Y, MAX_X, MAX_Y
     except ValueError as e:
         print(f"[!] error while convertion of data: {e}")
+        logger.debug(f"error while convertion of data: {e}")
         return 0, 0, 0, 0
 
         

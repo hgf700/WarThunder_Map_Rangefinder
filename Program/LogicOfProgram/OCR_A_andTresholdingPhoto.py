@@ -85,8 +85,8 @@ def OCR_A_andTresholdingPhoto():
         plt.show()
     
     try:
-        # "" to remove all white spaces
-        value_string =f"{text.strip()}"
+        #  to remove all white spaces
+        value_string = "".join(text.split())
         value_int=int(value_string)
         logger.debug(f"ocr recognized: {value_int}")
         print(f"ocr recognized: {value_int}")
