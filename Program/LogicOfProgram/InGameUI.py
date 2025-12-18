@@ -11,6 +11,7 @@ from Program.LogicOfProgram.logger import setup_logger
 logger = setup_logger(__name__)
 
 mode_selected = None
+
 # mode_event = threading.Event()
 
 print = functools.partial(print, flush=True)
@@ -20,7 +21,7 @@ def InGameUI():
     root.overrideredirect(True)
     root.attributes('-topmost', True)
 
-    modeA_M = {"mode": "auto"}
+    modeA_M = {"mode": None}
 
     # global mode_selected
 
@@ -32,14 +33,15 @@ def InGameUI():
 
     def mode_changed():
         if mode.get() == "manual":
-            manual_setting_button.grid(column=1, row=3)
+            manual_setting_button.grid()
             modeA_M["mode"] = "manual"
             auto_setting_button.grid_remove()
             logger.debug(f"manual")
             # mode_selected="manual"
             # mode_event.set()
+
         elif mode.get() == "auto":
-            auto_setting_button.grid(column=1, row=3)
+            auto_setting_button.grid()
             modeA_M["mode"] = "auto"
             manual_setting_button.grid_remove()
             logger.debug(f"auto")
@@ -97,9 +99,12 @@ def InGameUI():
     
     #manual button
     manual_setting_button = ttk.Button(mainframe, text="Scale", command=open_scale, width=8)
+    manual_setting_button.grid(column=1, row=3)
+    manual_setting_button.grid_remove()
 
     #auto scale button
     auto_setting_button = ttk.Button(mainframe, text="Auto-Scale", command=auto_set_scale, width=8)
+    auto_setting_button.grid(column=1, row=3)
 
     mode = StringVar(value="auto")
     auto_button = ttk.Radiobutton(mainframe, text="A", variable=mode, value="auto", command=mode_changed)

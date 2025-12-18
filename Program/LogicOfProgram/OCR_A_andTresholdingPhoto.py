@@ -55,7 +55,7 @@ def OCR_A_andTresholdingPhoto():
     # Odwrócenie (tekst czarny -> 255)
     processed = cv2.bitwise_not(mask)
 
-    # Odszumianie i morphologia
+    # Odszumianie i morphologia rozszerzenie biale na sasiednie
     processed = cv2.GaussianBlur(processed, (3, 3), 0)
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
     processed = cv2.morphologyEx(processed, cv2.MORPH_CLOSE, kernel)
