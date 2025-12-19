@@ -126,4 +126,5 @@ and posibly move from notepads to redis , multiprocessing only for yolo rather t
 
 This tool is **not affiliated** with Gaijin Entertainment or War Thunder.  
 It is a **personal project**.
+
 For the tool to work correctly, the game must be set to **Borderless Windowed mode** in the graphics settings.
