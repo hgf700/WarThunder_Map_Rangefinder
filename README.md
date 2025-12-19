@@ -75,7 +75,7 @@ When using the Map Rangefinder:
 1. **Settings with resolutions:** Select your current game resolution and click **Submit**.  
    ![Settings with resolutions](assets/3.JPG)
 
-2. **In-game UI:** The overlay appears and is **!!!hoverable!!!** to activate Manual mode click button **M** alternatively to activate Automatic press **A**.  
+2. **In-game UI:** The overlay appears and is **!!!hoverable!!!** to activate Manual mode click button **M** alternatively to activate Automatic press **A** (requires downloaded **Tesseract OCR**).  
    ![In-game UI](assets/4.JPG)
 
 3. **Insert scale - Manual Setup (M):** for **M** Enter your map scale using **numbers** only then click **Set**  
@@ -126,3 +126,4 @@ and posibly move from notepads to redis , multiprocessing only for yolo rather t
 
 This tool is **not affiliated** with Gaijin Entertainment or War Thunder.  
 It is a **personal project**.
+For the tool to work correctly, the game must be set to **Borderless Windowed mode** in the graphics settings.
