@@ -16,7 +16,7 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
 3. The **YOLOv8 model** detects both the **player position** and the **marker** on the captured image.  
 4. The **pixels-per-square value** (minimap scale) must be **manually entered once** and is then reused for automatic distance calculations.  
    - Alternatively, **Automatic mode** can be used, which requires **Tesseract OCR**.  
-5. The calculated **distance in meters** is displayed in a small **in-game overlay (Tkinter UI)**.
+5. The calculated **distance in meters** is displayed in a small **in-game overlay (Tkinter UI)** and is **!!!hoverable!!!**
 
 ---
 
@@ -97,15 +97,14 @@ When using the Map Rangefinder:
 
 5. **Automatic Scale Detection (A)**  
    In **Automatic mode (A)**, press **Repeat Scale**.  
-   The program will process previously captured minimap screenshots and apply **image thresholding** to the minimap scale area.
+   The program will screenshot area of map apply **image thresholding** **Gaussian blur** and **morhgological transform** to the minimap scale area.
 
    ![Thresholded minimap scale](assets/7.png)
 
 6. **OCR Processing (A)**  
    The OCR engine automatically scans the detected scale region and attempts to extract the numeric value.  
    - Icons, enemy markers, or ally indicators may interfere with detection and affect OCR accuracy.
-
-   ![OCR input](assets/8.JPG)  
+ 
    ![OCR result](assets/9.JPG)
 
 
