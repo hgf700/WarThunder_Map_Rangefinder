@@ -32,6 +32,8 @@ def OCR_A_andTresholdingPhoto():
     if image is None:
         raise FileNotFoundError(f"image not found: {image}")
 
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
     # Wycięcie ROI (dolna prawa część)
     height, width = image.shape[:2]
     crop_width = 120
@@ -55,7 +57,7 @@ def OCR_A_andTresholdingPhoto():
     # Odwrócenie (tekst czarny -> 255)
     processed = cv2.bitwise_not(mask)
 
-    # Odszumianie i morphologia rozszerzenie biale na sasiednie
+    # Odszumianie i morphologia rozszerzenie biale na sasiednie a potem zmniejszenie na normalne rozmiary
     processed = cv2.GaussianBlur(processed, (3, 3), 0)
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
     processed = cv2.morphologyEx(processed, cv2.MORPH_CLOSE, kernel)

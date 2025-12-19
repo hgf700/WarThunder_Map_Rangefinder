@@ -41,7 +41,7 @@ def SettingsUI():
 
         
         res2=[1920, 1080, 1584, 741, 1904, 1066]#1920x1080
-        res3=[2560, 1440, 2045, 922, 2542, 1420]#2560x1440
+        res3=[2560, 1440, 2045, 922, 2542, 1430]#2560x1440
         if development==1:
             res1=[1366, 768, 987, 389, 1351, 703] # dev laptop 1366x768
         if res == "1920x1080":
@@ -51,8 +51,8 @@ def SettingsUI():
         elif res == "1366x768":
             if development==1:
                 save_to_file(res1[0],res1[1],res1[2],res1[3],res1[4],res1[5])
-            else:
-                print("error settingsui")
+        else:
+            print("error settingsui")
         
         result["resolution"] = res
         logger.debug(f"seted resolution {res}")
