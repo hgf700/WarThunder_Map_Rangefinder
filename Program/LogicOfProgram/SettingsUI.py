@@ -2,8 +2,9 @@ from tkinter import *
 from tkinter import ttk
 import os
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
-from Program.LogicOfProgram.PathToPrograms import settings_path
+from Program.LogicOfProgram.PathToPrograms import settings_path,meters_path
 from Program.LogicOfProgram.Development import development
+from Program.LogicOfProgram.ManageYoloResponse import save_to_file_meters 
 import functools
 from Program.LogicOfProgram.logger import setup_logger
 
@@ -15,10 +16,14 @@ def save_to_file(width, height, MiniMapStartX,MiniMapStartY,MiniMapEndX,MiniMapE
     with open(settings_path, "w") as f:
         f.write(f"{width} {height} {MiniMapStartX} {MiniMapStartY} {MiniMapEndX} {MiniMapEndY}")      
 
+if not meters_path.exists():
+    start=0
+    save_to_file_meters(start)
+
 def SettingsUI():
     root = Tk()
     root.title("Settings")
-    # root.overrideredirect(True)
+    root.overrideredirect(True)
     # root.attributes('-topmost', False)
 
     result = {"resolution": None}
@@ -38,7 +43,6 @@ def SettingsUI():
     # --- Plik do zapisu ---
     def resolution_changed(*args):
         res = resolution.get()
-
         
         res2=[1920, 1080, 1584, 741, 1904, 1066]#1920x1080
         res3=[2560, 1440, 2045, 922, 2542, 1430]#2560x1440

@@ -9,17 +9,17 @@ logger = setup_logger(__name__)
 
 print = functools.partial(print, flush=True)
 
+def save_to_file_meters(meters):
+    with open(meters_path, "w") as f:
+        f.write(f"{meters}")
+
 def ManageYoloResponse():
     parts=ReadFromFile(prediction_path)
     
     if not parts:   
         logger.debug(f"no data in file prediction.txt")
         print("[!] no data in file prediction.txt")
-        return
-    
-    def save_to_file_meters(meters):
-        with open(meters_path, "w") as f:
-            f.write(f"{meters}")
+        return    
     
     cleaned = parts.replace(",", " ").replace("\n", " ").replace("\t", " ")
     parts = [p for p in cleaned.split(" ") if p.strip() != ""]
@@ -48,8 +48,6 @@ def ManageYoloResponse():
         Py1 = int(parts[9])
         Px2 = int(parts[10])
         Py2 = int(parts[11])
-
-        
 
         Mx=(Mx1+Mx2)/2
         My=(My1+My2)/2
