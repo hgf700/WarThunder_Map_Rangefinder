@@ -1,12 +1,13 @@
 from tkinter import *
 from tkinter import ttk
+import os
+import functools
 from Program.LogicOfProgram.OCR_A_andTresholdingPhoto import OCR_A_andTresholdingPhoto
 from Program.LogicOfProgram.ManualScale import ManualScale
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
-from Program.LogicOfProgram.PathToPrograms import scale_path,meters_path
-import os
-import functools
+from Program.LogicOfProgram.PathToPrograms import scale_path,meters_path,PxPerMapSquare_path
 from Program.LogicOfProgram.logger import setup_logger
+from Program.LogicOfProgram.Development import PxPerSquareDebug 
 
 logger = setup_logger(__name__)
 
@@ -112,6 +113,12 @@ def InGameUI():
     auto_button.grid(column=1, row=2, sticky=E)
     manual_button.grid(column=1, row=2, sticky=W)
 
+    if PxPerSquareDebug==1:
+        PxPerMap = StringVar(value=ReadFromFile(PxPerMapSquare_path))
+        ttk.Label(mainframe, text="PxPerSQ").grid(column=1, row=4, sticky=W)
+        ttk.Entry(mainframe, textvariable=PxPerMap, state="readonly", width=10).grid(column=2, row=4, sticky=W)
+    
+
     for child in mainframe.winfo_children():
         child.grid_configure(padx=5, pady=5)
 
@@ -144,6 +151,35 @@ def InGameUI():
         _refresh()
 
     refresh_meters()
+
+    if PxPerSquareDebug==1:
+        def refresh_PxPerSquare():
+            last_mtime = None
+
+            def _refreshPxPerSquare():
+                nonlocal last_mtime
+                try:
+                    if os.path.exists(PxPerMapSquare_path):
+                        mtime = os.path.getmtime(PxPerMapSquare_path)
+                        if mtime != last_mtime:
+                            new_value = ReadFromFile(PxPerMapSquare_path)
+                            PxPerMap.set(new_value)
+                            last_mtime = mtime
+                            print(f"[INFO] updated PxPerMap: {new_value}")
+                    else:
+                        print(f"[WARN] file PxPerMap{PxPerMapSquare_path} do not exist.")
+                except Exception as e:
+                    print(f"[ERROR] while reading PxPerMap: {e}")
+                finally:
+                    root.after(500, _refreshPxPerSquare)
+
+            _refreshPxPerSquare()
+        refresh_PxPerSquare()
+
+
+        
+
+
     root.mainloop()
 
     return modeA_M["mode"]

@@ -86,6 +86,8 @@ def CalculatePxPerMapSquare(resolutionPX):
 
     pixels_per_square=int(pixels_per_square)
 
+    # pixels_per_square=41
+
     print(f"Letter {keys[0]} and {keys[1]} where used to calculate scale.")
     print(f"1 square = {pixels_per_square} px")
 
