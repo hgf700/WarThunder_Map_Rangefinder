@@ -147,8 +147,7 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
     #         print(f"Błąd przy obsłudze klawiatury: {e}")
 
     print("[*] Listener ")
-    with keyboard.Listener(on_press=on_press, on_release=on_release) as kl, \
-        mouse.Listener(on_click=on_click) as ml:
+    with keyboard.Listener(on_press=on_press, on_release=on_release) as kl, mouse.Listener(on_click=on_click) as ml:
         kl.join()
         ml.join()
 

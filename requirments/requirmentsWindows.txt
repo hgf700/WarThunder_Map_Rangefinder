@@ -1,1 +1,11 @@
-pip install mss numpy opencv-python pyautogui ultralytics torch torch-vision PyAutoGUI pynput pytesseract pathlib 
+mss
+numpy
+opencv-python
+pyautogui
+ultralytics
+torch
+torch-vision
+PyAutoGUI
+pynput
+pytesseract
+pathlib 

@@ -174,11 +174,7 @@ def InGameUI():
                     root.after(500, _refreshPxPerSquare)
 
             _refreshPxPerSquare()
-        refresh_PxPerSquare()
-
-
-        
-
+        refresh_PxPerSquare() 
 
     root.mainloop()
 
