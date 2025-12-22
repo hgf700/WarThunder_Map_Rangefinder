@@ -37,7 +37,7 @@ def OCR_A_andTresholdingPhoto():
     # Wycięcie ROI (dolna prawa część)
     height, width = image.shape[:2]
     crop_width = 120
-    crop_height = 20
+    crop_height = 25
     offset_from_end = 10  # ile px przed końcem obrazu w poziomie zaczyna się wycinek
 
     # Współrzędne prostokąta

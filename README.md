@@ -120,7 +120,8 @@ When using the Map Rangefinder:
 
 improve threading to hybrid aproach ThreadPoolExecutor + Queue
 and posibly move from notepads to redis , multiprocessing only for yolo rather then threads
-
+improve model yolo
+execution of file by using exe
 
 ## ⚠️ Disclaimer
 
