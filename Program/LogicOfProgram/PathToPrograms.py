@@ -1,9 +1,29 @@
 from pathlib import Path
+import sys
 
 base_dir = Path(__file__).resolve().parent.parent
 logic_of_program = base_dir  / "LogicOfProgram"
 
 # print(base_dir)
+
+# ─── ZASOBY (PyInstaller) ──────────────────────────────────
+# APP_ROOT = Path(sys.argv[0]).resolve().parent
+# if hasattr(sys, "_MEIPASS"):
+#     RESOURCES_ROOT = Path(sys._MEIPASS)
+# else:
+#     RESOURCES_ROOT = APP_ROOT
+
+# def resource_path(relative: str | Path) -> Path:
+#     return RESOURCES_ROOT / relative
+
+# model_path = resource_path("yolo_weights/last.pt")
+
+# letters_root = resource_path("LettersForVariuousResolutions")
+
+# def Letters_return_func(number: int):
+#     folder = letters_root / f"res{number}"
+#     return folder / "B.png", folder / "D.png", folder / "F.png"
+# ─── Koniec ZASOBY (PyInstaller) ──────────────────────────────────
 
 project_root = logic_of_program.parent
 file = "train_yolo_wt"

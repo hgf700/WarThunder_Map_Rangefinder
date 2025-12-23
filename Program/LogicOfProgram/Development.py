@@ -1,5 +1,5 @@
 #for developing 
-development=0
+development=1
 showImagePLT=0
 writeImage=0
 

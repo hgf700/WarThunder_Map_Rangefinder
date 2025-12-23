@@ -23,8 +23,8 @@ if not meters_path.exists():
 def SettingsUI():
     root = Tk()
     root.title("Settings")
-    root.overrideredirect(True)
-    # root.attributes('-topmost', False)
+    # root.overrideredirect(True)
+    root.attributes('-topmost', False)
 
     result = {"resolution": None}
 
