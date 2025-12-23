@@ -6,7 +6,10 @@ import os
 import threading
 import functools
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
-from Program.LogicOfProgram.PathToPrograms import settings_path, prediction_raw_path
+from Program.LogicOfProgram.PathToPrograms import (
+    settings_path,
+    prediction_raw_path
+    )
 from Program.LogicOfProgram.Development import writeImage
 from Program.LogicOfProgram.logger import setup_logger
 

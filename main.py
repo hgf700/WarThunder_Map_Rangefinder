@@ -10,7 +10,10 @@ from Program.LogicOfProgram.GenerateBackendMark import GenerateBackendMark
 from Program.LogicOfProgram.UsageOfYolo import UsageOfYolo
 from Program.LogicOfProgram.CalculatePxPerMapSquare import CalculatePxPerMapSquare
 from Program.LogicOfProgram.ManageYoloResponse import ManageYoloResponse
-from Program.LogicOfProgram.PathToPrograms import settings_path, prediction_raw_path
+from Program.LogicOfProgram.PathToPrograms import (
+    settings_path,
+    prediction_raw_path
+)
 from Program.LogicOfProgram.logger import setup_logger
 from Program.LogicOfProgram.Development import development
 

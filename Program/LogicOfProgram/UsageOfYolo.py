@@ -2,7 +2,12 @@ from ultralytics import YOLO
 import os
 import cv2
 import functools
-from Program.LogicOfProgram.PathToPrograms import model_path,prediction_raw_path,prediction_folder,prediction_path
+from Program.LogicOfProgram.PathToPrograms import (
+    model_path,
+    prediction_raw_path,
+    prediction_folder,
+    prediction_path
+)
 from Program.LogicOfProgram.logger import setup_logger
 from Program.LogicOfProgram.pyinstaller_Utility import resource_path
 

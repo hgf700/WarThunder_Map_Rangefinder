@@ -23,6 +23,15 @@ logic_of_program = base_dir  / "LogicOfProgram"
 # def Letters_return_func(number: int):
 #     folder = letters_root / f"res{number}"
 #     return folder / "B.png", folder / "D.png", folder / "F.png"
+
+# logic_root = APP_ROOT / "LogicOfProgram"
+# logic_root.mkdir(exist_ok=True)
+
+# prediction_folder = logic_root / "prediction"
+# prediction_folder.mkdir(exist_ok=True)
+
+# prediction_raw_path = prediction_folder / "capture.png"
+# prediction_path = prediction_folder / "prediction.txt"
 # ─── Koniec ZASOBY (PyInstaller) ──────────────────────────────────
 
 project_root = logic_of_program.parent
@@ -44,7 +53,7 @@ settings_folder = logic_of_program / "settings"
 settings_path = settings_folder / "settings.txt"
 
 prediction_raw_folder = logic_of_program / "prediction" 
-# prediction_raw_folder.mkdir(parents=True, exist_ok=True)
+prediction_raw_folder.mkdir(parents=True, exist_ok=True)
 prediction_raw_path = prediction_raw_folder / "capture.png"
 cleanPhoto_raw_path = prediction_raw_folder / "cleanPhoto.png"
 

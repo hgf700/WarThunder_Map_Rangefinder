@@ -3,7 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import functools
 import pytesseract
-from Program.LogicOfProgram.Development import showImagePLT, development
+from Program.LogicOfProgram.Development import (
+    showImagePLT,
+    development
+)
 from Program.LogicOfProgram.PathToPrograms import (
     tresholding_PNG_path,
     prediction_raw_path,

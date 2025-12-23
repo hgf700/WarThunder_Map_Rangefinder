@@ -1,11 +1,14 @@
 from tkinter import *
 from tkinter import ttk
 import os
+import functools
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
-from Program.LogicOfProgram.PathToPrograms import settings_path,meters_path
+from Program.LogicOfProgram.PathToPrograms import (
+    settings_path,
+    meters_path
+)
 from Program.LogicOfProgram.Development import development
 from Program.LogicOfProgram.ManageYoloResponse import save_to_file_meters 
-import functools
 from Program.LogicOfProgram.logger import setup_logger
 
 logger = setup_logger(__name__)

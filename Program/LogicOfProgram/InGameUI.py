@@ -5,7 +5,11 @@ import functools
 from Program.LogicOfProgram.OCR_A_andTresholdingPhoto import OCR_A_andTresholdingPhoto
 from Program.LogicOfProgram.ManualScale import ManualScale
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
-from Program.LogicOfProgram.PathToPrograms import scale_path,meters_path,PxPerMapSquare_path
+from Program.LogicOfProgram.PathToPrograms import (
+    scale_path,
+    meters_path,
+    PxPerMapSquare_path
+)
 from Program.LogicOfProgram.logger import setup_logger
 from Program.LogicOfProgram.Development import PxPerSquareDebug 
 
