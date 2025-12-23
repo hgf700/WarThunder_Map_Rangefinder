@@ -1,3 +1,0 @@
-pip install pyinstaller
-
-pyinstaller --clean --distpath="Range_Calculator" --workpath="temp" --icon=./assets/logo3_ico.ico --add-data "Program/LogicOfProgram/Development.py;." --onedir main.py

@@ -4,13 +4,17 @@ import cv2
 import functools
 from Program.LogicOfProgram.PathToPrograms import model_path,prediction_raw_path,prediction_folder,prediction_path
 from Program.LogicOfProgram.logger import setup_logger
+from Program.LogicOfProgram.pyinstaller_Utility import resource_path
 
 logger = setup_logger(__name__)
 
 print = functools.partial(print, flush=True)
 
 def UsageOfYolo():
-    # Załaduj model
+    
+    # MODEL_RELATIVE_PATH = "yolo_weights/last.pt"
+
+    # model_path = resource_path(MODEL_RELATIVE_PATH)
     model = YOLO(model_path)
 
     # Wykonaj detekcję

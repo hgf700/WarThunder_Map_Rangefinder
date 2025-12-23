@@ -8,3 +8,4 @@ torch-vision
 PyAutoGUI
 pynput
 pytesseract
+pyinstaller

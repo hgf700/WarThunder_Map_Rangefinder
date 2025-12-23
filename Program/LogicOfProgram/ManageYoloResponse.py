@@ -1,8 +1,8 @@
 import os
+import functools
 import math
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import prediction_path,settings_path,scale_path,meters_path,PxPerMapSquare_path
-import functools
 from Program.LogicOfProgram.logger import setup_logger
 
 logger = setup_logger(__name__)
