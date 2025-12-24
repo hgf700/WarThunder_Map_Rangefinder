@@ -4,22 +4,22 @@ from pathlib import Path
 APP_ROOT = Path(sys.argv[0]).resolve().parent
 
 if hasattr(sys, "_MEIPASS"):
-    RESOURCES_ROOT = Path(sys._MEIPASS)
+    DATA_PATH = APP_ROOT / "_internal"
+    
 else:
-    RESOURCES_ROOT = Path(__file__).resolve().parents[2]
+    DATA_PATH = Path(__file__).resolve().parents[2]  # root projektu
 
 def resource_path(relative: str | Path) -> Path:
-    return RESOURCES_ROOT / relative
+    return DATA_PATH / relative
 
-model_path = resource_path("Program/train_yolo_wt/weights/last.pt")
-
-letters_root = resource_path("Program/LettersForVariuousResolutions")
+model_path = resource_path(f"{DATA_PATH}/Program/train_yolo_wt/weights/last.pt")
+letters_root = resource_path(f"{DATA_PATH}Program/LettersForVariuousResolutions")
 
 def Letters_return_func(number: int):
     folder = letters_root / f"res{number}"
     return folder / "B.png", folder / "D.png", folder / "F.png"
 
-data_root = APP_ROOT / "Program" /"LogicOfProgram"
+data_root = DATA_PATH / "Program" /"LogicOfProgram"
 data_root.mkdir(exist_ok=True)
 
 scale_folder = data_root / "scale"

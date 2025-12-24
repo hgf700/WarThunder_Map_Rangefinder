@@ -2,6 +2,12 @@ pyinstaller --clean `
 --distpath="EXE_Range_Calculator" `
 --icon=./assets/logo3_ico.ico `
 --add-data "Program/train_yolo_wt/weights;Program/train_yolo_wt/weights" `
+--add-data "Program/LogicOfProgram/meters;Program/LogicOfProgram/meters" `
+--add-data "Program/LogicOfProgram/prediction/results;Program/LogicOfProgram/prediction/results" `
+--add-data "Program/LogicOfProgram/PxPerMapSquare;Program/LogicOfProgram/PxPerMapSquare" `
+--add-data "Program/LogicOfProgram/scale;Program/LogicOfProgram/scale" `
+--add-data "Program/LogicOfProgram/settings;Program/LogicOfProgram/settings" `
+--add-data "Program/LogicOfProgram/thresholding;Program/LogicOfProgram/thresholding" `
 --add-data "Program/LettersForVariuousResolutions;Program/LettersForVariuousResolutions" `
---add-data "pyinstaller/config.json;A_config" `
+--add-data "pyinstaller/config.json;pyinstaller/config" `
 --onedir main.py
