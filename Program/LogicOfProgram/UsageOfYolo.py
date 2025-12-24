@@ -9,7 +9,6 @@ from Program.LogicOfProgram.PathToPrograms import (
     prediction_path
 )
 from Program.LogicOfProgram.logger import setup_logger
-from Program.LogicOfProgram.pyinstaller_Utility import resource_path
 
 logger = setup_logger(__name__)
 
