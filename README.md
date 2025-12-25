@@ -118,10 +118,10 @@ When using the Map Rangefinder:
 
 ## Important Notes
 
-If the program works correctly, the `pyinstaller` folder contains a `.txt` file with the command used to compile the program into an `.exe` file (compilation takes around 2 minutes).
-For the tool to work correctly, the game must be set to **Borderless Windowed** mode in the graphics settings.
+- If the program works correctly, the `pyinstaller` folder contains a `.txt` file with the command used to compile the program into an `.exe` file (compilation takes around 2 minutes).
+- For the tool to work correctly, the game must be set to **Borderless Windowed** mode in the graphics settings.
 The **Map Size** must be set to **100%**.
-If Tesseract is not in the PATH, the installation directory must match (the default download route):
+- If Tesseract is not in the PATH, the installation directory must match (the default download route):
 ```
 C:\Program Files\Tesseract-OCR\
 ```
