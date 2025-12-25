@@ -17,6 +17,7 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
 4. The **pixels-per-square value** (minimap scale) must be **manually entered once** and is then reused for automatic distance calculations.  
    - Alternatively, **Automatic mode** can be used, which requires **Tesseract OCR**.  
 5. The calculated **distance in meters** is displayed in a small **in-game overlay (Tkinter UI)** and is **!!!hoverable!!!**
+6. If the program **works correctly**, the `pyinstaller` folder contains a `.txt` file with the command used to compile the program into an `.exe` file (compilation takes around **2 minutes**).
 
 ---
 
@@ -27,7 +28,8 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
 - 🖼️ **Tkinter** — in-game overlay / UI  
 - 🧵 **Threading** — concurrent backend processing and UI  
 - 🎥 **OpenCV** — frame capture and image preprocessing  
-- 🔎 **Tesseract OCR** — automatic minimap scale detection  
+- 🔎 **Tesseract OCR** — automatic minimap scale detection 
+- 📦 **PyInstaller** — executable packaging 
 
 ---
 
@@ -120,7 +122,7 @@ When using the Map Rangefinder:
 
 - If the program works correctly, the `pyinstaller` folder contains a `.txt` file with the command used to compile the program into an `.exe` file (compilation takes around 2 minutes).
 - For the tool to work correctly, the game must be set to **Borderless Windowed** mode in the graphics settings.
-The **Map Size** must be set to **100%**.
+- The **Map Size** must be set to **100%**.
 - If Tesseract is not in the PATH, the installation directory must match (the default download route):
 ```
 C:\Program Files\Tesseract-OCR\
