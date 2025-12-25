@@ -116,6 +116,16 @@ When using the Map Rangefinder:
 
    ![YOLO Neural network analyzing the capture](assets/2.jpg)
 
+## Important Notes
+
+If the program works correctly, the `pyinstaller` folder contains a `.txt` file with the command used to compile the program into an `.exe` file (compilation takes around 2 minutes).
+For the tool to work correctly, the game must be set to **Borderless Windowed** mode in the graphics settings.
+The **Map Size** must be set to **100%**.
+If Tesseract is not in the PATH, the installation directory must match (the default download route):
+```
+C:\Program Files\Tesseract-OCR\
+```
+
 ## plans for future
 
 improve threading to hybrid aproach ThreadPoolExecutor + Queue
@@ -127,5 +137,3 @@ execution of file by using exe
 
 This tool is **not affiliated** with Gaijin Entertainment or War Thunder.  
 It is a **personal project**.
-
-For the tool to work correctly, the game must be set to **Borderless Windowed mode** in the graphics settings.
