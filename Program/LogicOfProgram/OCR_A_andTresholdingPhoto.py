@@ -91,6 +91,7 @@ def OCR_A_andTresholdingPhoto():
         return value_int
     except ValueError:
         logger.warning(f"OCR failed, text='{text}'")
+        print(f"OCR failed, text={text}")
         return None
 
 # OCR_A_andTresholdingPhoto()

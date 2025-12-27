@@ -61,14 +61,14 @@ def InGameUI():
 
     def open_scale():
         value = ManualScale(root)  
-        if value:
+        if value is not None:
             scale.set(value)
             logger.debug(f"manually seted scale {value}")
             print(f"ingameui: {value}")
 
     def auto_set_scale():
         value = OCR_A_andTresholdingPhoto()  
-        if value:
+        if value is not None:
             scale.set(value)
             logger.debug(f"auto seted scale {value}")
             print(f"ingameui: {value}")
