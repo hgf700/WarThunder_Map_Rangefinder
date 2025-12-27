@@ -13,7 +13,7 @@ def resource_path(relative: str | Path) -> Path:
     return DATA_PATH / relative
 
 model_path = resource_path(f"{DATA_PATH}/Program/train_yolo_wt/weights/last.pt")
-letters_root = resource_path(f"{DATA_PATH}Program/LettersForVariuousResolutions")
+letters_root = resource_path(f"{DATA_PATH}/Program/LettersForVariuousResolutions")
 
 def Letters_return_func(number: int):
     folder = letters_root / f"res{number}"
