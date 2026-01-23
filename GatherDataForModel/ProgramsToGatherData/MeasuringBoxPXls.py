@@ -4,7 +4,7 @@ import cv2
 import os
 
 start = 786
-end = 793  # ustaw, ile chcesz
+end = 793 
 
 for i in range(start, end + 1):
 

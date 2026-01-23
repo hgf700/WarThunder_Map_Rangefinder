@@ -1,0 +1,11 @@
+mss
+numpy
+opencv-python
+pyautogui
+ultralytics
+torch
+torch-vision
+PyAutoGUI
+pynput
+pytesseract
+pyinstaller

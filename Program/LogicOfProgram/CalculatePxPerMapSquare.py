@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import os
 from Program.LogicOfProgram.PathToPrograms import (
     prediction_raw_path, 
     PxPerMapSquare_path,

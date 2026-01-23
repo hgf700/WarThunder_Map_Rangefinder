@@ -10,8 +10,6 @@ os.makedirs(output_folder, exist_ok=True)
 
 # Pozycja kółka (np. x=100, y=200 w pikselach)
 
-
-
 for filename in os.listdir(input_folder):
     if filename.endswith(".png"):
         path = os.path.join(input_folder, filename)
