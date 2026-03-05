@@ -1,0 +1,11 @@
+# chyba meh kod i ciezko ogarnac ocb plus gosciu duzo korzsyta z sleep xd jak miernota
+https://github.com/Ktpls/wtdistancemeasures
+
+# tworzy linie pomiedzy markiem a graczem w cv2 i korzysta z wt localhost dobre pod pxpersquare
+https://github.com/Guter-Mann/WarThunder-Distance-measurement/blob/v0.1.1-alpha/src/objects/map.py
+
+# robi canny daje szukanie lin i 
+# cv2.HoughLinesP Hough znajduje linie i zwraca ich współrzędne: Z pionowych bierze x, z 
+# poziomych y. Liczy odstępy między liniami Najczęstszy odstęp = wielkość kratki
+#wsm spoko ale duzy compute power chyba?
+https://github.com/NativeSmell/WarThunderDistanceCalculator/blob/main/src/model/DigitRecognizer.py
