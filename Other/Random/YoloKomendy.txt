@@ -1,0 +1,49 @@
+# uczenie z rotacja zdjec (augment)
+yolo train model=runs/detect/train5/weights/best.pt data=C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\data.yaml epochs=50 imgsz=640 augment=True name=train_aug
+
+#walidacja na calym zbiorze
+yolo val model=runs/detect/train_aug/weights/best.pt data=C:\Users\USER098\Documents\GitHub\balistic-calculator-WT\TrainingData\data.yaml
+
+#eksport
+yolo export model=runs/detect/train_aug/weights/best.pt format=onnx
+
+#wykorzystanie?
+from ultralytics import YOLO
+model = YOLO('runs/detect/train_aug/weights/best.pt')
+results = model('path/to/new_map.png')  # Detekcja
+for r in results:
+    boxes = r.boxes  # Bounding boxy
+    classes = r.boxes.cls  # Klasy (0=gracz, 1=ping, 2=metry)
+    print(f'Wykryto: {classes}')
+
+#dane wiecej
+Zwiększenie liczby danych:
+Augmentacja offline: Użyj biblioteki Albumentations, aby wygenerować więcej obrazów z 
+transformacjami (np. zmiana jasności, kontrastu, dodanie szumu, rotacje).
+
+#dokladnosc
+Zmień imgsz=640 na imgsz=800 lub 960, aby model lepiej wychwytywał detale małych obiektów:
+
+#rekom
+imgsz=800: Większy rozmiar obrazu, aby model lepiej widział małe cyfry (np. "120m").
+cls=1.2: Lekko zwiększony nacisk na klasyfikację, aby model pewniej rozróżniał metry od gracza/pingu (niezależnie od wartości).
+box=7.5: Większy nacisk na dokładne bounding boxy wokół liczb.
+dfl=1.5: Poprawia regresję boxów dla małych obiektów jak tekst.
+augment=True: Automatycznie dodaje transformacje (rotacje, zmiany jasności), co pomaga modelowi generalizować dla różnych wartości (120 vs 200) i tła.
+Oznacz ręcznie liczby jako klasa 2 na wszystkich 71 obrazach.
+Wygeneruj augmentowane obrazy (~200).
+Wytrenuj model z imgsz=800 i naciskiem na klasę 2.
+Użyj OCR do odczytu wartości liczb po detekcji.
+
+#OCR
+from ultralytics import YOLO
+import pytesseract, cv2
+model = YOLO('runs/detect/train_new/weights/best.pt')
+results = model('map_071.png', imgsz=800)
+for r in results:
+    for box, cls in zip(r.boxes.xyxy, r.boxes.cls):
+        if int(cls) == 2:
+            x1, y1, x2, y2 = map(int, box)
+            crop = r.orig_img[y1:y2, x1:x2]
+            value = pytesseract.image_to_string(crop, config='--psm 8 digits')
+            print(f"Metry: {value}m")

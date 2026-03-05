@@ -1,0 +1,101 @@
+
+
+
+wiecej danych z kazdej dostepnej niestandardowej mapy
+
+najlepiej na 1 dzien ok epoch 1000
+najlepiej na collabs bo maja h100
+
+i jesli rozni sie od tresholda nowy ss
+
+auto
+2 ss zwyklej mapy w sarosci i z tresholdingiem
+
+logowanie watkow
+
+import logging
+import traceback
+
+logging.basicConfig(
+    filename="thread_errors.log",
+    level=logging.ERROR,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+
+def handle_thread_exception(args):
+    tb = "".join(traceback.format_exception(args.exc_type, args.exc_value, args.exc_traceback))
+    logging.error(f"Błąd w wątku {args.thread.name}: {tb}")
+    print(f"[LOG] Zapisano błąd w thread_errors.log")
+
+restart watkow przy bledzie
+
+def handle_thread_exception(args):
+    print(f"[BŁĄD] Wątek {args.thread.name} zakończył się z błędem {args.exc_type.__name__}: {args.exc_value}")
+
+    # automatyczny restart tylko dla backend_thread
+    if args.thread.name == "backend_thread":
+        print("[INFO] Restartuję backend po błędzie...")
+        new_thread = threading.Thread(
+            target=GenerateBackendMark,
+            args=(settings_path, prediction_raw_path, when_capture_ready),
+            name="backend_thread",
+            daemon=True
+        )
+        new_thread.start()
+
+
+
+
+
+
+poprawic watkowanie Patrząc na to, co masz teraz (YOLO + callbacki + UI), najlepszy układ hybrydowy to:
+
+
+
+
+
+ThreadPoolExecutor — do obsługi zadań “cięższych”, ale nie stricte CPU (np. YOLO, odczyt plików, backend),
+Queue — do komunikacji między backendem a UI (np. przesył wyników, błędów),
+
+przyklad
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from queue import Queue
+import threading
+import time
+
+# Kolejka wyników do UI
+result_queue = Queue()
+
+def yolo_task(number):
+    """Symulacja detekcji YOLO"""
+    time.sleep(1)
+    if number == 2:
+        raise ValueError("YOLO padło na klatce 2")
+    return f"Detekcja zakończona: {number}"
+
+def manage_results():
+    """Wątek UI / InGameUI monitorujący wyniki"""
+    while True:
+        result = result_queue.get()
+        if result == "STOP":
+            print("[UI] Zatrzymano monitorowanie wyników.")
+            break
+        print(f"[UI] Nowy wynik: {result}")
+
+def main():
+    ui_thread = threading.Thread(target=manage_results, daemon=True)
+    ui_thread.start()
+
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        futures = [executor.submit(yolo_task, i) for i in range(5)]
+
+        for future in as_completed(futures):
+            try:
+                result = future.result()
+                result_queue.put(result)
+            except Exception as e:
+                result_queue.put(f"Błąd: {e}")
+
+    result_queue.put("STOP")
+
+main()
