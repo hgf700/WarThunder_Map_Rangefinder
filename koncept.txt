@@ -1,0 +1,56 @@
+koncept for improvements
+Adaptive threshold
+Detekcja krawędzi (Canny
+
+edges = cv2.Canny(thresh, 50, 150)
+
+Detekcja linii (cv2.HoughLinesP)
+
+lines = cv2.HoughLinesP(
+    edges,
+    rho=1,
+    theta=np.pi/180,
+    threshold=100,
+    minLineLength=50,
+    maxLineGap=10
+)
+
+. Rysowanie wykrytych linii
+
+output = img.copy()
+
+if lines is not None:
+    for line in lines:
+        x1, y1, x2, y2 = line[0]
+        cv2.line(output, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
+cv2.imshow("lines", output)
+cv2.waitKey(0)
+
+Twój przypadek (minimapa + siatka):
+siatka = dużo prostych poziomych i pionowych linii
+Canny → wyciąga krawędzie
+Hough → znajduje linie na podstawie punktów krawędzi
+
+#Filtrowanie tylko poziomych/pionowych linii
+
+for line in lines:
+    x1, y1, x2, y2 = line[0]
+    
+    angle = np.arctan2(y2 - y1, x2 - x1)
+    
+    # tylko prawie poziome lub pionowe
+    if abs(angle) < 0.1 or abs(abs(angle) - np.pi/2) < 0.1:
+        cv2.line(output, (x1, y1), (x2, y2), (0,255,0), 2)
+
+#Usuwanie szumu przed Canny
+
+blur = cv2.GaussianBlur(gray, (5,5), 0)
+edges = cv2.Canny(blur, 50, 150)
+
+#Jeśli siatka jest regularna
+
+Możesz potem:
+
+grupować linie (clustering)
+liczyć odległości między nimi → skala mapy
