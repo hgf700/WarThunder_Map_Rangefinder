@@ -1,0 +1,1 @@
+move from match template to HoughLinesP najbardziej obiecujace bo uzywa z tego podejscia wojsko
