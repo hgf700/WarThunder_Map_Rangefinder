@@ -41,10 +41,12 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
 2. **Install dependencies**
    ```bash
    pip install -r requirments/requirmentsWindows.txt
+   ```
 
 3. **Run the program**
     ```bash
     python main.py
+    ```
 
 4. **Select your current game resolution** and click **Submit**.  
    - If your resolution is not listed, please **create a pull request** and send a **print screen of your game with minimap including the scale bar** so it can be added in the future.
@@ -92,9 +94,7 @@ When using the Map Rangefinder:
    - add it to the system **PATH**.  
 
    > ⚠️ If Tesseract is not in the PATH, the installation directory must match (the default download route):
-     ```
-     C:\Program Files\Tesseract-OCR\
-     ```
+     `C:\Program Files\Tesseract-OCR\`
    ![Auto scale](assets/6.JPG)
 
 5. **Automatic Scale Detection (A)**  
