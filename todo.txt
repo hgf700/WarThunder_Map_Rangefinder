@@ -1,1 +1,3 @@
-move from match template to HoughLinesP najbardziej obiecujace bo uzywa z tego podejscia wojsko
+move from match template to HoughLinesP
+
+input validation in manual and some error shows in interface
