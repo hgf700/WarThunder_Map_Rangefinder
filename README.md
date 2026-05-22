@@ -36,7 +36,7 @@ The tool uses a **YOLOv8 neural network** for on-screen object detection and com
 ## 🚀 Usage (Windows)
 
 1. **Install Python**  
-   During installation, select **"Add Python to PATH"** (or add it manually later).
+   During installation, select **"Add Python to PATH"** (or add it manually later).                                                          https://www.python.org/downloads/
 
 2. **Install dependencies**
    ```bash
