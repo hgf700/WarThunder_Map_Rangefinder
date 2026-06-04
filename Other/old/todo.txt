@@ -1,4 +1,11 @@
+move from match template to HoughLinesP
 
+input validation in manual and some error shows in interface
+
+if not in path/file ocr show error in ui
+
+
+####oldddd
 
 
 wiecej danych z kazdej dostepnej niestandardowej mapy

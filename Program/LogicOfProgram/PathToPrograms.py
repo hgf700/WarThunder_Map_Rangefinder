@@ -12,7 +12,7 @@ else:
 def resource_path(relative: str | Path) -> Path:
     return DATA_PATH / relative
 
-model_path = resource_path(f"{DATA_PATH}/Program/train_yolo_wt/weights/last.pt")
+model_path = resource_path(f"{DATA_PATH}/Program/train_yolo_wt/weights/best.pt")
 letters_root = resource_path(f"{DATA_PATH}/Program/LettersForVariuousResolutions")
 
 def Letters_return_func(number: int):
