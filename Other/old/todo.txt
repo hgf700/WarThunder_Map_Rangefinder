@@ -4,37 +4,26 @@ input validation in manual and some error shows in interface
 
 if not in path/file ocr show error in ui
 
-
-####oldddd
-
-
 wiecej danych z kazdej dostepnej niestandardowej mapy
 
-najlepiej na 1 dzien ok epoch 1000
-najlepiej na collabs bo maja h100
+najlepiej na 1 dzien ok epoch 1000(ale moge zrobic tresholding mapy do uczenia i wtedy przy pomiarze brac mape po tresholdingu )
+najlepiej na collabs 
 
 i jesli rozni sie od tresholda nowy ss
 
 auto
 2 ss zwyklej mapy w sarosci i z tresholdingiem
 
-logowanie watkow
+logowanie watkow moze
 
-import logging
-import traceback
+poprawic watkowanie Patrząc na to, co masz teraz (YOLO + callbacki + UI), najlepszy układ hybrydowy to:
 
-logging.basicConfig(
-    filename="thread_errors.log",
-    level=logging.ERROR,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
-
-def handle_thread_exception(args):
-    tb = "".join(traceback.format_exception(args.exc_type, args.exc_value, args.exc_traceback))
-    logging.error(f"Błąd w wątku {args.thread.name}: {tb}")
-    print(f"[LOG] Zapisano błąd w thread_errors.log")
+dodac thread pool zamiast tworzyc i usuwac watki bo to duzo zasobow uzywa
 
 restart watkow przy bledzie
+
+ThreadPoolExecutor — do obsługi zadań “cięższych”, ale nie stricte CPU (np. YOLO, odczyt plików, backend),
+Queue — do komunikacji między backendem a UI (np. przesył wyników, błędów),
 
 def handle_thread_exception(args):
     print(f"[BŁĄD] Wątek {args.thread.name} zakończył się z błędem {args.exc_type.__name__}: {args.exc_value}")
@@ -49,20 +38,6 @@ def handle_thread_exception(args):
             daemon=True
         )
         new_thread.start()
-
-
-
-
-
-
-poprawic watkowanie Patrząc na to, co masz teraz (YOLO + callbacki + UI), najlepszy układ hybrydowy to:
-
-
-
-
-
-ThreadPoolExecutor — do obsługi zadań “cięższych”, ale nie stricte CPU (np. YOLO, odczyt plików, backend),
-Queue — do komunikacji między backendem a UI (np. przesył wyników, błędów),
 
 przyklad
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -106,6 +81,3 @@ def main():
     result_queue.put("STOP")
 
 main()
-
-
-dodac thread pool zamiast tworzyc i usuwac watki bo to duzo zasobow uzywa
