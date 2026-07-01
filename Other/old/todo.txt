@@ -106,3 +106,6 @@ def main():
     result_queue.put("STOP")
 
 main()
+
+
+dodac thread pool zamiast tworzyc i usuwac watki bo to duzo zasobow uzywa
