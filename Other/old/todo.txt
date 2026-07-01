@@ -25,6 +25,11 @@ restart watkow przy bledzie
 ThreadPoolExecutor — do obsługi zadań “cięższych”, ale nie stricte CPU (np. YOLO, odczyt plików, backend),
 Queue — do komunikacji między backendem a UI (np. przesył wyników, błędów),
 
+Dodaj augmentacje zamiast threshold
+Zamiast: threshold
+rób: brightness/contrast jitter, hue shift, gaussian noise, blur
+👉 to daje YOLO realną odporność na różne mapy
+
 def handle_thread_exception(args):
     print(f"[BŁĄD] Wątek {args.thread.name} zakończył się z błędem {args.exc_type.__name__}: {args.exc_value}")
 
@@ -39,7 +44,6 @@ def handle_thread_exception(args):
         )
         new_thread.start()
 
-przyklad
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from queue import Queue
 import threading
