@@ -89,12 +89,9 @@ When using the Map Rangefinder:
    To use **Automatic mode (A)**, download **Tesseract OCR** from:  
    https://tesseract-ocr.com/#download  
 
-   After installation, either:  
-   - place Tesseract in the project directory, **or**  
+   After installation of OCR, either:  
    - add it to the system **PATH**.  
-
-   > ⚠️ If Tesseract is not in the PATH, the installation directory must match (the default download route):
-   > 
+   - download in the default download route:
      `C:\Program Files\Tesseract-OCR\`
    
    ![Auto scale](assets/6.JPG)
@@ -132,9 +129,10 @@ When using the Map Rangefinder:
 ## plans for future
 
 improve threading to hybrid aproach ThreadPoolExecutor + Queue
-and posibly move from notepads to redis , multiprocessing only for yolo rather then threads
+process usage only for yolo rather then threads
 improve model yolo
-execution of file by using exe
+change logic of development debuging to json to allow compiled program to affect logic
+in automatic take new screenshot of map rather then gather scale from old minimap 
 
 ## ⚠️ Disclaimer
 
