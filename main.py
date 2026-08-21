@@ -1,8 +1,6 @@
 import threading 
 import queue
 import traceback
-import time
-from functools import partial
 from Program.LogicOfProgram.SettingsUI import SettingsUI
 # from Program.LogicOfProgram.InGameUI import InGameUI, mode_selected, mode_event
 from Program.LogicOfProgram.InGameUI import InGameUI
@@ -20,14 +18,13 @@ from Program.LogicOfProgram.Development import development
 logger = setup_logger(__name__)
 
 current_resolution = None
-
 task_queue = queue.Queue()
 
 def worker():
     """Worker to handle queue."""
     while True:
         task = task_queue.get()
-        if task is None:  # sygnał zakończenia
+        if task is None:  
             task_queue.task_done()
             print("[WORKER] stopped worker thread.")
             break
@@ -43,27 +40,15 @@ def worker():
 
 def handle_thread_exception(args):
     print("\n--- [Error in thread] ---")
-
     thread_name = getattr(args.thread, "name", "unknown thread")
     print(f"thread: {thread_name}")
     print(f"type: {args.exc_type.__name__}")
     print(f"mesage: {args.exc_value}")
-    print(f"is thread alive: {args.thread.is_alive() if args.thread else 'none data'}")
-
-    print("thread stack")
-    traceback.print_exception(args.exc_type, args.exc_value, args.exc_traceback)
-
-    # Lista aktywnych wątków
-    enumeration = threading.enumerate()
-    print(f"active thread ({len(enumeration)}):")
-    for i in enumeration:
-        print(f"  - {i.name} (alive={i.is_alive()})")
-
-    # Rozmiar stosu (globalny, nie dla konkretnego wątku)
-    size = threading.stack_size()
-    print(f"default size of thread stack: {size if size != 0 else 'system default'}")
+    print(
+        f"is thread alive: {args.thread.is_alive() if args.thread else 'none data'}"
+    )
     print("--- end thread exception ---\n")
-    logger.debug(f"thread error: ")
+    logger.debug("thread error: ")
 
 
 # funckja dla callback
@@ -90,20 +75,20 @@ def main():
         print("resolution not selected or error.")
         logger.debug(f"resolution not selected or error.")
         return
+    
     current_resolution = res
     print(f"setted resolution: {res}")
 
-    # 🎮 Uruchamiamy InGameUI (oddzielny wątek, działa do ESC/krzyżyka)
     InGameUI_thread = threading.Thread(target=InGameUI, name="InGameUIThread")
     InGameUI_thread.start()
 
-    # mode=mode_event.wait()
+    stop_event = threading.Event()
 
     # ⚙️ Uruchamiamy backend (YOLO + callback)
     print("[DEBUG] start backend_thread...execute callback when_capture_ready")
     backend_thread = threading.Thread(
         target=GenerateBackendMark,
-        args=(settings_path, prediction_raw_path, when_capture_ready),
+        args=(settings_path, prediction_raw_path, when_capture_ready, stop_event),
         daemon=True,
         name="GenerateMark"
     )
@@ -115,9 +100,16 @@ def main():
     InGameUI_thread.join()
     print("[INFO] InGameUI closed — closing program.")
 
+    stop_event.set()
+
     task_queue.put(None)
-    time.sleep(0.1)
+
+    print("[INFO] Waiting for backend thread to finish...")
+    backend_thread.join(timeout=3.0)
+
     task_queue.join()
+
+    print("[INFO] Program successfully closed.")
 
 if __name__ == "__main__":
     main()

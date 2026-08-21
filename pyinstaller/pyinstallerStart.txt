@@ -1,6 +1,7 @@
 pyinstaller --clean `
 --distpath="EXE_Range_Calculator" `
 --icon=./assets/logo3_ico.ico `
+--add-data "yolov8n.pt;." `
 --add-data "Program/train_yolo_wt/weights;Program/train_yolo_wt/weights" `
 --add-data "Program/LogicOfProgram/meters;Program/LogicOfProgram/meters" `
 --add-data "Program/LogicOfProgram/prediction/results;Program/LogicOfProgram/prediction/results" `

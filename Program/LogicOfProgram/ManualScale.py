@@ -34,13 +34,26 @@ def ManualScale(parent=None):
 
     def ScaleM_put():
         value = ScaleM_input.get().strip()
-        if value:
-            save_scale(value)
-            ScaleM_output.set(value)
-            result.set(value)
-            root.destroy()  # zamyka okno po kliknięciu „Set”
-            print(f"manual scale : {value}")
-            logger.debug(f"manual scale : {value}")
+
+        try:
+            numeric_value = float(value)
+
+            save_scale(numeric_value)
+            ScaleM_output.set(numeric_value)
+            result.set(numeric_value)  # Przekazujemy poprawną wartość
+            root.destroy()
+            print(f"manual scale : {numeric_value}")
+            logger.debug(f"manual scale : {numeric_value}")
+
+        except ValueError:
+            # Jeśli użytkownik wpisał litery lub znaki specjalne
+            error_val = "int only"
+            save_scale(error_val)
+            ScaleM_output.set(error_val)
+            result.set(error_val)  
+            root.destroy()  
+            logger.warning(f"Niepoprawna próba wpisania skali: '{value}'")
+
 
     ttk.Button(mainframe, text="Set", command=ScaleM_put).grid(column=0, row=1, sticky=E)
     ttk.Label(mainframe, text="Seted").grid(column=1, row=1, sticky=W)

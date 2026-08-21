@@ -30,6 +30,10 @@ def load_settings_box():
         print(f"[!] too small value ({len(parts)}) in settings.txt: {parts}")
         return 0, 0, 0, 0
 
+    if len(parts) > 6:
+        logger.debug(f"too much values ({len(parts)}) in settings.txt: {parts}")
+        print(f"[!] too much values ({len(parts)}) in settings.txt: {parts}")
+
     try:
         MIN_X, MIN_Y, MAX_X, MAX_Y = map(int, parts[2:6])
         print(f"[OK] lodaded cordinates: {MIN_X}, {MIN_Y}, {MAX_X}, {MAX_Y}")
@@ -108,8 +112,7 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
         if(writeImage==1):
             cv2.imshow("Preview", img)
             cv2.waitKey(500)
-        cv2.destroyAllWindows()
-
+            cv2.destroyAllWindows()
 
     def handle_region_click(x, y):
         """activate thread to handling mouse click."""
@@ -117,15 +120,9 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
         thread.daemon = True  # zakończy się razem z programem
         thread.start()
 
-
-    # ----- Listener myszy -----
     def on_click(x, y, button, pressed):
         nonlocal  alt_pressed
         if pressed:
-            # Blokuj środkowy i prawy przycisk
-            if button == mouse.Button.right or button == mouse.Button.middle:
-                print(f"[Ignore right and scroll]: {button}")
-                return
 
             if button==mouse.Button.left and pressed and alt_pressed:
                 print(f"alt+lpm in allowed are: {x},{y}")
