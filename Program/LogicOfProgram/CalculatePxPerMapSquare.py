@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 from Program.LogicOfProgram.PathToPrograms import (
     prediction_raw_path, 
     PxPerMapSquare_path,
@@ -86,10 +85,7 @@ def CalculatePxPerMapSquare(resolutionPX):
 
     # oblicz odległość w pikselach przypadającą na 1 kwadrat
     pixels_per_square = abs(y1 - y2) / abs(grid1 - grid2)
-
     pixels_per_square=int(pixels_per_square)
-
-    # pixels_per_square=41
 
     print(f"Letter {keys[0]} and {keys[1]} where used to calculate scale.")
     print(f"1 square = {pixels_per_square} px")

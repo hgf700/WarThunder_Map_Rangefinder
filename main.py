@@ -2,7 +2,6 @@ import threading
 import queue
 import traceback
 from Program.LogicOfProgram.SettingsUI import SettingsUI
-# from Program.LogicOfProgram.InGameUI import InGameUI, mode_selected, mode_event
 from Program.LogicOfProgram.InGameUI import InGameUI
 from Program.LogicOfProgram.GenerateBackendMark import GenerateBackendMark
 from Program.LogicOfProgram.UsageOfYolo import UsageOfYolo
@@ -34,6 +33,7 @@ def worker():
                 print(f"[WORKER OK] result: {result}")
         except Exception as e:
             print(f"[WORKER ERR] {e}")
+            logger.warning(f"[WORKER ERR] '{e}'")
             traceback.print_exc()
         finally:
             task_queue.task_done()
@@ -69,7 +69,7 @@ def main():
     
     threading.Thread(target=worker, daemon=True, name="TaskQueueWorker").start()
 
-    # 📏 Ustawienia rozdzielczości
+    # setting resolution
     res = SettingsUI()
     if not res or res == "error":
         print("resolution not selected or error.")
@@ -84,7 +84,7 @@ def main():
 
     stop_event = threading.Event()
 
-    # ⚙️ Uruchamiamy backend (YOLO + callback)
+    # start of backend yolo callback
     print("[DEBUG] start backend_thread...execute callback when_capture_ready")
     backend_thread = threading.Thread(
         target=GenerateBackendMark,
@@ -96,19 +96,16 @@ def main():
 
     print("[DEBUG] all threads are active. Program works in parallel.")
 
-    # czekamy aż użytkownik zamknie InGameUI
     InGameUI_thread.join()
     print("[INFO] InGameUI closed — closing program.")
 
     stop_event.set()
-
     task_queue.put(None)
 
     print("[INFO] Waiting for backend thread to finish...")
     backend_thread.join(timeout=3.0)
 
     task_queue.join()
-
     print("[INFO] Program successfully closed.")
 
 if __name__ == "__main__":

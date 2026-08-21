@@ -1,12 +1,10 @@
-captures/
-concepts/
+captures/*
 settings/*
 scale/*
 meters/*
-Todo/
 __pycache__/
 prediction/*
-MetersPerPx/
+MetersPerPx/*
 PxPerMapSquare/*
 thresholding/*
 temp/

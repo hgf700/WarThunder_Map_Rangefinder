@@ -130,6 +130,7 @@ def InGameUI():
 
     manual_setting_button.grid_remove()
 
+    #refresh if notice change in the file
     def refresh_meters():
         last_mtime = None
 
@@ -155,6 +156,7 @@ def InGameUI():
     refresh_meters()
 
     if PxPerSquareDebug==1:
+        #refresh if notice change in the file for debugging to check problem with cv2.matchtemplate and error
         def refresh_PxPerSquare():
             last_mtime = None
 

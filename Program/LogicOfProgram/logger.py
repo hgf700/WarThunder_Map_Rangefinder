@@ -7,7 +7,8 @@ def setup_logger(name: str) -> logging.Logger:
     if generateLogs == 1:
         logger.setLevel(logging.DEBUG)
     else:
-        logger.setLevel(logging.CRITICAL + 1)  # skutecznie wyłącza logger
+        # skutecznie wyłącza logger
+        logger.setLevel(logging.CRITICAL + 1)  
 
     if logger.handlers:
         return logger

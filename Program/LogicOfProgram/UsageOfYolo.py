@@ -15,10 +15,6 @@ logger = setup_logger(__name__)
 print = functools.partial(print, flush=True)
 
 def UsageOfYolo():
-    
-    # MODEL_RELATIVE_PATH = "yolo_weights/last.pt"
-
-    # model_path = resource_path(MODEL_RELATIVE_PATH)
     model = YOLO(model_path)
 
     # Wykonaj detekcję
@@ -35,17 +31,18 @@ def UsageOfYolo():
                 conf = box.conf[0]
                 cls = int(box.cls[0])
                 f.write(f"{cls} {conf:.2f} {x1:.0f} {y1:.0f} {x2:.0f} {y2:.0f} ")
-                print(f"class: {cls}, Conf: {conf:.2f}, BBox: ({x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f})")
+                print(f"class: {cls}, Conf: {conf:.2f}, Box: ({x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f})")
 
     # Zapisz obraz z detekcjami
     img_pred = results[0].plot()
     success = cv2.imwrite(output_image_path, img_pred)
 
     if success:
-        print(f"[✔] value saved:\n{prediction_path}\n{output_image_path}")
+        print(f"[✔] value saved:")
     else:
+        logger.warning("errow while saving prediction.png'")
         print("[❌] errow while saving prediction.png")
 
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
 
 # UsageOfYolo()

@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-import os
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import scale_path
 import functools
@@ -40,19 +39,20 @@ def ManualScale(parent=None):
 
             save_scale(numeric_value)
             ScaleM_output.set(numeric_value)
-            result.set(numeric_value)  # Przekazujemy poprawną wartość
+            result.set(numeric_value)  
             root.destroy()
             print(f"manual scale : {numeric_value}")
             logger.debug(f"manual scale : {numeric_value}")
 
-        except ValueError:
+        except ValueError as e:
             # Jeśli użytkownik wpisał litery lub znaki specjalne
             error_val = "int only"
             save_scale(error_val)
             ScaleM_output.set(error_val)
             result.set(error_val)  
             root.destroy()  
-            logger.warning(f"Niepoprawna próba wpisania skali: '{value}'")
+            print(f"inncorect attempt to write scale: {value} {e}")
+            logger.warning(f"inncorect attempt to write scale: '{value} {e}'")
 
 
     ttk.Button(mainframe, text="Set", command=ScaleM_put).grid(column=0, row=1, sticky=E)

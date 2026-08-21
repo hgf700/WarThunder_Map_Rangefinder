@@ -62,7 +62,6 @@ def ManageYoloResponse():
 
         #pitagoras function
         distance = math.hypot(Px - Mx, Py - My)
-
         print(f"[INFO] Marker: ({Mx}, {My}) | Conf: {Mpred:.2f}")
         print(f"[INFO] Player: ({Px}, {Py}) | Conf: {Ppred:.2f}")
         print(f"[INFO] distance: {distance}px")
@@ -75,7 +74,6 @@ def ManageYoloResponse():
         width, height = parts2[0], parts2[1]
 
         scale=float(ReadFromFile(scale_path))
-        
         PxPerMap=int(ReadFromFile(PxPerMapSquare_path))
 
         print(f"width {width}")
@@ -88,14 +86,13 @@ def ManageYoloResponse():
         # przeliczenie pikseli na metry
 
         distance_m = (distance / PxPerMap) * scale
-
-        distance_m = int(distance_m)             # zaokrąglenie do liczby całkowitej
+        # zaokrąglenie do liczby całkowitej
+        distance_m = int(distance_m)             
 
         print(f"[INFO] 1 map square = {PxPerMap} m")
         print(f"[INFO] distance in meters: {distance_m} m")
         
         logger.debug(f"1 map square = {PxPerMap} m | distance in meters: {distance_m} m")
-
         save_to_file_meters(distance_m)
 
         return distance_m

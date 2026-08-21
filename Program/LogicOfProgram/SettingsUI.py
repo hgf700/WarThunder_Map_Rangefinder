@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-import os
 import functools
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import (
@@ -20,7 +19,7 @@ def save_to_file(width, height, MiniMapStartX,MiniMapStartY,MiniMapEndX,MiniMapE
         f.write(f"{width} {height} {MiniMapStartX} {MiniMapStartY} {MiniMapEndX} {MiniMapEndY}")      
 
 if not meters_path.exists():
-    start=0
+    start = 0
     save_to_file_meters(start)
 
 def SettingsUI():
@@ -28,7 +27,6 @@ def SettingsUI():
     root.title("Settings")
     # root.overrideredirect(True)
     root.attributes('-topmost', False)
-
     result = {"resolution": None}
 
     mainframe = ttk.Frame(root, padding=10)

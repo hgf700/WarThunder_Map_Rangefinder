@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 import matplotlib.pyplot as plt
 import functools
 import pytesseract
@@ -9,7 +8,6 @@ from Program.LogicOfProgram.Development import (
 )
 from Program.LogicOfProgram.PathToPrograms import (
     tresholding_PNG_path,
-    prediction_raw_path,
     tresholding_TXT_path,
     scale_path,
     cleanPhoto_raw_path
@@ -22,6 +20,7 @@ print = functools.partial(print, flush=True)
 
 def OCR_A_andTresholdingPhoto():
     MIN_X, MIN_Y, MAX_X, MAX_Y = load_settings_box()
+    
     captureRegionClean = capture_region(MIN_X, MIN_Y, MAX_X, MAX_Y)
     cv2.imwrite(cleanPhoto_raw_path, captureRegionClean)
 
@@ -64,8 +63,6 @@ def OCR_A_andTresholdingPhoto():
     processed = cv2.GaussianBlur(processed, (3, 3), 0)
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
     processed = cv2.morphologyEx(processed, cv2.MORPH_CLOSE, kernel)
-
-    # Zapis wyciętego obrazu
     cv2.imwrite(tresholding_PNG_path, processed)
 
     # OCR

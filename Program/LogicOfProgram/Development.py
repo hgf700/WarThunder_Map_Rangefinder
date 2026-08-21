@@ -1,4 +1,4 @@
-#for developing 
+#for development
 development=0
 showImagePLT=0
 writeImage=0

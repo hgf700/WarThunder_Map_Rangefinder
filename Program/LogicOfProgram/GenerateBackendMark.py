@@ -2,13 +2,11 @@ import mss
 import cv2
 import numpy as np
 from pynput import mouse, keyboard
-import os
 import threading
 import functools
 from Program.LogicOfProgram.ReadFromFile import ReadFromFile
 from Program.LogicOfProgram.PathToPrograms import (
     settings_path,
-    prediction_raw_path
     )
 from Program.LogicOfProgram.Development import writeImage
 from Program.LogicOfProgram.logger import setup_logger
@@ -44,7 +42,7 @@ def load_settings_box():
         return 0, 0, 0, 0
 
         
-        # return tuple(map(int, read[2:6]))
+# return tuple(map(int, read[2:6]))
 def capture_region(x1, y1, x2, y2):
     """ ss only in allowed area of screen."""
     with mss.mss() as sct:
@@ -54,13 +52,11 @@ def capture_region(x1, y1, x2, y2):
         img_bgr = cv2.cvtColor(img_bgr, cv2.COLOR_BGRA2BGR)
         return img_bgr  
 
-#on capture flaga dla callback 
-# Python traktuje None jako False.
-def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
-# Parametry kółka do wizualnego feedbacku (BGR)
+#on capture flaga dla callback  Python traktuje None jako False.
+def GenerateBackendMark(prediction_raw_path,on_capture=None):
     radius1 = 8
     radius2 = 6
-    color1 = (0, 165, 255)  # pomarańczowy
+    color1 = (0, 165, 255)  # pomarańczowy bo bgr
     color2 = (39, 250, 0)   # zielony
     Alpha = 0.4 
         
@@ -103,8 +99,7 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
         cv2.imwrite(prediction_raw_path, img)
         print(f"[+] ss saved as {prediction_raw_path}")
 
-#callback 
-# Python traktuje None jako False.
+        #callback Python traktuje None jako False.
         if on_capture:
             on_capture("1")
 
@@ -152,4 +147,4 @@ def GenerateBackendMark(settings_path,prediction_raw_path,on_capture=None):
         ml.join()
 
 
-# GenerateBackendMark(settings_path,captures_folder)
+# GenerateBackendMark(captures_folder)
