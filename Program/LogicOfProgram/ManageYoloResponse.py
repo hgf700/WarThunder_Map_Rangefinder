@@ -67,7 +67,7 @@ def ManageYoloResponse():
         print(f"[INFO] distance: {distance}px")
         
         logger.debug(f"(0) Marker: ({Mx}, {My}) | Conf: {Mpred:.2f} (1) Player: ({Px}, {Py}) | Conf: {Ppred:.2f} distance: {distance}px")
-
+    
         resolution =ReadFromFile(settings_path)
         parts2 = [int(x) for x in resolution.split()]
 
@@ -98,8 +98,9 @@ def ManageYoloResponse():
         return distance_m
 
     except ValueError as e:
-        print("[!] error while converting values:", e)
-        logger.debug(f"error while converting values")
-        return 
+        print("[!] error while converting values / not number:", e)
+        logger.debug(f"error while converting values / not number")
+        message = "error or not number"
+        return message
         
 # ManageYoloResponse()
